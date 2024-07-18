@@ -1,5 +1,14 @@
+import { SearchComponent } from "../../Components";
+
 const HomePage = () => {
-  return <div>Welcome to Home Page</div>;
+  return (
+    <main>
+      <section>
+        <SearchComponent />
+        <h1>Welcome to Home Page</h1>
+      </section>
+    </main>
+  );
 };
 
 export default HomePage;
