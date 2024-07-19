@@ -26,11 +26,16 @@ const LoginConponent = ({ toggleForm }) => {
     }
   };
   return (
-    <section>
-      <h2 className="text-2xl font-bold mb-6 text-gray-900 w-5/12 mx-auto">
+    <motion.section
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ type: "tween", duration: 0.3 }}
+      className=" w-5/12 mx-auto min-w-[360px] max-w-[580px] bg-gray-100 p-4 rounded-xl mb-16"
+    >
+      <h2 className="text-xl font-bold mb-6 text-gray-900 mx-auto">
         Log in your account
       </h2>
-      <form onSubmit={handleSubmit} className=" w-5/12 mx-auto">
+      <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="text-sm block font-medium text-gray-900">
             Email
@@ -41,7 +46,7 @@ const LoginConponent = ({ toggleForm }) => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Your email address"
-            className="border-2 border-gray-300 rounded-lg py-2 px-4 text-gray-700 w-full focus:outline-none focus:border-blue-500 bg-gray-100 text-gray-900"
+            className="border-2 border-gray-300 rounded-lg py-2 px-4 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-100 text-gray-900"
           />
         </div>
         <div className="mb-4">
@@ -54,13 +59,13 @@ const LoginConponent = ({ toggleForm }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Your password"
-            className="border-2 border-gray-300 rounded-lg py-2 px-4 text-gray-700 w-full focus:outline-none focus:border-blue-500 bg-gray-100 text-gray-900"
+            className="border-2 border-gray-300 rounded-lg py-2 px-4 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-100 text-gray-900"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full bg-emerald-600 text-white p-2 rounded-md hover:bg-emerald-800"
+          className="w-full bg-cyan-600 text-white p-2 rounded-md hover:bg-cyan-800"
         >
           <Link to="/">Login</Link>
         </button>
@@ -70,13 +75,13 @@ const LoginConponent = ({ toggleForm }) => {
           Don't have an account?{" "}
           <button
             onClick={toggleForm}
-            className="text-gray-900  pl-2 hover:underline"
+            className="text-gray-900  pl-2 hover:underline hover:font-semibold"
           >
             Sign Up
           </button>
         </p>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
