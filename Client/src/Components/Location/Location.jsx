@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import LayoutComponent from "../LayoutComponent/LayoutComponent";
+import LayoutComponent from "./LayoutComponent";
 
 const Location = () => {
   const [bookshelves, setBookshelves] = useState([]);

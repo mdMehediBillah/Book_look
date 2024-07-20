@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MapComponent from "../MapComponent/MapComponent";
+import MapComponent from "./MapComponent";
 
 const LayoutComponent = ({
   bookshelves,

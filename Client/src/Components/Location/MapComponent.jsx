@@ -2,7 +2,7 @@ import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import RoutingMachine from "../RoutingMachine/RoutingMachine";
+import RoutingMachine from "./RoutingMachine";
 
 // Define the custom icon
 const customIcon = new L.Icon({
