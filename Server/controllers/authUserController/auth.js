@@ -13,9 +13,12 @@ export const createUser = async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (user) {
-      return next(
-        createError(400, "Email has been taken. Please try another one!")
-      );
+      return res
+        .status(400)
+        .json({ message: "Email has been taken. Please try another one!" });
+      // return next(
+      //   createError(400, "Email has been taken. Please try another one!")
+      // );
     }
 
     if (!user) {
@@ -67,12 +70,16 @@ export const loginUser = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: email });
     if (!user) {
-      return next(createError(400, "Wrong credentials"));
+      return res.status(400).json({ message: "You provide an invalid email!" });
+      // return next(createError(400, "Wrong credentials"));
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return next(createError(400, "Incorrect password!"));
+      return res
+        .status(400)
+        .json({ message: "You provide an invalid password!" });
+      // return next(createError(400, "Incorrect password!"));
     }
 
     if (user && isPasswordValid) {

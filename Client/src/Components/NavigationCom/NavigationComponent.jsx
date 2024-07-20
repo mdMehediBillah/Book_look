@@ -4,8 +4,13 @@ import { MdOutlineLeaderboard } from "react-icons/md";
 import { GrLogout } from "react-icons/gr";
 import { GiBlackBook } from "react-icons/gi";
 import { motion } from "framer-motion";
+import { useContext } from "react";
+import { AuthContext } from "../../Context/User/AuthContext.jsx";
 
+// =================================================================
+// NavigationComponent
 const NavigationComponent = () => {
+  const { user, logout } = useContext(AuthContext);
   const navLinkStyles = ({ isActive }) => {
     return isActive ? "font-bold text-cyan-600" : "text-black";
   };
@@ -73,10 +78,10 @@ const NavigationComponent = () => {
               // onClick={handleLogout}
               className="bg-rose-600 px-4 mt-1 rounded"
             >
-              <span>
+              <span onClick={logout}>
                 {" "}
                 <GrLogout />
-                <Link to="/registration">Logout</Link>
+                Logout
               </span>
             </li>
           </ul>
