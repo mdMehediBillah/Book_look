@@ -22,8 +22,8 @@ const LayoutComponent = ({
     : filteredBookshelves.slice(0, 3);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 h-screen">
-      <div className="p-4 overflow-y-auto">
+    <div className="flex flex-col md:flex-row lg:h-1/2screen">
+      <div className="flex flex-col p-4 md:w-1/3">
         <SearchInput
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
@@ -33,7 +33,7 @@ const LayoutComponent = ({
         {displayedBookshelves.map((shelf, idx) => (
           <div
             key={idx}
-            className="mb-5 p-4 border border-gray-300 rounded bg-gray-50"
+            className="mb-5 p-2 border border-gray-300 rounded bg-gray-50"
           >
             <h3 className="text-lg font-semibold">{shelf.name}</h3>
             <p className="text-gray-700">{shelf.address}</p>
@@ -49,7 +49,7 @@ const LayoutComponent = ({
         )}
       </div>
 
-      <div className="relative col-span-2">
+      <div className="flex-grow h-1/2 md:h-full">
         <MapComponent
           bookshelves={filteredBookshelves}
           center={center}
