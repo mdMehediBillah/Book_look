@@ -16,3 +16,8 @@ h3 {
 .logo {
   font-family: "Aclonica", sans-serif;
 }
+
+/* for hiding default rauting path */
+.leaflet-routing-container {
+  display: none !important;
+}
