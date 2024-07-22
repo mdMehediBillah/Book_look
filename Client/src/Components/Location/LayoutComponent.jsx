@@ -22,7 +22,7 @@ const LayoutComponent = ({
     : filteredBookshelves.slice(0, 3);
 
   return (
-    <div className="flex flex-col md:flex-row lg:h-1/2screen">
+    <div className="flex flex-col md:flex-row">
       <div className="flex flex-col p-4 md:w-1/3">
         <SearchInput
           searchTerm={searchTerm}

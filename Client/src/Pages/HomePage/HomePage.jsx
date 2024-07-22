@@ -9,7 +9,7 @@ const HomePage = () => {
         <h1>Welcome to Home Page</h1>
       </section>
      <div className="container mx-auto flex-grow p-4">
-        <div className="bg-white p-6 rounded-lg shadow-lg">
+        <div className="bg-white p-6 rounded-lg shadow-lg bg-red-400 ">
           <Location />
         </div>
       </div>

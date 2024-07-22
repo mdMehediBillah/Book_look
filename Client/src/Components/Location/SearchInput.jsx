@@ -1,18 +1,22 @@
 import React from "react";
 
-// const cityCoordinates = {
-//   Leipzig: [51.321003, 12.3716],
-//   Berlin: [52.52, 13.405],
-//   Frankfurt: [50.1109, 8.6821],
-// };
+const cityCoordinates = {
+  Leipzig: [51.321003, 12.3716],
+  Berlin: [52.52, 13.405],
+  Frankfurt: [50.1109, 8.6821],
+};
 
 const SearchInput = ({ searchTerm, setSearchTerm, setCenter }) => {
   const handleSearchChange = (e) => {
-    const term = e.target.value;
+    const term = e.target.value.trim(); // Remove any leading/trailing whitespace
     setSearchTerm(term);
+    console.log("Search term:", term); // Debugging
+    console.log("cityCoordinates:", cityCoordinates); // Debugging
     const cityCoord = cityCoordinates[term];
+    console.log("City coordinates:", cityCoord); // Debugging
     if (cityCoord) {
       setCenter(cityCoord);
+      console.log("Center set to:", cityCoord); // Debugging
     }
   };
 
