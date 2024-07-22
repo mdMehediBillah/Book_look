@@ -78,13 +78,6 @@ const SignUpComponent = ({ toggleForm }) => {
     }
     setLoading(true);
     try {
-      // const newUser = {
-      //   firstName,
-      //   lastName,
-      //   email,
-      //   password,
-      //   agree,
-      // };
       const response = await axios.post(
         `http://localhost:8000/api/v1/auth/register`,
         formData

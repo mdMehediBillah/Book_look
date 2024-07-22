@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 // Create context
 export const AuthContext = createContext();
@@ -6,6 +7,7 @@ export const AuthContext = createContext();
 // Create a provider component
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  // const navigate = useNavigate();
 
   useEffect(() => {
     // Check for user in localStorage
@@ -23,6 +25,8 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user");
+    window.location.reload();
+    // navigate("/registrationPage");
   };
 
   return (
