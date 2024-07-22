@@ -1,0 +1,17 @@
+
+
+.time-picker-input .react-time-picker__wrapper {
+  border: none;
+}
+
+.react-time-picker__clock {
+  transform: scale(0.6); /* Adjust the scale as needed */
+}
+
+.react-time-picker__clock .react-clock__face {
+  border: none; /* Remove inner border */
+}
+
+.react-time-picker__inputGroup {
+  border: none;
+}

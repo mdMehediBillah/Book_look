@@ -4,6 +4,7 @@ import { toast } from "react-toastify";  //to show notifications
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
+import "./CustomTimePicker.css"; 
 
 const CreateShelfForm = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,8 @@ const CreateShelfForm = () => {
     closingTime: "",
   });
 
+    const [images, setImages] = useState([]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -23,27 +26,86 @@ const CreateShelfForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post("/api/bookshelves", formData);
-      toast.success(response.data.message);
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Error creating bookshelf");
-    }
-  };
+    const handleFileChange = (e) => {
+      setImages(e.target.files);
+    };
+
+   const handleSubmit = async (e) => {
+     e.preventDefault();
+     const data = new FormData();
+     data.append("barcode", formData.barcode);
+     data.append("name", formData.name);
+     data.append("openingTime", formData.openingTime);
+     data.append("closingTime", formData.closingTime);
+
+     for (let i = 0; i < images.length; i++) {
+       data.append("images", images[i]);
+     }
+
+     try {
+       const response = await axios.post("/api/bookshelves", data, {
+         headers: {
+           "Content-Type": "multipart/form-data",
+         },
+       });
+       toast.success(response.data.message);
+     } catch (error) {
+       toast.error(error.response?.data?.message || "Error creating bookshelf");
+     }
+   };
+
 
   return (
     <form
       onSubmit={handleSubmit}
       className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-md"
     >
+      <h2 className="text-xl font-bold mb-4 text-center">
+        Create New Bookshelf
+      </h2>
+
       <div className="mb-4">
         <label
           htmlFor="barcode"
           className="block text-sm font-medium text-gray-700"
         >
-          Barcode:
+          Country:
+        </label>
+        <input
+          type="text"
+          id="barcode"
+          name="barcode"
+          value={formData.barcode}
+          onChange={handleChange}
+          required
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label
+          htmlFor="barcode"
+          className="block text-sm font-medium text-gray-700"
+        >
+          City:
+        </label>
+        <input
+          type="text"
+          id="barcode"
+          name="barcode"
+          value={formData.barcode}
+          onChange={handleChange}
+          required
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label
+          htmlFor="barcode"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Country:
         </label>
         <input
           type="text"
@@ -60,14 +122,15 @@ const CreateShelfForm = () => {
           htmlFor="image"
           className="block text-sm font-medium text-gray-700"
         >
-          Image URL:
+          Image:
         </label>
         <input
-          type="text"
-          id="image"
-          name="image"
-          value={formData.image}
-          onChange={handleChange}
+          type="file"
+          id="images"
+          name="images"
+          onChange={handleFileChange}
+          accept="image/*"
+          multiple
           required
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
@@ -102,7 +165,7 @@ const CreateShelfForm = () => {
           value={formData.openingTime}
           onChange={(value) => handleTimeChange("openingTime", value)}
           required
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm"
+          className="time-picker-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
       </div>
       <div className="mb-4">
@@ -118,7 +181,7 @@ const CreateShelfForm = () => {
           value={formData.closingTime}
           onChange={(value) => handleTimeChange("closingTime", value)}
           required
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="time-picker-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
       </div>
       <button
