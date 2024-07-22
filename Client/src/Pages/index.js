@@ -12,6 +12,7 @@ import CreateShelf from "./CreateShelf/CreateShelf.jsx";
 import BorrowBookPage from "./BorrowBookPage/BorrowBookPage.jsx";
 import DonateBookPage from "./DonateBookPage/DonateBookPage.jsx";
 import NotFoundPage from "./NotFoundPage/NotFoundPage.jsx";
+import TermsConditionPage from "./TermsConditionPage/TermsConditionPage.jsx";
 
 // export all pages
 export {
@@ -29,4 +30,5 @@ export {
   CreateShelf,
   BorrowBookPage,
   DonateBookPage,
+  TermsConditionPage,
 };

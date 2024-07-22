@@ -12,44 +12,57 @@ const SignUpComponent = ({ toggleForm }) => {
 
   // =================================================================
   // define states
-  const [visible, setVisibile] = useState(true);
+  const [visible, setVisibile] = useState(false);
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
+    agree: false,
   });
-  const { name, email, password } = formData;
+  // const { firstName, lastName, email, password, agree } = formData;
 
   // =================================================================
   // handleChange event
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    setErrors({ ...errors, [e.target.name]: "" }); // Clear error message on input change
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
+    // setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: "" });
+    // setErrors({ ...errors, [e.target.name]: "" }); // Clear error message on input change
   };
 
   // =================================================================
   // handleReset event
   const handleReset = () => {
     setFormData({
-      name: "",
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
+      agree: false,
     });
   };
 
   // Validate form inputs
   const validate = () => {
     const newErrors = {};
-    if (!formData.name) newErrors.name = "Name is required";
+    if (!formData.firstName) newErrors.firstName = "first name is required";
+    if (!formData.lastName) newErrors.lastName = "last name is required";
     if (!formData.email) {
       newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Email is invalid";
     }
     if (!formData.password) newErrors.password = "Password is required";
+    if (!formData.agree)
+      newErrors.agree = "You must accept the terms and conditions";
     return newErrors;
   };
 
@@ -63,23 +76,27 @@ const SignUpComponent = ({ toggleForm }) => {
       setErrors(validationErrors);
       return;
     }
-
+    setLoading(true);
     try {
-      const newUser = {
-        name,
-        email,
-        password,
-      };
-      const { data } = await axios.post(
-        `http://localhost:5050/api/v1/auth/registerUserr`,
-        newUser
+      const response = await axios.post(
+        `http://localhost:8000/api/v1/auth/register`,
+        formData
       );
-      console.log(data);
+      console.log(response);
       toast.success("SignUp successfully!");
       handleReset();
       navigate("/");
     } catch (error) {
-      toast.error("Please fill all information in the form");
+      console.error("Error during signup:", error);
+      if (error.response && error.response.data) {
+        setErrors({ form: error.response.data.message });
+      } else {
+        setErrors({ form: "An error occurred. Please try again." });
+      }
+      // console.log(error.response.data.message);
+      toast.error("Signup failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -91,29 +108,50 @@ const SignUpComponent = ({ toggleForm }) => {
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: "tween", duration: 0.3 }}
-      className=" w-5/12 mx-auto min-w-[360px] max-w-[580px] bg-gray-100 p-4 rounded-xl mb-16"
+      className=" w-5/12 mx-auto min-w-[360px] max-w-[580px] bg-gray-100 p-4 rounded-xl mb-16 drop-shadow-xl"
     >
       <h2 className="text-xl font-bold mb-6 text-gray-900">
         Sign up your account
       </h2>
       <form onSubmit={handleSubmit} className="">
-        <div className="mb-4">
+        {errors.form && (
+          <p className="bg-red-600 text-white text-xs p-2 mb-2 rounded-md">
+            {errors.form}
+          </p>
+        )}
+        <div className="mb-3">
           <label className="text-sm block font-medium text-gray-900">
-            Name
+            First name
           </label>
           <input
             type="text"
-            name="name"
-            value={formData.name}
+            name="firstName"
+            value={formData.firstName}
             onChange={handleChange}
-            placeholder="Your name"
-            className="border-2 border-gray-300 rounded-lg py-2 px-4 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-100 text-gray-900"
+            placeholder="Your first name"
+            className="border-2 border-gray-300 rounded-lg py-1 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-100 text-gray-900"
           />
-          {errors.name && (
-            <p className="text-xs text-red-600 px-2 pt-1">{errors.name}</p>
+          {errors.firstName && (
+            <p className="text-xs text-red-600 px-2 pt-1">{errors.firstName}</p>
           )}
         </div>
-        <div className="mb-4">
+        <div className="mb-3">
+          <label className="text-sm block font-medium text-gray-900">
+            Last name
+          </label>
+          <input
+            type="text"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            placeholder="Your first name"
+            className="border-2 border-gray-300 rounded-lg py-1 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-100 text-gray-900"
+          />
+          {errors.lastName && (
+            <p className="text-xs text-red-600 px-2 pt-1">{errors.lastName}</p>
+          )}
+        </div>
+        <div className="mb-3">
           <label className="text-sm block font-medium text-gray-900">
             Email
           </label>
@@ -123,17 +161,17 @@ const SignUpComponent = ({ toggleForm }) => {
             value={formData.email}
             onChange={handleChange}
             placeholder="Your email address"
-            className="border-2 border-gray-300 rounded-lg py-2 px-4 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-100 text-gray-900"
+            className="border-2 border-gray-300 rounded-lg py-1 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-100 text-gray-900"
           />
           {errors.email && (
             <p className="text-xs text-red-600 px-2 pt-1">{errors.email}</p>
           )}
         </div>
-        <div className="mb-4">
+        <div className="mb-3">
           <label className="text-sm block font-medium text-gray-900">
             Password
           </label>
-          <div className="flex w-full items-center justify-between border-2 border-gray-300 rounded-lg py-2 px-4 text-gray-700 0focus:outline-none focus:border-cyan-50">
+          <div className="flex w-full items-center justify-between border-2 border-gray-300 rounded-lg py-1 px-2 text-gray-700 focus:outline-none focus:border-cyan-50">
             <input
               type={visible ? "text" : "password"}
               name="password"
@@ -157,11 +195,31 @@ const SignUpComponent = ({ toggleForm }) => {
           )}
         </div>
 
+        <div className="mb-4 px-2">
+          <label>
+            <input
+              type="checkbox"
+              name="agree"
+              checked={formData.agree}
+              onChange={handleChange}
+              className="mr-2 w-4 h-4"
+            />
+            I accept the{" "}
+            <Link to="/terms_condition">
+              <span className="hover:underline text-cyan-600 cursor-pointer">
+                terms and conditions
+              </span>
+            </Link>
+          </label>
+          {errors.agree && (
+            <p className="text-xs text-red-600 px-2 pt-1">{errors.agree}</p>
+          )}
+        </div>
         <button
           type="submit"
           className="w-full bg-cyan-600 text-white p-2 rounded-md hover:bg-cyan-800"
         >
-          Sign up
+          {loading ? "Signing up..." : "Signup"}
         </button>
       </form>
       <div>
@@ -169,7 +227,7 @@ const SignUpComponent = ({ toggleForm }) => {
           Already have an account?{" "}
           <button
             onClick={toggleForm}
-            className="text-gray-900  pl-2 hover:underline hover:font-semibold"
+            className="text-gray-900  pl-2 hover:underline font-semibold"
           >
             Log In
           </button>

@@ -1,13 +1,45 @@
 import { FaRegUserCircle } from "react-icons/fa";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { MdOutlineLeaderboard } from "react-icons/md";
 import { GrLogout } from "react-icons/gr";
 import { GiBlackBook } from "react-icons/gi";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
+// =================================================================
+// NavigationComponent
 const NavigationComponent = () => {
+  const navigate = useNavigate();
+
+  // fetching data from local storage
+  const userLocal = localStorage.getItem("user");
+  const user = JSON.parse(userLocal);
+  const { firstName, lastName, email, image, createdAt } = user;
+  // console.log(email, firstName, lastName, email, image, createdAt);
+
+  const [userData, setUserData] = useState(userLocal);
+
+  // verify user is logged in
+  useEffect(() => {
+    if (!localStorage.getItem("user")) navigate("/registrationPage");
+  }, []);
+
+  useEffect(() => {
+    setUserData(userLocal);
+    // console.log(userLocal);
+  }, []);
+
+  // Navlink styles
   const navLinkStyles = ({ isActive }) => {
     return isActive ? "font-bold text-cyan-600" : "text-black";
+  };
+
+  // handle Logout
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    // logout();
+    navigate("/registrationPage");
+    window.location.reload();
   };
   return (
     <motion.header
@@ -54,7 +86,8 @@ const NavigationComponent = () => {
             className="btn bg-cyan-800 text-white glass btn-xs hover:bg-red-500"
           >
             <FaRegUserCircle />
-            user@example.com
+            {userData ? email : "User email"}
+            {/* {email} */}
           </div>
           <ul
             tabIndex={0}
@@ -73,10 +106,10 @@ const NavigationComponent = () => {
               // onClick={handleLogout}
               className="bg-rose-600 px-4 mt-1 rounded"
             >
-              <span>
+              <span onClick={handleLogout}>
                 {" "}
                 <GrLogout />
-                <Link to="/registration">Logout</Link>
+                Logout
               </span>
             </li>
           </ul>
