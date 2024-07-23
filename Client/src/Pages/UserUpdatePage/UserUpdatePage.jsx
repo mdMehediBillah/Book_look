@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/User/AuthContext.jsx";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { format } from "date-fns";
 
 const UserUpdatePage = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const UserUpdatePage = () => {
     firstName,
     lastName,
     email,
+    aboutMe,
     street,
     zipCode,
     city,
@@ -23,6 +25,7 @@ const UserUpdatePage = () => {
     country,
     image,
     banner,
+    createdAt,
   } = user;
 
   const [formData, setFormData] = useState({
@@ -30,6 +33,7 @@ const UserUpdatePage = () => {
     lastName: lastName || "",
     email: email || "",
     password: "",
+    aboutMe: aboutMe || "",
     street: street || "",
     zipCode: zipCode || "",
     city: city || "",
@@ -119,7 +123,7 @@ const UserUpdatePage = () => {
   };
 
   return (
-    <main>
+    <main className="pb-16">
       <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900 max-w-screen-lg">
         <div className="w-3/12">
           <GoBackComponent />
@@ -150,129 +154,230 @@ const UserUpdatePage = () => {
         }}
       >
         <div className="avatar absolute bottom-[-48px] left-[32px]">
-          <div className="ring-gray ring-offset-base-100 w-44 rounded-full ring ring-offset-2">
+          <div className="ring-gray-50 ring-cyan-400 w-44 rounded-full ring ring-offset-2">
             <img src={imagePreview} alt="Profile" />
           </div>
         </div>
       </div>
-      <div className="py-2 px-4 container mx-auto justify-between screen-max-lg bg-gray-100 max-w-screen-lg">
-        <form onSubmit={handleSubmit} className="w-4/12 mx-auto">
-          <div className="flex flex-col">
-            <label>First Name:</label>
-            <input
-              type="text"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              required
-            />
+      <div className="py-2 px-4 container mx-auto justify-between screen-max-lg bg-gray-100 max-w-screen-lg pb-16">
+        <form onSubmit={handleSubmit} className="">
+          <div className="flex justify-between ">
+            <div className="flex flex-col pt-12 w-56">
+              <label className="mt-1 py-2 px-3 rounded cursor-pointer text-center  px-4 bg-cyan-100 w-8/12 mx-auto rounded-xl font-semibold hover:bg-cyan-300 text-sm">
+                Change Profile
+                <input
+                  type="file"
+                  name="image"
+                  onChange={handleChange}
+                  className="hidden"
+                />
+              </label>
+            </div>
+
+            <div className="flex flex-col items-end w-56">
+              <label className="mt-1 py-2 px-3 rounded cursor-pointer text-center  px-4 bg-cyan-100 w-8/12 mx-auto rounded-xl font-semibold hover:bg-cyan-300 text-sm">
+                Change Banner
+                <input
+                  type="file"
+                  name="banner"
+                  onChange={handleChange}
+                  className="hidden"
+                />
+              </label>
+            </div>
           </div>
-          <div className="flex flex-col">
-            <label>Last Name:</label>
-            <input
-              type="text"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              required
-            />
+          <div className="flex container mx-auto min-w-[360px] max-w-[900px] justify-between items-end pb-12 mt-8">
+            <div>
+              <h4 className="text-3xl font-semibold text-gray-600 ">
+                Personal information
+              </h4>
+            </div>
+            <div className="flex flex-col">
+              <div className="flex gap-1 text-gray-500 text-sm">
+                <span className="">Email:</span>
+                <span>{email}</span>
+              </div>
+              <div className="flex gap-1 text-gray-500 text-sm">
+                <span className="">Member since:</span>
+                <span>{`${format(createdAt, "dd/MM/yyyy")}`} </span>
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col">
-            <label>Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="flex flex-col">
-            <label>Password:</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Your password"
-              className="w-full text-gray-900 outline-none bg-transparent"
-            />
-          </div>
-          <div className="flex flex-col">
-            <label>Street:</label>
-            <input
-              type="text"
-              name="street"
-              value={formData.street}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label>Zip Code:</label>
-            <input
-              type="text"
-              name="zipCode"
-              value={formData.zipCode}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label>City:</label>
-            <input
-              type="text"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label>State:</label>
-            <input
-              type="text"
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label>Country:</label>
-            <input
-              type="text"
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label>Profile Image:</label>
-            <input type="file" name="image" onChange={handleChange} />
-          </div>
-          <div className="flex flex-col">
-            <label>Banner Image:</label>
-            <input type="file" name="banner" onChange={handleChange} />
-          </div>
-          <div className="mb-4 px-2">
-            <label>
+          <div className="min-w-[360px] max-w-[900px] mx-auto  grid md:grid-cols-2 sm:grid-cols-1 gap-4">
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-2">
+                <div className="flex flex-col">
+                  <label className="text-sm block  text-gray-700 mb-1">
+                    First name
+                  </label>
+                  <input
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    placeholder="Your first name"
+                    required
+                    className="border-2 border-gray-200 rounded-lg py-1 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="text-sm block  text-gray-700 mb-1">
+                    Last name
+                  </label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    placeholder="Your last name"
+                    required
+                    className="border-2 border-gray-200 rounded-lg py-1 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <label className="text-sm block  text-gray-700 mb-1">
+                  About yourself
+                </label>
+                <textarea
+                  name="aboutMe"
+                  value={formData.aboutMe}
+                  onChange={handleChange}
+                  placeholder="Tell us about yourself"
+                  className="border-2 border-gray-200 rounded-lg py-1 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50 h-[162px]"
+                />
+              </div>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold text-gray-600 pb-2 pt-6">
+                Address
+              </h4>
+              <div className="flex flex-col gap-3">
+                <div className="flex gap-2">
+                  <div className="flex flex-col">
+                    <label className="text-sm block  text-gray-700 mb-1">
+                      Country
+                    </label>
+                    <input
+                      type="text"
+                      name="country"
+                      value={formData.country}
+                      onChange={handleChange}
+                      placeholder="Your country"
+                      className="border-2 border-gray-200 rounded-lg py-1 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm block  text-gray-700 mb-1">
+                      State
+                    </label>
+                    <input
+                      type="text"
+                      name="state"
+                      value={formData.state}
+                      onChange={handleChange}
+                      placeholder="Your state"
+                      className="border-2 border-gray-200 rounded-lg py-1 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50"
+                    />
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <div className="flex flex-col">
+                    <label>City</label>
+                    <input
+                      type="text"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleChange}
+                      placeholder="Your city"
+                      className="border-2 border-gray-200 rounded-lg py-1 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm block  text-gray-700 mb-1">
+                      Postal Code
+                    </label>
+                    <input
+                      type="text"
+                      name="zipCode"
+                      value={formData.zipCode}
+                      onChange={handleChange}
+                      placeholder="Your postal code"
+                      className="border-2 border-gray-200 rounded-lg py-1 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50"
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  <label className="text-sm block  text-gray-700 mb-1">
+                    Road
+                  </label>
+                  <input
+                    type="text"
+                    name="street"
+                    value={formData.street}
+                    onChange={handleChange}
+                    placeholder="Your Road"
+                    className="border-2 border-gray-200 rounded-lg py-1 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <label className="text-sm block  text-gray-700 mb-1">Email</label>
               <input
-                type="checkbox"
-                name="agree"
-                checked={formData.agree}
+                type="email"
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
-                className="mr-2 w-4 h-4"
+                placeholder="Your email address"
+                required
+                className="border-2 border-gray-200 rounded-lg py-1 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50"
               />
-              I accept the{" "}
-              <Link to="/terms_condition">
-                <span className="hover:underline text-cyan-600 cursor-pointer">
-                  terms and conditions
-                </span>
-              </Link>
-            </label>
+            </div>
+            <div className="flex flex-col">
+              <label className="text-sm block  text-gray-700 mb-1">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Your password"
+                className="border-2 border-gray-200 rounded-lg py-1 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50"
+              />
+            </div>
+            <div className="mb-8 px-2 pt-4">
+              <label>
+                <input
+                  type="checkbox"
+                  name="agree"
+                  checked={formData.agree}
+                  onChange={handleChange}
+                  className="mr-2 w-4 h-4"
+                />
+                I am updating my profile and I agree to the changes
+              </label>
+            </div>
           </div>
-          <button type="submit" disabled={loading}>
-            {loading ? "Uploading..." : "Update Profile"}
-          </button>
-          {error && <p style={{ color: "red" }}>{error}</p>}
-          {success && <p style={{ color: "green" }}>{success}</p>}
+
+          <div className=" min-w-[360px] max-w-[900px] mx-auto pt-8">
+            <div className="w-6/12 mx-auto bg-cyan-900 text-center py-2 px-4 rounded-lg text-white font-semibold hover:bg-rose-600 cursor-pointer">
+              <button type="submit" disabled={loading}>
+                {loading ? "Uploading..." : "Update Profile"}
+              </button>
+              {error && (
+                <p className="bg-red-700 text-white px-2 py-1 mt-2 text-sm">
+                  {error}
+                </p>
+              )}
+              {success && (
+                <p className="bg-green-700 px-2 py-1 mt-2 text-sm font-regular">
+                  {success}
+                </p>
+              )}
+            </div>
+          </div>
         </form>
       </div>
     </main>

@@ -12,7 +12,7 @@ const UserProfileComponent = () => {
   // fetching data from local storage
   const userLocal = localStorage.getItem("user");
   const userLocalData = JSON.parse(userLocal);
-  const { firstName, lastName, email, image, createdAt, banner } =
+  const { firstName, lastName, email, image, createdAt, banner, aboutMe } =
     userLocalData;
   console.log(email, firstName, lastName, email, image, createdAt);
   const [loading, setLoading] = useState(false);
@@ -40,7 +40,7 @@ const UserProfileComponent = () => {
         }}
       >
         <div className="avatar absolute bottom-[-48px] left-[32px]">
-          <div className="ring-gray ring-offset-base-100 w-44 rounded-full ring ring-offset-2">
+          <div className="ring-gray-50 ring-cyan-400 w-44 rounded-full ring ring-offset-2">
             <img src={image} />
           </div>
         </div>
@@ -62,7 +62,12 @@ const UserProfileComponent = () => {
             {/* {format(user.createdAt, "dd/MM/yyyy HH:mm")} */}
           </p>
         </div>
-        <div>
+      </div>
+      <div className="flex justify-between gap-4 container max-w-screen-lg mx-auto pb-4">
+        <div className="pl-12 w-8/12">
+          <p>{aboutMe}</p>
+        </div>
+        <div className=" w-4/12 text-right">
           <Link to="/profile_update">
             <button className="mt-3 bg-cyan-100 py-2 px-4 text-center rounded-xl font-medium text-sm">
               Update Profile
