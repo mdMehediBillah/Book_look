@@ -16,6 +16,7 @@
     "axios": "^1.7.2",
     "country-state-city": "^3.2.1",
     "date-fns": "^3.6.0",
+    "formik": "^2.4.6",
     "framer-motion": "^11.3.6",
     "leaflet": "^1.9.4",
     "leaflet-routing-machine": "^3.2.12",
@@ -27,7 +28,8 @@
     "react-router-dom": "^6.25.1",
     "react-spinners": "^0.14.1",
     "react-time-picker": "^7.0.0",
-    "react-toastify": "^10.0.5"
+    "react-toastify": "^10.0.5",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

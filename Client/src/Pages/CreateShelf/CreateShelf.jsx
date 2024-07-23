@@ -18,6 +18,8 @@ import {
   faRoad,
   faMapPin,
   faMap,
+  faCity, 
+  faGlobe, 
 } from "@fortawesome/free-solid-svg-icons";
 
 const CreateShelfForm = () => {
@@ -107,44 +109,40 @@ const CreateShelfForm = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Left Side */}
         <div className="space-y-4">
-          <div className="flex items-center mb-4">
-            <FontAwesomeIcon icon={faBook} className="mr-2 text-gray-600" />
+          <div className="flex items-center mb-4 relative">
+            <FontAwesomeIcon
+              icon={faBook}
+              className="absolute left-3 top-3 text-gray-600"
+            />
             <div className="flex-1">
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Name of Bookshelf:
-              </label>
               <input
                 type="text"
                 id="name"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
+                placeholder="Bookshelf Name"
                 required
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
           </div>
 
-          <div className="flex items-center mb-4">
-            <FontAwesomeIcon icon={faBarcode} className="mr-2 text-gray-600" />
+          <div className="flex items-center mb-4 relative">
+            <FontAwesomeIcon
+              icon={faBarcode}
+              className="absolute left-3 top-3 text-gray-600"
+            />
             <div className="flex-1">
-              <label
-                htmlFor="barcode"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Barcode:
-              </label>
               <input
                 type="text"
                 id="barcode"
                 name="barcode"
                 value={formData.barcode}
                 onChange={handleChange}
+                placeholder="Barcode"
                 required
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
           </div>
@@ -234,84 +232,76 @@ const CreateShelfForm = () => {
             </div>
           </div>
 
-          <div className="flex items-center mb-4">
-            <FontAwesomeIcon icon={faRoad} className="mr-2 text-gray-600" />
+          <div className="flex items-center mb-4 relative">
+            <FontAwesomeIcon
+              icon={faRoad}
+              className="absolute left-3 top-3 text-gray-600"
+            />
             <div className="flex-1">
-              <label
-                htmlFor="street"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Street:
-              </label>
               <input
                 type="text"
                 id="street"
                 name="street"
                 value={formData.street}
                 onChange={handleChange}
+                placeholder="Street"
                 required
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
           </div>
 
-          <div className="flex items-center mb-4">
-            <FontAwesomeIcon icon={faMap} className="mr-2 text-gray-600" />
+          <div className="flex items-center mb-4 relative">
+            <FontAwesomeIcon
+              icon={faMap}
+              className="absolute left-3 top-3 text-gray-600"
+            />
             <div className="flex-1">
-              <label
-                htmlFor="postalCode"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Postal Code:
-              </label>
               <input
                 type="text"
                 id="postalCode"
                 name="postalCode"
                 value={formData.postalCode}
                 onChange={handleChange}
+                placeholder="Postal Code"
                 required
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
           </div>
 
-          <div className="flex items-center mb-4">
-            <FontAwesomeIcon icon={faMapPin} className="mr-2 text-gray-600" />
+          <div className="flex items-center mb-4 relative">
+            <FontAwesomeIcon
+              icon={faMapPin}
+              className="absolute left-3 top-3 text-gray-600"
+            />
             <div className="flex-1">
-              <label
-                htmlFor="latitude"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Latitude:
-              </label>
               <input
                 type="text"
                 id="latitude"
                 name="latitude"
                 value={formData.latitude}
                 onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                placeholder="Latitude"
+                className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
           </div>
 
-          <div className="flex items-center mb-4">
-            <FontAwesomeIcon icon={faMapPin} className="mr-2 text-gray-600" />
+          <div className="flex items-center mb-4 relative">
+            <FontAwesomeIcon
+              icon={faMapPin}
+              className="absolute left-3 top-3 text-gray-600"
+            />
             <div className="flex-1">
-              <label
-                htmlFor="longitude"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Longitude:
-              </label>
               <input
                 type="text"
                 id="longitude"
                 name="longitude"
                 value={formData.longitude}
                 onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                placeholder="Longitude"
+                className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
           </div>
