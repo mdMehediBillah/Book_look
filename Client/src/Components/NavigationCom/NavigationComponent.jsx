@@ -14,7 +14,7 @@ const NavigationComponent = () => {
   // fetching data from local storage
   const userLocal = localStorage.getItem("user");
   const user = JSON.parse(userLocal);
-  const { firstName, lastName, email, image, createdAt } = user;
+  const { firstName } = user;
   // console.log(email, firstName, lastName, email, image, createdAt);
 
   const [userData, setUserData] = useState(userLocal);
@@ -46,15 +46,15 @@ const NavigationComponent = () => {
       initial={{ x: 300, opacity: 0, scale: 0.5 }}
       animate={{ x: 0, opacity: 1, scale: 1 }}
       transition={{ type: "spring", duration: 0.3 }}
-      className="flex container mx-auto justify-between items-center gap-2 p-2"
+      className="flex container mx-auto justify-between items-center gap-2 p-3 bg-cyan-900 shadow rounded-b-lg"
     >
       <div className=" w-2/12 logo">
         <Link to="/" className="flex justify-center items-center gap-2">
-          <GiBlackBook className="w-8 h-8" />
+          <GiBlackBook className="min-w-7 min-h-7 text-cyan-400" />
 
           <div>
-            <span className="text-rose-500 font-semibold ">Book</span>
-            <span className="text-cyan-600 font-semibold ">Look</span>
+            <span className="text-rose-600 font-semibold text-2xl">Book</span>
+            <span className="text-cyan-600 font-semibold text-2xl">Look</span>
           </div>
         </Link>
       </div>
@@ -62,17 +62,17 @@ const NavigationComponent = () => {
       <nav className="flex items-center w-full justify-between  w-10/12">
         <div className="flex  mx-auto w-5/12">
           <ol className="flex gap-2 mx-auto">
-            <li className="py-1 px-4 bg-red-100 rounded-full text-center cursor-pointer text-xs  text-gray-500 hover:bg-red-200">
+            <li className="py-1 px-4 bg-cyan-100 rounded-full text-center cursor-pointer text-xs hover:bg-cyan-200">
               <NavLink className={navLinkStyles} to="/donate_book">
                 Donate
               </NavLink>
             </li>
-            <li className="py-1 px-4 bg-red-100 rounded-full text-center cursor-pointer text-xs  text-gray-500 hover:bg-red-200">
+            <li className="py-1 px-4 bg-cyan-100 rounded-full text-center cursor-pointer text-xs hover:bg-cyan-200">
               <NavLink className={navLinkStyles} to="/borrow_book">
                 Borrow
               </NavLink>
             </li>
-            <li className="py-1 px-4 bg-red-100 rounded-full text-center cursor-pointer text-xs  text-gray-500 hover:bg-red-200">
+            <li className="py-1 px-4 bg-cyan-100 rounded-full text-center cursor-pointer text-xs hover:bg-cyan-200">
               <NavLink className={navLinkStyles} to="/create_shelf">
                 Create
               </NavLink>
@@ -86,7 +86,8 @@ const NavigationComponent = () => {
             className="btn bg-cyan-800 text-white glass btn-xs hover:bg-red-500"
           >
             <FaRegUserCircle />
-            {userData ? email : "User email"}
+            <span className="">Hello! {userData ? firstName : "User"}</span>
+
             {/* {email} */}
           </div>
           <ul

@@ -10,6 +10,7 @@ import {
   RegistrationPage,
   TermsConditionPage,
   UserProfilePage,
+  UserUpdatePage,
 } from "./Pages";
 import { NavigationComponent } from "./Components";
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/borrow_book" element={<BorrowBookPage />} />
         <Route path="/create_shelf" element={<CreateShelf />} />
         <Route path="/profile" element={<UserProfilePage />} />
+        <Route path="/profile_update" element={<UserUpdatePage />} />
         <Route path="/terms_condition" element={<TermsConditionPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
@@ -53,6 +55,7 @@ const ConditionalNavBar = () => {
     "/registrationPage",
     "/profile",
     "/terms_condition",
+    "/profile_update",
   ];
 
   return !hideNavBarRoutes.includes(location.pathname) ? (
