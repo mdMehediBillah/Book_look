@@ -1,9 +1,21 @@
 import { Link, useNavigate } from "react-router-dom";
-import { GoBackComponent, UserProfileComponent } from "../../Components";
-import { useEffect } from "react";
+import {
+  GoBackComponent,
+  UpdateUserProfile,
+  UserProfileComponent,
+} from "../../Components";
+import { useEffect, useState } from "react";
 
 const UserProfilePage = () => {
   const navigate = useNavigate();
+
+  // // Initial state for like status
+  // const [isUpdatingProfile, setUpdatingProfile] = useState(false);
+
+  // // Function to handle the handleUpdateProfile click
+  // const handleUpdateProfile = () => {
+  //   setUpdatingProfile(!isUpdatingProfile);
+  // };
 
   // verify user is logged in
   useEffect(() => {
@@ -12,11 +24,11 @@ const UserProfilePage = () => {
 
   return (
     <main>
-      <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-rose-50 max-w-screen-lg">
-        <div className="">
+      <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900 max-w-screen-lg">
+        <div className="w-3/12">
           <GoBackComponent />
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 w-6/12 justify-center">
           <div>
             <Link
               to="/"
@@ -29,13 +41,15 @@ const UserProfilePage = () => {
             </Link>
           </div>
         </div>
-        <div>
-          <h3 className="text-xl font-bold  container mx-auto text-gray-700">
-            Your Profile
-          </h3>
+        <div className="w-3/12 flex justify-end">
+          <div className="py-1 px-3 font-semibold text-white">
+            <h4>Your Profile</h4>
+          </div>
         </div>
       </section>
-      <UserProfileComponent />
+      <div>
+        <UserProfileComponent />
+      </div>
     </main>
   );
 };
