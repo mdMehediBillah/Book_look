@@ -1,42 +1,124 @@
 import Bookshelf from "../../models/bookshelf/index.js";
 import createError from "http-errors";
+import { v4 as uuidv4 } from "uuid";
 
 //==========================================================================
 // Create a bookshelf
 //==========================================================================
+
 export const createBookshelf = async (req, res, next) => {
-  const { barcode, image, name, openingHours } = req.body;
+  const {
+    image,
+    name,
+    country,
+    state,
+    city,
+    zipCode,
+    street,
+    longitude,
+    latitude,
+    openingTime,
+    closingTime,
+  } = req.body;
 
   try {
-    const bookshelf = await Bookshelf.findOne({ barcode });
+    // Generate a unique barcode
+    const barcode = uuidv4();
 
-    if (bookshelf) {
-      return next(createError(400, "Book shelf exist!"));
+    // Check if the bookshelf already exists
+    const existingBookshelf = await Bookshelf.findOne({ barcode });
+
+    if (existingBookshelf) {
+      return next(createError(400, "Bookshelf already exists!"));
     }
 
-    if (!bookshelf) {
-      const newBookShelf = new Bookshelf({
-        barcode,
-        image,
-        name,
-        openingHours,
-      });
+    // Create a new bookshelf instance
+    const newBookshelf = new Bookshelf({
+      barcode,
+      image,
+      name,
+      country,
+      state,
+      city,
+      zipCode,
+      street,
+      longitude,
+      latitude,
+      openingTime,
+      closingTime,
+    });
 
-      try {
-        await newBookShelf.save();
-      } catch (error) {
-        console.log(error);
-        return next(createError(500, "Bookshelf not saved"));
-      }
+    // Save the new bookshelf to the database
+    await newBookshelf.save();
 
-      res.status(201).json({
-        success: true,
-        message: "Bookshelf successfully created!",
-      });
-    }
+    // Respond with success message
+    res.status(201).json({
+      success: true,
+      message: "Bookshelf successfully created!",
+    });
   } catch (error) {
-    console.log(error);
-    return next(createError(500, "Server error! please try again!"));
+    console.error(error);
+    return next(createError(500, "Server error! Please try again!"));
+  }
+};
+
+//==========================================================================
+// Update bookshelf
+//==========================================================================
+export const updateBookshelf = async (req, res, next) => {
+  const { id } = req.params;
+  const {
+    image,
+    name,
+    country,
+    state,
+    city,
+    zipCode,
+    street,
+    longitude,
+    latitude,
+    openingTime,
+    closingTime,
+  } = req.body;
+
+  try {
+    // Find and update the bookshelf by ID
+    const updatedBookshelf = await Bookshelf.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          image,
+          name,
+          country,
+          state,
+          city,
+          zipCode,
+          street,
+          longitude,
+          latitude,
+          openingTime,
+          closingTime,
+        },
+      },
+      {
+        new: true, // Return the updated document
+        runValidators: true, // Ensure validators are run on the update
+      }
+    );
+
+    if (!updatedBookshelf) {
+      return next(createError(404, "Bookshelf not found!"));
+    }
+
+    // Respond with success message and updated document
+    res.status(200).json({
+      success: true,
+      message: "Bookshelf successfully updated!",
+      data: updatedBookshelf,
+    });
+  } catch (error) {
+    console.error(error);
+    return next(createError(500, "Server error! Please try again!"));
   }
 };
 
@@ -105,4 +187,3 @@ export const deleteBookshelf = async (req, res, next) => {
     return next(createError(500, "Internal server error"));
   }
 };
-
