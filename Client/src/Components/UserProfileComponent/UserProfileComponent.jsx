@@ -3,17 +3,17 @@ import { AuthContext } from "../../Context/User/AuthContext.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import UserProfileActivitiesCompo from "../UserProfileActivitiesCompo/UserProfileActivitiesCompo.jsx";
-import bannerImgUrl from "../../assets/images/banner_default.png";
 
 const UserProfileComponent = () => {
   const navigate = useNavigate();
 
-  const { logout } = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext);
 
   // fetching data from local storage
   const userLocal = localStorage.getItem("user");
-  const user = JSON.parse(userLocal);
-  const { firstName, lastName, email, image, createdAt } = user;
+  const userLocalData = JSON.parse(userLocal);
+  const { firstName, lastName, email, image, createdAt, banner } =
+    userLocalData;
   console.log(email, firstName, lastName, email, image, createdAt);
   const [loading, setLoading] = useState(false);
 
@@ -36,7 +36,7 @@ const UserProfileComponent = () => {
       <div
         className="bg-gray-400 h-[180px] relative container max-w-screen-lg mx-auto bg-cover bg-center bg-no-repeat w-[100%]"
         style={{
-          backgroundImage: `url(${bannerImgUrl})`,
+          backgroundImage: `url(${banner})`,
         }}
       >
         <div className="avatar absolute bottom-[-48px] left-[32px]">

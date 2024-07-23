@@ -8,126 +8,114 @@ import { toast } from "react-toastify";
 
 const UserUpdatePage = () => {
   const navigate = useNavigate();
-
   const { logout } = useContext(AuthContext);
 
-  // fetching data from local storage
   const userLocal = localStorage.getItem("user");
   const user = JSON.parse(userLocal);
-  // console.log(userLocal);
-  const { firstName, lastName, email, image, createdAt } = user;
-  // console.log(email, firstName, lastName, email, image, createdAt);
+  const {
+    firstName,
+    lastName,
+    email,
+    street,
+    zipCode,
+    city,
+    state,
+    country,
+    image,
+    banner,
+  } = user;
 
-  // States define
-  const [imageData, setImageData] = useState(null);
+  const [formData, setFormData] = useState({
+    firstName: firstName || "",
+    lastName: lastName || "",
+    email: email || "",
+    password: "",
+    street: street || "",
+    zipCode: zipCode || "",
+    city: city || "",
+    state: state || "",
+    country: country || "",
+    image: "",
+    banner: "",
+    agree: false,
+  });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [userData, setUserData] = useState(userLocal);
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    street: "",
-    zipCode: "",
-    city: "",
-    state: "",
-    country: "",
-    image: "",
-  });
+  const [imagePreview, setImagePreview] = useState(image || "");
+  const [bannerPreview, setBannerPreview] = useState(banner || bannerImgUrl);
 
-  // =================================================================
-  // Check if user is logged in
   useEffect(() => {
     if (!localStorage.getItem("user")) navigate("/registrationPage");
-    setUserData(userLocal);
   }, [logout]);
 
-  // handleChange
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-  // handleImageChange
-  const handleImageChange = (e) => {
-    setImageData(e.target.files[0]);
-  };
-  // ==================================================================
-  // handleUpload image to Cloud Storage
-  const handleUpload = async () => {
-    // e.preventDefault();
-    if (!imageData) return "";
-    // Set loading to true
-    setLoading(true);
-    setError("");
-    setSuccess("");
-    // =================================================================
-    // Upload image to Cloudinary
-    // =================================================================
+    const { name, value, type, checked, files } = e.target;
+    if (type === "file") {
+      const file = files[0];
+      setFormData({
+        ...formData,
+        [name]: file,
+      });
 
+      if (name === "image") {
+        setImagePreview(URL.createObjectURL(file));
+      } else if (name === "banner") {
+        setBannerPreview(URL.createObjectURL(file));
+      }
+    } else {
+      setFormData({
+        ...formData,
+        [name]: type === "checkbox" ? checked : value,
+      });
+    }
+  };
+
+  const uploadImageToCloudinary = async (file) => {
     const cloud_name = import.meta.env.VITE_CLOUD_NAME;
     const upload_preset = import.meta.env.VITE_UPLOAD_PRESET;
     const cloud_URL = `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`;
 
-    // Save image to cloudinary
-    // const response = await axios.post(cloud_URL, userProfilePhoto);
-    // const { url } = response.data;
+    const data = new FormData();
+    data.append("file", file);
+    data.append("cloud_name", cloud_name);
+    data.append("upload_preset", upload_preset);
 
-    // =================================================================
-    const userProfilePhoto = new FormData();
-    userProfilePhoto.append("file", imageData);
-    userProfilePhoto.append("cloud_name", cloud_name);
-    userProfilePhoto.append("upload_preset", upload_preset);
-    console.log(cloud_URL);
-
-    try {
-      const response = await axios.post(
-        await axios.post(cloud_URL, userProfilePhoto)
-      );
-      const { url } = response.data;
-      console.log(url);
-      return url;
-    } catch (error) {
-      console.error("Error uploading the image", error);
-      setError("Error uploading the image. Please try again.");
-      setLoading(false);
-      return "";
-    }
+    const response = await axios.post(cloud_URL, data);
+    return response.data.url;
   };
-  // ==================================================================
-  // handleSubmit
-  // ==================================================================
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    handleUpload();
-    // setError("");
-    // setSuccess("");
+    setLoading(true);
 
-    // let imageUrl = formData.image;
-    // if (imageData) {
-    //   imageUrl = await handleUpload();
-    // }
+    try {
+      let imageUrl = formData.image
+        ? await uploadImageToCloudinary(formData.image)
+        : image;
+      let bannerUrl = formData.banner
+        ? await uploadImageToCloudinary(formData.banner)
+        : banner;
 
-    // if (!imageUrl) return; // If image upload failed, don't proceed
+      const updatedFormData = {
+        ...formData,
+        image: imageUrl,
+        banner: bannerUrl,
+      };
 
-    // const updatedFormData = { ...formData, image: imageUrl };
-    // console.log(image);
-
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:5050/api/v1/users/update",
-    //     updatedFormData
-    //   );
-    //   console.log("User updated successfully:", response.data);
-    //   setSuccess("Profile updated successfully!");
-    // } catch (error) {
-    //   console.error("Error updating user:", error);
-    //   setError("Server error! Please try again!");
-    // } finally {
-    //   setLoading(false);
-    // }
+      const response = await axios.put(
+        `http://localhost:8000/api/v1/auth/update/${user._id}`,
+        updatedFormData
+      );
+      console.log("User updated successfully:", response.data);
+      setSuccess("Profile updated successfully!");
+    } catch (error) {
+      console.error("Error updating user:", error);
+      setError("Server error! Please try again!");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -158,12 +146,12 @@ const UserUpdatePage = () => {
       <div
         className="bg-gray-400 h-[180px] relative container max-w-screen-lg mx-auto bg-cover bg-center bg-no-repeat w-[100%]"
         style={{
-          backgroundImage: `url(${bannerImgUrl})`,
+          backgroundImage: `url(${bannerPreview})`,
         }}
       >
         <div className="avatar absolute bottom-[-48px] left-[32px]">
           <div className="ring-gray ring-offset-base-100 w-44 rounded-full ring ring-offset-2">
-            <img src={image} />
+            <img src={imagePreview} alt="Profile" />
           </div>
         </div>
       </div>
@@ -174,7 +162,7 @@ const UserUpdatePage = () => {
             <input
               type="text"
               name="firstName"
-              value={firstName}
+              value={formData.firstName}
               onChange={handleChange}
               required
             />
@@ -184,9 +172,30 @@ const UserUpdatePage = () => {
             <input
               type="text"
               name="lastName"
-              value={lastName}
+              value={formData.lastName}
               onChange={handleChange}
               required
+            />
+          </div>
+          <div className="flex flex-col">
+            <label>Email:</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="flex flex-col">
+            <label>Password:</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Your password"
+              className="w-full text-gray-900 outline-none bg-transparent"
             />
           </div>
           <div className="flex flex-col">
@@ -234,10 +243,30 @@ const UserUpdatePage = () => {
               onChange={handleChange}
             />
           </div>
-
-          <div>
+          <div className="flex flex-col">
             <label>Profile Image:</label>
-            <input type="file" onChange={handleImageChange} />
+            <input type="file" name="image" onChange={handleChange} />
+          </div>
+          <div className="flex flex-col">
+            <label>Banner Image:</label>
+            <input type="file" name="banner" onChange={handleChange} />
+          </div>
+          <div className="mb-4 px-2">
+            <label>
+              <input
+                type="checkbox"
+                name="agree"
+                checked={formData.agree}
+                onChange={handleChange}
+                className="mr-2 w-4 h-4"
+              />
+              I accept the{" "}
+              <Link to="/terms_condition">
+                <span className="hover:underline text-cyan-600 cursor-pointer">
+                  terms and conditions
+                </span>
+              </Link>
+            </label>
           </div>
           <button type="submit" disabled={loading}>
             {loading ? "Uploading..." : "Update Profile"}
