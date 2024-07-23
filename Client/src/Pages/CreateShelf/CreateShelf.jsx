@@ -22,9 +22,28 @@ import {
   faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
 
+  //------------------------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------------------------
+
+// Function to upload image to Cloudinary
+const uploadImageToCloudinary = async (file) => {
+  const cloud_name = import.meta.env.VITE_CLOUD_NAME;
+  const upload_preset = import.meta.env.VITE_UPLOAD_PRESET;
+  const cloud_URL = `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`;
+  const data = new FormData();
+  data.append("file", file);
+  data.append("upload_preset", upload_preset);
+  const response = await axios.post(cloud_URL, data);
+  return response.data.url;
+};
+ //------------------------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------------------------
+
 const CreateShelfForm = () => {
   const [formData, setFormData] = useState({
-    image: "",
+    barcode: "",
+    image: null,
+    banner: null,
     name: "",
     openingTime: "",
     closingTime: "",
@@ -36,83 +55,100 @@ const CreateShelfForm = () => {
     latitude: "",
     longitude: "",
   });
-
+  //------------------------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------------------------
   const [images, setImages] = useState([]);
   const [is24Hours, setIs24Hours] = useState(false);
-  const [loading, setLoading] = useState(false); // Initialize loading state
+  const [loading, setLoading] = useState(false);
 
+  //------------------------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------------------------
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // for file upload
+  const handleFileChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.files[0] });
+  };
+
+  // for time selection
   const handleTimeChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFileChange = (e) => {
-    setImages(e.target.files);
-  };
-
+  // for location selection
   const handleLocationChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
   };
 
-const uploadImageToCloudinary = async (file) => {
-  const cloud_name = import.meta.env.VITE_CLOUD_NAME;
-  const upload_preset = import.meta.env.VITE_UPLOAD_PRESET;
-  const cloud_URL = `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`;
-  const data = new FormData();
-  data.append("file", file);
-  data.append("cloud_name", cloud_name);
-  data.append("upload_preset", upload_preset);
-  const response = await axios.post(cloud_URL, data);
-  return response.data.url;
-};
+  // for selecting 24 hours or custom time
+  const handleRadioChange = (e) => {
+    setIs24Hours(e.target.value === "24hours");
+  };
 
+  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Start loading
-    const data = new FormData();
-    // data.append("barcode", formData.barcode); 
-    data.append("image", formData.image); 
-    data.append("name", formData.name);
-    data.append("openingTime", is24Hours ? "00:00" : formData.openingTime);
-    data.append("closingTime", is24Hours ? "23:59" : formData.closingTime);
-    data.append("country", formData.country);
-    data.append("state", formData.state);
-    data.append("city", formData.city);
-    data.append("street", formData.street);
-    data.append("zipCode", formData.zipCode);
-    data.append("latitude", formData.latitude);
-    data.append("longitude", formData.longitude);
 
-    if (images.length > 2) {
-      toast.error("You can upload a maximum of 2 images.");
-      setLoading(false); // Set loading to false if there is an error
-      return;
-    }
-
-    for (let i = 0; i < images.length; i++) {
-      data.append("image", images[i]);
-    }
-
+    //------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------
+    // const data = new FormData();
+    // data.append("barcode", formData.barcode);
+    // data.append("image", formData.image);
+    // data.append("name", formData.name);
+    // data.append("openingTime", is24Hours ? "00:00" : formData.openingTime);
+    // data.append("closingTime", is24Hours ? "23:59" : formData.closingTime);
+    // data.append("country", formData.country);
+    // data.append("state", formData.state);
+    // data.append("city", formData.city);
+    // data.append("street", formData.street);
+    // data.append("zipCode", formData.zipCode);
+    // data.append("latitude", formData.latitude);
+    // data.append("longitude", formData.longitude);
+    //------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------
     try {
+      // Upload images if they are selected
+      let imageUrl = formData.image
+        ? await uploadImageToCloudinary(formData.image)
+        : null;
+      let bannerUrl = formData.banner
+        ? await uploadImageToCloudinary(formData.banner)
+        : null;
+
+      //------------------------------------------------------------------------------------------------------------
+      //------------------------------------------------------------------------------------------------------------
+
+      // Create updated form data with URLs
+      const updatedFormData = {
+        ...formData,
+        image: imageUrl,
+        banner: bannerUrl,
+      };
+
+      //------------------------------------------------------------------------------------------------------------
+      //------------------------------------------------------------------------------------------------------------
+      // Send the updated form data to the server
       const response = await axios.post(
         "http://localhost:8000/api/v1/bookshelves/new",
-        data,
-
+        updatedFormData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
+
       toast.success(response.data.message);
     } catch (error) {
+      console.error("Error creating bookshelf:", error);
       toast.error(error.response?.data?.message || "Error creating bookshelf");
     } finally {
-      setLoading(false); // loading is set to false after the request completes
+      setLoading(false); // Set loading to false after the request completes
     }
-  };
-
-  const handleRadioChange = (e) => {
-    setIs24Hours(e.target.value === "24hours");
   };
 
   return (
@@ -169,19 +205,37 @@ const uploadImageToCloudinary = async (file) => {
             <FontAwesomeIcon icon={faImage} className="mr-2 text-gray-600" />
             <div className="flex-1">
               <label
-                htmlFor="images"
+                htmlFor="image"
                 className="block text-sm font-medium text-gray-700"
               >
-                Images (Max 2):
+                Image:
               </label>
               <input
                 type="file"
-                id="images"
-                name="images"
+                id="image"
+                name="image"
                 onChange={handleFileChange}
                 accept="image/*"
-                multiple
-                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center mb-4">
+            <FontAwesomeIcon icon={faImage} className="mr-2 text-gray-600" />
+            <div className="flex-1">
+              <label
+                htmlFor="banner"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Banner:
+              </label>
+              <input
+                type="file"
+                id="banner"
+                name="banner"
+                onChange={handleFileChange}
+                accept="image/*"
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
@@ -330,7 +384,7 @@ const uploadImageToCloudinary = async (file) => {
 
       <button
         type="submit"
-        className="w-full py-2 mt-7 px-4 m bg-cyan-700 text-white font-bold rounded-md hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        className="w-full py-2 mt-7 px-4 bg-cyan-700 text-white font-bold rounded-md hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
       >
         Create Bookshelf
       </button>
