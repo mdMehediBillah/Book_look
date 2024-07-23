@@ -6,8 +6,19 @@ import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import "./CustomTimePicker.css";
-import CountryStateCitySelector from "../../Components/CreateShelfComponent/CountryStateCitySelector";
-
+import CountryStateCitySelector from "../../Components/CreateShelfComponent/CountryStateCitySelector.jsx";
+import TimeSelectionOptions from "../../Components/CreateShelfComponent/TimeSelectionOptions.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBarcode,
+  faImage,
+  faBook,
+  faClock,
+  faMapMarkerAlt,
+  faRoad,
+  faMapPin,
+  faMap,
+} from "@fortawesome/free-solid-svg-icons";
 
 const CreateShelfForm = () => {
   const [formData, setFormData] = useState({
@@ -21,6 +32,8 @@ const CreateShelfForm = () => {
     city: "",
     street: "",
     postalCode: "",
+    latitude: "",
+    longitude: "",
   });
 
   const [images, setImages] = useState([]);
@@ -54,6 +67,8 @@ const CreateShelfForm = () => {
     data.append("city", formData.city);
     data.append("street", formData.street);
     data.append("postalCode", formData.postalCode);
+    data.append("latitude", formData.latitude);
+    data.append("longitude", formData.longitude);
 
     if (images.length > 2) {
       toast.error("You can upload a maximum of 2 images.");
@@ -83,158 +98,229 @@ const CreateShelfForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-md"
+      className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-md"
     >
       <h2 className="text-xl font-bold mb-4 text-center">
         Create New Bookshelf
       </h2>
 
-      <div className="mb-4">
-        <label
-          htmlFor="name"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Name of Bookshelf:
-        </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Left Side */}
+        <div className="space-y-4">
+          <div className="flex items-center mb-4">
+            <FontAwesomeIcon icon={faBook} className="mr-2 text-gray-600" />
+            <div className="flex-1">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Name of Bookshelf:
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
 
-      <div className="mb-4">
-        <label
-          htmlFor="images"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Images (Max 2):
-        </label>
-        <input
-          type="file"
-          id="images"
-          name="images"
-          onChange={handleFileChange}
-          accept="image/*"
-          multiple
-          required
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-      </div>
+          <div className="flex items-center mb-4">
+            <FontAwesomeIcon icon={faBarcode} className="mr-2 text-gray-600" />
+            <div className="flex-1">
+              <label
+                htmlFor="barcode"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Barcode:
+              </label>
+              <input
+                type="text"
+                id="barcode"
+                name="barcode"
+                value={formData.barcode}
+                onChange={handleChange}
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
 
-      <CountryStateCitySelector onLocationChange={handleLocationChange} />
+          <div className="flex items-center mb-4">
+            <FontAwesomeIcon icon={faImage} className="mr-2 text-gray-600" />
+            <div className="flex-1">
+              <label
+                htmlFor="images"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Images (Max 2):
+              </label>
+              <input
+                type="file"
+                id="images"
+                name="images"
+                onChange={handleFileChange}
+                accept="image/*"
+                multiple
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
 
-      <div className="mb-4">
-        <label
-          htmlFor="postalCode"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Postal Code:
-        </label>
-        <input
-          type="text"
-          id="postalCode"
-          name="postalCode"
-          value={formData.postalCode}
-          onChange={handleChange}
-          required
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-      </div>
+          <div className="flex items-center mb-4">
+            <FontAwesomeIcon icon={faClock} className="mr-2 text-gray-600" />
+            <div className="flex-1">
+              <TimeSelectionOptions
+                is24Hours={is24Hours}
+                handleRadioChange={handleRadioChange}
+              />
+            </div>
+          </div>
 
-      <div className="mb-4">
-        <label
-          htmlFor="street"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Street:
-        </label>
-        <input
-          type="text"
-          id="street"
-          name="street"
-          value={formData.street}
-          onChange={handleChange}
-          required
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-      </div>
+          {!is24Hours && (
+            <div className="flex space-x-4 mb-4">
+              <div className="flex-1">
+                <label
+                  htmlFor="openingTime"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Opening Time:
+                </label>
+                <TimePicker
+                  id="openingTime"
+                  name="openingTime"
+                  value={formData.openingTime}
+                  onChange={(value) => handleTimeChange("openingTime", value)}
+                  required
+                  className="time-picker-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+              </div>
 
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700">
-          Opening Time:
-        </label>
-        <div className="flex items-center">
-          <input
-            type="radio"
-            id="24hours"
-            name="timeOption"
-            value="24hours"
-            checked={is24Hours}
-            onChange={handleRadioChange}
-            className="mr-2"
-          />
-          <label htmlFor="24hours" className="mr-4">
-            24 Hours
-          </label>
-          <input
-            type="radio"
-            id="customTime"
-            name="timeOption"
-            value="customTime"
-            checked={!is24Hours}
-            onChange={handleRadioChange}
-            className="mr-2"
-          />
-          <label htmlFor="customTime">Custom Time</label>
+              <div className="flex-1">
+                <label
+                  htmlFor="closingTime"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Closing Time:
+                </label>
+                <TimePicker
+                  id="closingTime"
+                  name="closingTime"
+                  value={formData.closingTime}
+                  onChange={(value) => handleTimeChange("closingTime", value)}
+                  required
+                  className="time-picker-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Right Side */}
+        <div className="space-y-4">
+          <div className="flex items-center mb-4">
+            <FontAwesomeIcon
+              icon={faMapMarkerAlt}
+              className="mr-2 text-gray-600"
+            />
+            <div className="flex-1">
+              <CountryStateCitySelector
+                onLocationChange={handleLocationChange}
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center mb-4">
+            <FontAwesomeIcon icon={faRoad} className="mr-2 text-gray-600" />
+            <div className="flex-1">
+              <label
+                htmlFor="street"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Street:
+              </label>
+              <input
+                type="text"
+                id="street"
+                name="street"
+                value={formData.street}
+                onChange={handleChange}
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center mb-4">
+            <FontAwesomeIcon icon={faMap} className="mr-2 text-gray-600" />
+            <div className="flex-1">
+              <label
+                htmlFor="postalCode"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Postal Code:
+              </label>
+              <input
+                type="text"
+                id="postalCode"
+                name="postalCode"
+                value={formData.postalCode}
+                onChange={handleChange}
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center mb-4">
+            <FontAwesomeIcon icon={faMapPin} className="mr-2 text-gray-600" />
+            <div className="flex-1">
+              <label
+                htmlFor="latitude"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Latitude:
+              </label>
+              <input
+                type="text"
+                id="latitude"
+                name="latitude"
+                value={formData.latitude}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center mb-4">
+            <FontAwesomeIcon icon={faMapPin} className="mr-2 text-gray-600" />
+            <div className="flex-1">
+              <label
+                htmlFor="longitude"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Longitude:
+              </label>
+              <input
+                type="text"
+                id="longitude"
+                name="longitude"
+                value={formData.longitude}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
-      {!is24Hours && (
-        <>
-          <div className="mb-4">
-            <label
-              htmlFor="openingTime"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Opening Time:
-            </label>
-            <TimePicker
-              id="openingTime"
-              name="openingTime"
-              value={formData.openingTime}
-              onChange={(value) => handleTimeChange("openingTime", value)}
-              required
-              className="time-picker-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="closingTime"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Closing Time:
-            </label>
-            <TimePicker
-              id="closingTime"
-              name="closingTime"
-              value={formData.closingTime}
-              onChange={(value) => handleTimeChange("closingTime", value)}
-              required
-              className="time-picker-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-        </>
-      )}
-
       <button
         type="submit"
-        className="w-full py-2 px-4 bg-cyan-700 text-white font-bold rounded-md hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        className="w-full py-2 px-4 bg-cyan-700 text-white font-bold rounded-md hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mt-6"
       >
         Create Bookshelf
       </button>
