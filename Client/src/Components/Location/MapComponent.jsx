@@ -46,7 +46,7 @@ const MapComponent = ({
 
       if (userLocation) {
         const userIcon = L.icon({
-          iconUrl: "path_to_custom_user_icon.png", 
+          iconUrl: "path_to_custom_user_icon.png",
           iconSize: [25, 41],
           iconAnchor: [12, 41],
         });
@@ -67,48 +67,55 @@ const MapComponent = ({
   }, [bookshelves, center, userLocation, destination]);
 
   return (
-    <MapContainer
-      center={center}
-      zoom={5}
-      scrollWheelZoom={true}
-      style={{ height: "100vh", width: "100%" }}
-      whenCreated={(mapInstance) => {
-        mapRef.current = mapInstance;
-      }}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      {bookshelves.map((shelf, idx) => (
-        <Marker key={idx} position={shelf.location} icon={customIcon}>
-          <Popup>
-            <div style={{ maxWidth: "200px" }}>
-              <h3>{shelf.name}</h3>
-              <p>{shelf.address}</p>
-              {shelf.imageUrl && (
-                <img
-                  src={shelf.imageUrl}
-                  alt={shelf.name}
-                  style={{ width: "100%", height: "auto", borderRadius: "5px" }}
-                />
-              )}
-              <button
-                onClick={() => setDestination(shelf.location)}
-                style={{ marginTop: "10px" }}
-              >
-                Go Here
-              </button>
-            </div>
-          </Popup>
-        </Marker>
-      ))}
-      <LocationMarker />
-      {userLocation && destination && (
-        <RoutingMachine start={userLocation} end={destination} />
-      )}
-      <MinimapControl position="topright" zoom={0} />
-    </MapContainer>
+    <div className="px-2">
+      <MapContainer
+        center={center}
+        zoom={5}
+        scrollWheelZoom={true}
+        // style={{ height: "200px", width: "100%" }}
+        whenCreated={(mapInstance) => {
+          mapRef.current = mapInstance;
+        }}
+        className="min-h-[500px] max-h-[800px] w-full "
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {bookshelves.map((shelf, idx) => (
+          <Marker key={idx} position={shelf.location} icon={customIcon}>
+            <Popup>
+              <div style={{ maxWidth: "200px" }}>
+                <h3>{shelf.name}</h3>
+                <p>{shelf.address}</p>
+                {shelf.imageUrl && (
+                  <img
+                    src={shelf.imageUrl}
+                    alt={shelf.name}
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      borderRadius: "5px",
+                    }}
+                  />
+                )}
+                <button
+                  onClick={() => setDestination(shelf.location)}
+                  style={{ marginTop: "10px" }}
+                >
+                  Go Here
+                </button>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
+        <LocationMarker />
+        {userLocation && destination && (
+          <RoutingMachine start={userLocation} end={destination} />
+        )}
+        <MinimapControl position="topright" zoom={0} />
+      </MapContainer>
+    </div>
   );
 };
 
