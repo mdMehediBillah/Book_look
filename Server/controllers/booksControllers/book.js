@@ -5,6 +5,7 @@ import Bookshelf from "../../models/bookshelf/index.js";
 //==========================================================================
 // Create New book
 //==========================================================================
+
 export const createBook = async (req, res, next) => {
   const {
     ISBN,
@@ -15,7 +16,6 @@ export const createBook = async (req, res, next) => {
     publisher,
     coverImageUrl,
     summary,
-    pages,
     shelfId,
   } = req.body;
 
@@ -50,30 +50,62 @@ export const createBook = async (req, res, next) => {
       publisher,
       coverImageUrl,
       summary,
-      pages,
       shelfId,
     });
 
     const savedBook = await newBook.save();
-    console.log("save book=", savedBook)
 
     const bookshelf = await Bookshelf.findById(shelfId);
     if (!bookshelf) {
-      return res.status(404).json({ message: "Bookshelf not found" });
+      return res
+        .status(404)
+        .json({ success: true, message: "Bookshelf not found" });
     }
 
     bookshelf.books.push(savedBook._id);
     await bookshelf.save();
 
-    console.log("save bookshelf=", await bookshelf.save())
 
     res.status(201).json({
       success: true,
       message: "Book created and added to the bookshelf successfully",
     });
   } catch (error) {
-    console.log("error=", error)
     return next(createError(500, "Server error! please try again!"));
+  }
+};
+
+//==========================================================================
+// Update book to add author/s
+//==========================================================================
+export const updateBook = async (req, res, next) => {
+  const { bookId, firstName, lastName, birthDate, deathDate } = req.body;
+
+  try {
+    const book = await Book.findById(bookId);
+
+    if (!book) {
+      return next(createError(400, "Book does not exist!"));
+    }
+
+    const author = {
+      firstName,
+      lastName,
+      birthDate,
+      deathDate,
+    };
+
+    book.authors.push(author);
+
+    await book.save();
+
+    return res.status(200).json({
+      success: true,
+      result: book,
+      message: "Book author is successfully added.",
+    });
+  } catch (error) {
+    return next(createError(400, "Server error! Please try again!"));
   }
 };
 
