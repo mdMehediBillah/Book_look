@@ -43,7 +43,7 @@ const CreateShelfForm = () => {
   const [formData, setFormData] = useState({
     barcode: "",
     image: null,
-    banner: null,
+    // banner: null,
     name: "",
     openingTime: "",
     closingTime: "",
@@ -52,8 +52,8 @@ const CreateShelfForm = () => {
     city: "",
     street: "",
     zipCode: "",
-    latitude: "",
-    longitude: "",
+    // latitude: "",
+    // longitude: "",
   });
   //------------------------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------------------------
@@ -115,9 +115,9 @@ const CreateShelfForm = () => {
       let imageUrl = formData.image
         ? await uploadImageToCloudinary(formData.image)
         : null;
-      let bannerUrl = formData.banner
-        ? await uploadImageToCloudinary(formData.banner)
-        : null;
+      // let bannerUrl = formData.banner
+      //   ? await uploadImageToCloudinary(formData.banner)
+      //   : null;
 
       //------------------------------------------------------------------------------------------------------------
       //------------------------------------------------------------------------------------------------------------
@@ -126,7 +126,7 @@ const CreateShelfForm = () => {
       const updatedFormData = {
         ...formData,
         image: imageUrl,
-        banner: bannerUrl,
+        // banner: bannerUrl,
       };
 
       //------------------------------------------------------------------------------------------------------------
@@ -154,7 +154,7 @@ const CreateShelfForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-md"
+      className="max-w-5xl mx-auto p-6 mt-10 bg-white shadow-md rounded-md"
     >
       <h2 className="text-xl font-bold mb-4 text-center">
         Create New Bookshelf
@@ -221,7 +221,7 @@ const CreateShelfForm = () => {
             </div>
           </div>
 
-          <div className="flex items-center mb-4">
+          {/* <div className="flex items-center mb-4">
             <FontAwesomeIcon icon={faImage} className="mr-2 text-gray-600" />
             <div className="flex-1">
               <label
@@ -239,7 +239,7 @@ const CreateShelfForm = () => {
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
-          </div>
+          </div> */}
 
           <div className="flex items-center mb-4">
             <FontAwesomeIcon icon={faClock} className="mr-2 text-gray-600" />
@@ -342,7 +342,7 @@ const CreateShelfForm = () => {
             </div>
           </div>
 
-          <div className="flex items-center mb-4 relative">
+          {/* <div className="flex items-center mb-4 relative">
             <FontAwesomeIcon
               icon={faMapPin}
               className="absolute left-3 top-3 text-gray-600"
@@ -359,9 +359,9 @@ const CreateShelfForm = () => {
                 className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
-          </div>
+          </div> */}
 
-          <div className="flex items-center mb-4 relative">
+          {/* <div className="flex items-center mb-4 relative">
             <FontAwesomeIcon
               icon={faMapPin}
               className="absolute left-3 top-3 text-gray-600"
@@ -378,7 +378,7 @@ const CreateShelfForm = () => {
                 className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
