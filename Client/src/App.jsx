@@ -12,6 +12,7 @@ import {
   UserProfilePage,
 } from "./Pages";
 import { NavigationComponent } from "./Components";
+import AdminDashboardPage from "./Pages/dashboardPages/adminDashboardPage/AdminDashboardPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/create_shelf" element={<CreateShelf />} />
         <Route path="/profile" element={<UserProfilePage />} />
         <Route path="/terms_condition" element={<TermsConditionPage />} />
+        <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <ToastContainer

@@ -9,10 +9,10 @@ import {
 
 const borrowedBookRouter = express.Router();
 
-borrowedBookRouter.post("/new", createBorrowedBook);
+borrowedBookRouter.post("/new/:id", createBorrowedBook);
 borrowedBookRouter.get("/", getBorrowedBooks);
 borrowedBookRouter.get("/:id", getBorrowedBook);
 borrowedBookRouter.delete("/:id", deleteBorrowedBook);
-borrowedBookRouter.get("//count/all", countBorrowedBooks);
+borrowedBookRouter.get("/count/all", countBorrowedBooks);
 
 export default borrowedBookRouter;
