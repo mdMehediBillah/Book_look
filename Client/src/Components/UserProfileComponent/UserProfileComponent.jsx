@@ -7,12 +7,13 @@ import UserProfileActivitiesCompo from "../UserProfileActivitiesCompo/UserProfil
 const UserProfileComponent = () => {
   const navigate = useNavigate();
 
-  const { logout } = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext);
 
   // fetching data from local storage
   const userLocal = localStorage.getItem("user");
-  const user = JSON.parse(userLocal);
-  const { firstName, lastName, email, image, createdAt } = user;
+  const userLocalData = JSON.parse(userLocal);
+  const { firstName, lastName, email, image, createdAt, banner } =
+    userLocalData;
   console.log(email, firstName, lastName, email, image, createdAt);
   const [loading, setLoading] = useState(false);
 
@@ -31,8 +32,13 @@ const UserProfileComponent = () => {
   };
 
   return (
-    <div>
-      <div className="bg-gray-400 h-[180px] relative container max-w-screen-lg mx-auto ">
+    <section>
+      <div
+        className="bg-gray-400 h-[180px] relative container max-w-screen-lg mx-auto bg-cover bg-center bg-no-repeat w-[100%]"
+        style={{
+          backgroundImage: `url(${banner})`,
+        }}
+      >
         <div className="avatar absolute bottom-[-48px] left-[32px]">
           <div className="ring-gray ring-offset-base-100 w-44 rounded-full ring ring-offset-2">
             <img src={image} />
@@ -57,8 +63,8 @@ const UserProfileComponent = () => {
           </p>
         </div>
         <div>
-          <Link to="/update">
-            <button className="mt-3 bg-cyan-200 py-2 px-4 text-center rounded-xl font-medium text-sm">
+          <Link to="/profile_update">
+            <button className="mt-3 bg-cyan-100 py-2 px-4 text-center rounded-xl font-medium text-sm">
               Update Profile
             </button>
           </Link>
@@ -83,7 +89,7 @@ const UserProfileComponent = () => {
           </button>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

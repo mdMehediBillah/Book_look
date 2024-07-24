@@ -108,17 +108,19 @@ const Location = () => {
   }
 
   return (
-    <LayoutComponent
-      bookshelves={bookshelves}
-      center={center}
-      setCenter={setCenter}
-      userLocation={userLocation}
-      destination={destination}
-      setDestination={(loc) => {
-        setDestination(loc);
-        console.log("Destination set:", loc);
-      }}
-    />
+    <div className="">
+      <LayoutComponent
+        bookshelves={bookshelves}
+        center={center}
+        setCenter={setCenter}
+        userLocation={userLocation}
+        destination={destination}
+        setDestination={(loc) => {
+          setDestination(loc);
+          console.log("Destination set:", loc);
+        }}
+      />
+    </div>
   );
 };
 
