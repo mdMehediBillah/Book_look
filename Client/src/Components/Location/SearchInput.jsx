@@ -26,7 +26,7 @@ const SearchInput = ({ searchTerm, setSearchTerm, setCenter }) => {
       value={searchTerm}
       onChange={handleSearchChange}
       placeholder="Search by city"
-      className="p-2 mb-4 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50 placeholder-gray-500 text-gray-700"
+      className="w-full p-2 mb-4 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50 placeholder-gray-500 text-gray-700"
     />
   );
 };
