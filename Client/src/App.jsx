@@ -24,8 +24,6 @@ import AdminDashboardPage from "./Pages/dashboardPages/adminDashboardPage/AdminD
 function App() {
   return (
     <>
-      <ConditionalNavBar />
-
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/registrationPage" element={<RegistrationPage />} />
@@ -37,9 +35,9 @@ function App() {
 
         <Route path="/create_book" element={<CreateBookPage />}>
           <Route path="createBookSearch" element={<SearchBookComponent />} />
-          <Route path="book/:id" element={<BookDetailsCom />} />
           <Route path="createBookinput" element={<CreateBookComponent />} />
         </Route>
+        <Route path="/createBookSearch/:id" element={<BookDetailsCom />} />
 
         <Route path="/terms_condition" element={<TermsConditionPage />} />
         <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
@@ -62,20 +60,4 @@ function App() {
   );
 }
 
-const ConditionalNavBar = () => {
-  const location = useLocation();
-
-  // Don't display Navbar on these routes
-  const hideNavBarRoutes = [
-    "/registrationPage",
-    "/profile",
-    "/terms_condition",
-    "/profile_update",
-    "/create_book",
-  ];
-
-  return !hideNavBarRoutes.includes(location.pathname) ? (
-    <NavigationComponent />
-  ) : null;
-};
 export default App;

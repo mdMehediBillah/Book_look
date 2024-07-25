@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from "react";
+import { useRef } from "react";
 import { useGlobalContext } from "../../Context/Book/context.jsx"; // Import the context
 import { Link } from "react-router-dom";
 import coverImg from "../../assets/images/banner_default.png"; // Placeholder image
@@ -57,25 +57,26 @@ const SearchBookComponent = () => {
           <div className="container screen-max-lg p-4">
             <div className="">
               <h2 className="text-2xl font-bold pt-8 pb-4">{resultTitle}</h2>
-              <div className="grid lg:grid-cols-5 gap-3">
+              <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 gap-3 ">
                 {booksWithCovers.map((book) => (
                   <div
                     key={book.id}
                     className="flex flex-col bg-gray-50 p-2 shadow-md border-2 border-gray-200 rounded-md hover:scale-105 transition-transform duration-300 cursor-pointer"
                   >
-                    <div className="">
-                      <img
-                        src={book.cover_img}
-                        alt="cover"
-                        className="w-full cover "
-                      />
-                    </div>
+                    {" "}
+                    <Link to={`/createBookSearch/${book.id}`}>
+                      <div className="">
+                        <img
+                          src={book.cover_img}
+                          alt="cover"
+                          className="w-full cover "
+                        />
+                      </div>
+                    </Link>
                     <div className="px-2">
-                      <Link to={`book/${book.id}`}>
-                        <div className="text-lg font-semibold pt-2">
-                          <span>{book.title}</span>
-                        </div>
-                      </Link>
+                      <div className="text-lg font-semibold pt-2">
+                        <span>{book.title}</span>
+                      </div>
                       <div className="">
                         <span className="t">Author: </span>
                         <span>{book.author.join(", ")}</span>
@@ -87,7 +88,6 @@ const SearchBookComponent = () => {
                       <div className="">
                         <span className="">First Publish Year: </span>
                         <span>{book.first_publish_year}</span>
-                        {/* <span>{book.author_key}</span> */}
                       </div>
                     </div>
                   </div>

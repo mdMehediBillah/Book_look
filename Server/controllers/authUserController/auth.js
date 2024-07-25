@@ -98,19 +98,20 @@ export const loginUser = async (req, res, next) => {
         : new Date(Date.now() + 24 * 60 * 60 * 1000);
 
       res
-        .cookie("token", token, {
-          path: "/",
-          httpOnly: false,
-          expires: tokenExpiry,
-          sameSite: "strict",
-          secure: true,
-        })
+        // .cookie("token", token, {
+        //   path: "/",
+        //   httpOnly: false,
+        //   expires: tokenExpiry,
+        //   sameSite: "strict",
+        //   secure: true,
+        // })
 
         .status(200)
         .json({
           success: true,
           result: { ...rest },
           message: "User successfully logged in!",
+          token,
         });
     }
   } catch (error) {

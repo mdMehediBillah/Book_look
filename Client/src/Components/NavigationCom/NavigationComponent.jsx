@@ -1,32 +1,26 @@
+import { useEffect } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { MdOutlineLeaderboard } from "react-icons/md";
 import { GrLogout } from "react-icons/gr";
 import { GiBlackBook } from "react-icons/gi";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useAuthContext } from "../../Context/User/AuthContext.jsx";
 
 // =================================================================
 // NavigationComponent
 const NavigationComponent = () => {
+  const { user } = useAuthContext();
   const navigate = useNavigate();
 
-  // fetching data from local storage
-  const userLocal = localStorage.getItem("user");
-  const user = JSON.parse(userLocal);
   const { firstName } = user;
-  // console.log(email, firstName, lastName, email, image, createdAt);
-
-  const [userData, setUserData] = useState(userLocal);
+  // console.log(firstName);
+  // localStorage.setItem("userName", user.firstName);
+  // const firstName = localStorage.getItem("userName");
 
   // verify user is logged in
   useEffect(() => {
-    if (!localStorage.getItem("user")) navigate("/registrationPage");
-  }, []);
-
-  useEffect(() => {
-    setUserData(userLocal);
-    // console.log(userLocal);
+    if (!localStorage.getItem("token")) navigate("/registrationPage");
   }, []);
 
   // Navlink styles
@@ -36,17 +30,16 @@ const NavigationComponent = () => {
 
   // handle Logout
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     // logout();
     navigate("/registrationPage");
-    window.location.reload();
   };
   return (
     <motion.header
-      initial={{ x: 300, opacity: 0, scale: 0.5 }}
+      initial={{ x: 5, opacity: 0.9, scale: 0.99 }}
       animate={{ x: 0, opacity: 1, scale: 1 }}
       transition={{ type: "spring", duration: 0.3 }}
-      className="flex container mx-auto justify-between items-center gap-2 p-3 bg-cyan-900 shadow rounded-b-lg"
+      className="flex container mx-auto justify-between items-center gap-2 p-3 bg-cyan-900 shadow rounded-b-lg max-w-screen-lg"
     >
       <div className=" w-2/12 logo">
         <Link to="/" className="flex justify-center items-center gap-2">
@@ -86,7 +79,7 @@ const NavigationComponent = () => {
             className="btn bg-cyan-800 text-white glass btn-sm hover:bg-red-500"
           >
             <FaRegUserCircle />
-            <span className="">Hello! {userData ? firstName : "User"}</span>
+            <span className="">Hello! {user ? firstName : "User"}</span>
           </div>
           <ul
             tabIndex={0}
@@ -113,13 +106,6 @@ const NavigationComponent = () => {
             </li>
           </ul>
         </div>
-        {/* <Link
-          to="/registration"
-          className="flex items-center gap-2 w-2/12  justify-end"
-        >
-          <FaRegUserCircle />
-          <span>User</span>
-        </Link> */}
       </nav>
     </motion.header>
   );

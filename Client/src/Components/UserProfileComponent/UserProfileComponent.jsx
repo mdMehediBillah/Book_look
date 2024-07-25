@@ -1,31 +1,35 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../Context/User/AuthContext.jsx";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "../../Context/User/AuthContext.jsx";
 import { Link, useNavigate } from "react-router-dom";
-import { format } from "date-fns";
+import bannerImgUrl from "../../assets/images/banner_default.png";
+import profileImgUrl from "../../assets/images/avatar.png";
+// import { format } from "date-fns";
 import UserProfileActivitiesCompo from "../UserProfileActivitiesCompo/UserProfileActivitiesCompo.jsx";
 
 const UserProfileComponent = () => {
   const navigate = useNavigate();
 
-  const { logout, user } = useContext(AuthContext);
+  const { setUser, user } = useAuthContext();
+  console.log(JSON.stringify(user));
 
   // fetching data from local storage
-  const userLocal = localStorage.getItem("user");
-  const userLocalData = JSON.parse(userLocal);
+  // const userLocal = localStorage.getItem("user");
+  // const userLocalData = JSON.parse(userLocal);
   const { firstName, lastName, email, image, createdAt, banner, aboutMe } =
-    userLocalData;
-  console.log(email, firstName, lastName, email, image, createdAt);
+    user;
   const [loading, setLoading] = useState(false);
 
-  const [userData, setUserData] = useState(userLocal);
+  // const [userData, setUserData] = useState(userLocal);
 
+  const [imagePreview, setImagePreview] = useState(image || profileImgUrl);
+  const [bannerPreview, setBannerPreview] = useState(banner || bannerImgUrl);
   useEffect(() => {
-    if (!localStorage.getItem("user")) navigate("/registrationPage");
-    setUserData(userLocal);
-  }, [logout]);
+    if (!localStorage.getItem("token")) navigate("/registrationPage");
+    // setUserData(userLocal);
+  }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     // logout();
     navigate("/registrationPage");
     window.location.reload();
@@ -36,12 +40,12 @@ const UserProfileComponent = () => {
       <div
         className="bg-gray-400 h-[180px] relative container max-w-screen-lg mx-auto bg-cover bg-center bg-no-repeat w-[100%]"
         style={{
-          backgroundImage: `url(${banner})`,
+          backgroundImage: `url(${bannerPreview})`,
         }}
       >
         <div className="avatar absolute bottom-[-48px] left-[32px]">
-          <div className="ring-gray-50 ring-cyan-400 w-44 rounded-full ring ring-offset-2">
-            <img src={image} />
+          <div className="ring-gray-50 ring-cyan-400 w-44 rounded-full ring ring-offset-2 bg-gray-500">
+            <img src={imagePreview} alt="Profile" />
           </div>
         </div>
       </div>
@@ -57,7 +61,7 @@ const UserProfileComponent = () => {
         </div>
         <div>
           <p className="text-right text-sm  container mx-auto text-gray-500 ">
-            {`Member Since: ${format(createdAt, "dd/MM/yyyy")}`}{" "}
+            {/* {`Member Since: ${format(createdAt, "dd/MM/yyyy")}`}{" "} */}
           </p>
         </div>
       </div>
