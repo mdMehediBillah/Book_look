@@ -1,7 +1,7 @@
+//==========================================================================
 //This code fetches a list of bookshelves from an API, 
-//obtains the user's current location, and passes this data to a layout component. 
- // -----------------------------------------------------------------------------------------------------------
-  // -----------------------------------------------------------------------------------------------------------
+//obtains the user's current location, and passes this data to a layout component.
+//==========================================================================
 
 import React, { useEffect, useState } from "react";
 import LayoutComponent from "./LayoutComponent";
@@ -18,14 +18,16 @@ const Location = () => {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState(""); // Initialize searchTerm state variable
 
-  // -----------------------------------------------------------------------------------------------------------
-  // -----------------------------------------------------------------------------------------------------------
-  // Fetch all bookshelves
+  //==========================================================================
+  // Get all bookshelves
+  //==========================================================================
   useEffect(() => {
     const fetchBookshelves = async () => {
       try {
         // const response = await axios.get(`${API}/bookshelves`);
-        const response = await axios.get(`http://localhost:8000/api/v1/bookshelves/`);
+        const response = await axios.get(
+          `http://localhost:8000/api/v1/bookshelves/`
+        );
         setBookshelves(response.data.result);
       } catch (error) {
         toast.error("Error fetching Bookshelfs");
@@ -33,10 +35,11 @@ const Location = () => {
     };
     fetchBookshelves();
   }, []);
-  //-----------------------------------------------------------------------------------------------------------
-  //-----------------------------------------------------------------------------------------------------------
 
+  //==========================================================================
   //Fetching User Location:
+  //==========================================================================
+
   useEffect(() => {
     const getUserLocation = () => {
       if (navigator.geolocation) {
@@ -71,8 +74,9 @@ const Location = () => {
 
     getUserLocation();
   }, []);
-  //-----------------------------------------------------------------------------------------------------------
-  //-----------------------------------------------------------------------------------------------------------
+  //==========================================================================
+  // Error handling
+  //==========================================================================
 
   if (loadingLocation) {
     return <div>Loading location...</div>;
@@ -93,8 +97,8 @@ const Location = () => {
         setDestination(loc);
         console.log("Destination set:", loc);
       }}
-       searchTerm={searchTerm} // Pass searchTerm to child component
-      setSearchTerm={setSearchTerm} 
+      searchTerm={searchTerm} 
+      setSearchTerm={setSearchTerm}
     />
   );
 };

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
+import L from "leaflet";     //Leaflet library object for interacting with the map directly.
+import "leaflet/dist/leaflet.css";   //Leaflet’s default styling
 import RoutingMachine from "./RoutingMachine";
 import LocationMarker from "./LocationMarker";
 import MinimapControl from "./MinimapControl";
@@ -20,46 +20,56 @@ const MapComponent = ({
   destination,
   setDestination,
 }) => {
-  const mapRef = useRef(null);
+  const mapRef = useRef(null); //It is used to directly manipulate the map.
+
 
   useEffect(() => {
+    
     if (mapRef.current) {
       // Clear previous layers
       mapRef.current.eachLayer((layer) => {
         if (layer instanceof L.TileLayer || layer instanceof L.Marker) {
-          layer.remove();
+          layer.remove(); //Remove the previous layers (tiles or markers) from the map before adding new one.
         }
       });
-
+      //==========================================================================
       // Validate center coordinates
+      //==========================================================================
+
+      //center: is a prop that is passed to the MapComponent,indicating where the map should be centered.
+      //center.length === 2 :ensures that the center array has exactly two elements, which should be latitude and longitude.
       if (center && Array.isArray(center) && center.length === 2) {
         mapRef.current.setView(center, 13);
       } else {
         console.warn("Invalid center coordinates:", center);
       }
-
+      //==========================================================================
       // Add tile layer
+      //==========================================================================
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(mapRef.current);
 
+      //==========================================================================
       // Add bookshelf markers
+      //==========================================================================
       bookshelves.forEach((shelf) => {
         if (
-          shelf.location &&
-          Array.isArray(shelf.location) &&
-          shelf.location.length === 2
+          shelf.location &&          //Checks if the location property exists and is not null or undefined.
+          Array.isArray(shelf.location) &&      //Checks if the location property is an array.
+          shelf.location.length === 2       //Checks if the location array has exactly two elements: latitude and longitude.
         ) {
           L.marker(shelf.location)
             .addTo(mapRef.current)
-            .bindPopup(`<b>${shelf.name}</b><br>${shelf.address}`);
+            .bindPopup(`<b>${shelf.name}</b><br>${shelf.country}<br>${shelf.city}<br>${shelf.street}`);
         } else {
           console.warn("Invalid bookshelf location:", shelf.location);
         }
       });
-
+      //==========================================================================
       // Add user location marker
+      //==========================================================================
       if (
         userLocation &&
         Array.isArray(userLocation) &&
@@ -106,6 +116,9 @@ const MapComponent = ({
         }}
         className="min-h-[500px] max-h-[800px] w-full"
       >
+        {/* //==========================================================================
+        Adds the OpenStreetMap tile layer to the map.
+        //========================================================================== */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

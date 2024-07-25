@@ -1,4 +1,6 @@
+//==========================================================================
 //this code integrates a searchInput, a list of bookshelves, and a mapComponent.
+  //==========================================================================
 
 import React, { useState, useEffect } from "react";
 import MapComponent from "./MapComponent";
@@ -14,15 +16,18 @@ const LayoutComponent = ({
   searchTerm,
   setSearchTerm,
 }) => {
-  // -----------------------------------------------------------------------------------------------------------
-  // -----------------------------------------------------------------------------------------------------------
+  //==========================================================================
+  // City coordinates
+  //==========================================================================
   // const cityCoordinates = {
   //   Leipzig: [51.321003, 12.3716],
   //   Berlin: [52.52, 13.405],
   //   Frankfurt: [50.1109, 8.6821],
   // };
-  // -----------------------------------------------------------------------------------------------------------
-  // -----------------------------------------------------------------------------------------------------------
+
+  //==========================================================================
+  // Filter bookshelves based on search term
+  //==========================================================================
   // Ensure searchTerm is a lowercase string
   const normalizedSearchTerm = (searchTerm || "").toLowerCase();
 
@@ -44,8 +49,10 @@ const LayoutComponent = ({
       city.includes(normalizedSearchTerm)
     );
   });
-  // -----------------------------------------------------------------------------------------------------------
-  // -----------------------------------------------------------------------------------------------------------
+
+  //==========================================================================
+  // Set center coordinates based on search term
+  //==========================================================================
   // const handleSearch = () => {
   //   const coordinates = cityCoordinates[searchTerm];
   //   if (coordinates) {
@@ -59,16 +66,19 @@ const LayoutComponent = ({
   // useEffect(() => {
   //   handleSearch();
   // }, [searchTerm]);
-  // -----------------------------------------------------------------------------------------------------------
-  // -----------------------------------------------------------------------------------------------------------
-  // for show more button
+
+  //==========================================================================
+  // for show more/less button
+  //==========================================================================
   const [showMore, setShowMore] = useState(false);
 
   const displayedBookshelves = showMore
     ? filteredBookshelves
-    : filteredBookshelves.slice(0, 3);  //display only 3 bookshelves ehwn show more is false
-  // -----------------------------------------------------------------------------------------------------------
-  // -----------------------------------------------------------------------------------------------------------
+    : filteredBookshelves.slice(0, 3); //display only 3 bookshelves ehwn show more is false
+  
+
+
+
   return (
     <div className="flex flex-col md:flex-row">
       <div className="flex flex-col p-4 md:w-1/3">
@@ -111,6 +121,8 @@ const LayoutComponent = ({
 };
 
 export default LayoutComponent;
+
+
 
 // import React, { useState } from "react";
 // import MapComponent from "./MapComponent";
