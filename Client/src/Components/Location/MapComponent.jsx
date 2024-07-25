@@ -56,17 +56,22 @@ const MapComponent = ({
       // Add bookshelf markers
       //==========================================================================
       bookshelves.forEach((shelf) => {
-        const { latitude, longitude, name, city, street } = shelf;
-        const lat = parseFloat(latitude);
-        const lon = parseFloat(longitude);
-
-        if (!isNaN(lat) && !isNaN(lon)) {
-          console.log("Adding marker for:", shelf);
-          L.marker([lat, lon], { icon: customIcon })
-            .addTo(mapRef.current)
-            .bindPopup(`<b>${name}</b><br>${city}<b>${street}</b>`);
+        if (shelf.latitude && shelf.longitude) {
+          const location = [shelf.latitude, shelf.longitude];
+          L.marker(location).addTo(mapRef.current).bindPopup(`
+              <div style="max-width: 200px;">
+                <h3>${shelf.name}</h3>
+                <p>${shelf.street}, ${shelf.city}</p>
+                ${
+                  shelf.imageUrl
+                    ? `<img src="${shelf.imageUrl}" alt="${shelf.name}" style="width: 100%; height: auto; border-radius: 5px;" />`
+                    : ""
+                }
+                <button onClick={() => setDestination(location)} style="margin-top: 10px;">Go Here</button>
+              </div>
+            `);
         } else {
-          console.warn("Invalid bookshelf location:", { latitude, longitude });
+          console.warn("Invalid bookshelf location:", shelf.location);
         }
       });
       //==========================================================================
@@ -126,44 +131,44 @@ const MapComponent = ({
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        
-        {bookshelves.map((shelf, idx) => {
-          const { latitude, longitude, name, city,street } = shelf;
-          const lat = parseFloat(latitude);
-          const lon = parseFloat(longitude);
 
-          if (!isNaN(lat) && !isNaN(lon)) {
-            return (
-              <Marker key={idx} position={[lat, lon]} icon={customIcon}>
-                <Popup>
-                  <div style={{ maxWidth: "200px" }}>
-                    <h3>{name}</h3>
-                    <p>{city}</p>
-                    <p>{street}</p>
-                    {shelf.imageUrl && (
-                      <img
-                        src={shelf.imageUrl}
-                        alt={name}
-                        style={{
-                          width: "100%",
-                          height: "auto",
-                          borderRadius: "5px",
-                        }}
-                      />
-                    )}
-                    <button
-                      onClick={() => setDestination([lat, lon])}
-                      style={{ marginTop: "10px" }}
-                    >
-                      Go Here
-                    </button>
-                  </div>
-                </Popup>
-              </Marker>
-            );
-          }
-          return null;
-        })}
+        {bookshelves.map((shelf, idx) =>
+          shelf.latitude && shelf.longitude ? (
+            <Marker
+              key={idx}
+              position={[shelf.latitude, shelf.longitude]}
+              icon={customIcon}
+            >
+              <Popup>
+                <div style={{ maxWidth: "200px" }}>
+                  <h3>{shelf.name}</h3>
+                  <p>
+                    {shelf.street}, {shelf.city}
+                  </p>
+                  {shelf.imageUrl && (
+                    <img
+                      src={shelf.imageUrl}
+                      alt={shelf.name}
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        borderRadius: "5px",
+                      }}
+                    />
+                  )}
+                  <button
+                    onClick={() =>
+                      setDestination([shelf.latitude, shelf.longitude])
+                    }
+                    style={{ marginTop: "10px" }}
+                  >
+                    Go Here
+                  </button>
+                </div>
+              </Popup>
+            </Marker>
+          ) : null
+        )}
         <LocationMarker />
         {userLocation && destination && (
           <RoutingMachine start={userLocation} end={destination} />
