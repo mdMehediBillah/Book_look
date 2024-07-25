@@ -71,7 +71,7 @@ const SearchBookComponent = () => {
                       />
                     </div>
                     <div className="px-2">
-                      <Link to={`/book/${book.id}`}>
+                      <Link to={`book/${book.id}`}>
                         <div className="text-lg font-semibold pt-2">
                           <span>{book.title}</span>
                         </div>
@@ -87,6 +87,7 @@ const SearchBookComponent = () => {
                       <div className="">
                         <span className="">First Publish Year: </span>
                         <span>{book.first_publish_year}</span>
+                        {/* <span>{book.author_key}</span> */}
                       </div>
                     </div>
                   </div>

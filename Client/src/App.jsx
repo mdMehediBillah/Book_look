@@ -14,6 +14,7 @@ import {
   UserUpdatePage,
 } from "./Pages";
 import {
+  BookDetailsCom,
   CreateBookComponent,
   NavigationComponent,
   SearchBookComponent,
@@ -36,6 +37,7 @@ function App() {
 
         <Route path="/create_book" element={<CreateBookPage />}>
           <Route path="createBookSearch" element={<SearchBookComponent />} />
+          <Route path="book/:id" element={<BookDetailsCom />} />
           <Route path="createBookinput" element={<CreateBookComponent />} />
         </Route>
 

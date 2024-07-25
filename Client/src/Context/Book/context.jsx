@@ -24,6 +24,8 @@ const AppProvider = ({ children }) => {
             edition_count,
             first_publish_year,
             title,
+            author_key,
+            language,
           } = bookSingle;
           return {
             id: key,
@@ -32,6 +34,8 @@ const AppProvider = ({ children }) => {
             edition_count: edition_count,
             first_publish_year: first_publish_year,
             title: title,
+            author_key: author_key || [],
+            language: language || [],
           };
         });
         setBooks(newBooks);
