@@ -4,7 +4,6 @@
 
 import React, { useState, useEffect } from "react";
 import MapComponent from "./MapComponent";
-// import SearchInput from "./SearchInput";
 
 const LayoutComponent = ({
   bookshelves,
@@ -16,15 +15,6 @@ const LayoutComponent = ({
   searchTerm,
   setSearchTerm,
 }) => {
-  //==========================================================================
-  // City coordinates
-  //==========================================================================
-  // const cityCoordinates = {
-  //   Leipzig: [51.321003, 12.3716],
-  //   Berlin: [52.52, 13.405],
-  //   Frankfurt: [50.1109, 8.6821],
-  // };
-
   //==========================================================================
   // Filter bookshelves based on search term
   //==========================================================================
@@ -50,22 +40,6 @@ const LayoutComponent = ({
     );
   });
 
-  //==========================================================================
-  // Set center coordinates based on search term
-  //==========================================================================
-  // const handleSearch = () => {
-  //   const coordinates = cityCoordinates[searchTerm];
-  //   if (coordinates) {
-  //     console.log("City coordinates:", coordinates);
-  //     setCenter(coordinates);
-  //   } else {
-  //     console.log("City coordinates not found for:", searchTerm);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   handleSearch();
-  // }, [searchTerm]);
 
   //==========================================================================
   // for show more/less button
@@ -78,9 +52,8 @@ const LayoutComponent = ({
   
 
 
-
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-col md:flex-row mt-20">
       <div className="flex flex-col p-4 md:w-1/3">
         {displayedBookshelves.map((shelf, idx) => (
           <div

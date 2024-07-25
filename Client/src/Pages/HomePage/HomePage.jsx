@@ -5,7 +5,7 @@ const HomePage = () => {
   return (
     <main>
       <section>
-        <SearchComponent />
+        {/* <SearchComponent /> */}
         <h1>Welcome to Home Page</h1>
       </section>
       <div className="container mx-auto flex-grow p-4">

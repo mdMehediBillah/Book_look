@@ -17,7 +17,7 @@ const SearchComponent = ({ searchTerm, setSearchTerm, setCenter }) => {
 
   return (
     <section className="container mx-auto mt-4">
-      <div className="bg-gray-300 flex w-5/12 min-w-[400px] mx-auto rounded-full items-center justify-between">
+      <div className="bg-gray-300 flex w-5/12 min-w-[500px] mx-auto rounded-full items-center justify-between">
         <input
           type="text"
           placeholder="Search here..."
@@ -28,7 +28,7 @@ const SearchComponent = ({ searchTerm, setSearchTerm, setCenter }) => {
        
         <button
           type="button"
-          className="bg-gray-200 py-2 px-6 rounded-full text-center font-bold text-gray-400"
+          className="bg-gray-200 py-3 px-6 rounded-full text-center font-bold text-gray-400"
           onClick={handleSearchClick}
         >
           Search
