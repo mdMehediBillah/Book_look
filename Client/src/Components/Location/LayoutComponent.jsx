@@ -1,3 +1,5 @@
+//this code integrates a searchInput, a list of bookshelves, and a mapComponent.
+
 import React, { useState, useEffect } from "react";
 import MapComponent from "./MapComponent";
 import SearchInput from "./SearchInput";
@@ -12,15 +14,16 @@ const LayoutComponent = ({
   searchTerm,
   setSearchTerm,
 }) => {
-  const [showMore, setShowMore] = useState(false);
-
-  const cityCoordinates = {
-    Leipzig: [51.321003, 12.3716],
-    Berlin: [52.52, 13.405],
-    Frankfurt: [50.1109, 8.6821],
-  };
-
-  // Ensure searchTerm is a string
+  // -----------------------------------------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------------------------------------
+  // const cityCoordinates = {
+  //   Leipzig: [51.321003, 12.3716],
+  //   Berlin: [52.52, 13.405],
+  //   Frankfurt: [50.1109, 8.6821],
+  // };
+  // -----------------------------------------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------------------------------------
+  // Ensure searchTerm is a lowercase string
   const normalizedSearchTerm = (searchTerm || "").toLowerCase();
 
   // Safeguard against undefined properties
@@ -28,6 +31,7 @@ const LayoutComponent = ({
     console.log("Bookshelf:", shelf); // Log each bookshelf item ----> debugging
     console.log("Search Term:", normalizedSearchTerm); // Log the current search term ----> debugging
 
+    //search based on name, country, state, and city
     const name = shelf.name?.toLowerCase() || "";
     const country = shelf.country?.toLowerCase() || "";
     const state = shelf.state?.toLowerCase() || "";
@@ -40,25 +44,31 @@ const LayoutComponent = ({
       city.includes(normalizedSearchTerm)
     );
   });
+  // -----------------------------------------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------------------------------------
+  // const handleSearch = () => {
+  //   const coordinates = cityCoordinates[searchTerm];
+  //   if (coordinates) {
+  //     console.log("City coordinates:", coordinates);
+  //     setCenter(coordinates);
+  //   } else {
+  //     console.log("City coordinates not found for:", searchTerm);
+  //   }
+  // };
 
-  const handleSearch = () => {
-    const coordinates = cityCoordinates[searchTerm];
-    if (coordinates) {
-      console.log("City coordinates:", coordinates);
-      setCenter(coordinates);
-    } else {
-      console.log("City coordinates not found for:", searchTerm);
-    }
-  };
-
-  useEffect(() => {
-    handleSearch();
-  }, [searchTerm]);
+  // useEffect(() => {
+  //   handleSearch();
+  // }, [searchTerm]);
+  // -----------------------------------------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------------------------------------
+  // for show more button
+  const [showMore, setShowMore] = useState(false);
 
   const displayedBookshelves = showMore
     ? filteredBookshelves
-    : filteredBookshelves.slice(0, 3);
-
+    : filteredBookshelves.slice(0, 3);  //display only 3 bookshelves ehwn show more is false
+  // -----------------------------------------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------------------------------------
   return (
     <div className="flex flex-col md:flex-row">
       <div className="flex flex-col p-4 md:w-1/3">
