@@ -4,7 +4,7 @@
 
 import React, { useState, useEffect } from "react";
 import MapComponent from "./MapComponent";
-import SearchInput from "./SearchInput";
+// import SearchInput from "./SearchInput";
 
 const LayoutComponent = ({
   bookshelves,
@@ -82,12 +82,6 @@ const LayoutComponent = ({
   return (
     <div className="flex flex-col md:flex-row">
       <div className="flex flex-col p-4 md:w-1/3">
-        <SearchInput
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          setCenter={setCenter}
-        />
-
         {displayedBookshelves.map((shelf, idx) => (
           <div
             key={idx}

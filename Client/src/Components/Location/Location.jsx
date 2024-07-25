@@ -8,6 +8,7 @@ import LayoutComponent from "./LayoutComponent";
 import axios from "axios";
 import { API } from "../../utils/security/secreteKey";
 import { toast } from "react-toastify";
+import SearchComponent from "../SearchComponent/SearchComponent";
 
 const Location = () => {
   const [bookshelves, setBookshelves] = useState([]);
@@ -87,19 +88,26 @@ const Location = () => {
   }
 
   return (
-    <LayoutComponent
-      bookshelves={bookshelves}
-      center={center}
-      setCenter={setCenter}
-      userLocation={userLocation}
-      destination={destination}
-      setDestination={(loc) => {
-        setDestination(loc);
-        console.log("Destination set:", loc);
-      }}
-      searchTerm={searchTerm} 
-      setSearchTerm={setSearchTerm}
-    />
+    <div>
+      <SearchComponent
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        setCenter={setCenter}
+      />
+      <LayoutComponent
+        bookshelves={bookshelves}
+        center={center}
+        setCenter={setCenter}
+        userLocation={userLocation}
+        destination={destination}
+        setDestination={(loc) => {
+          setDestination(loc);
+          console.log("Destination set:", loc);
+        }}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
+    </div>
   );
 };
 
