@@ -5,6 +5,8 @@ import "leaflet/dist/leaflet.css";   //Leaflet’s default styling
 import RoutingMachine from "./RoutingMachine";
 import LocationMarker from "./LocationMarker";
 import MinimapControl from "./MinimapControl";
+import "./MapComponent.css"; 
+
 
 const customIcon = new L.Icon({
   iconUrl: "https://img.icons8.com/?size=100&id=13800&format=png&color=000000",
@@ -140,27 +142,28 @@ const MapComponent = ({
               icon={customIcon}
             >
               <Popup>
-                <div style={{ maxWidth: "200px" }}>
-                  <h3>{shelf.name}</h3>
-                  <p>
-                    {shelf.street}, {shelf.city}
-                  </p>
-                  {shelf.imageUrl && (
+                <div className="popup-container">
+                  {/* Image */}
+                  {shelf.image && shelf.image.length > 0 && (
                     <img
-                      src={shelf.imageUrl}
+                      src={shelf.image[0]}
                       alt={shelf.name}
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        borderRadius: "5px",
-                      }}
+                      className="popup-image"
                     />
                   )}
+                  {/* Title and Address */}
+                  <div className="popup-text">
+                    <h3 className="popup-title">{shelf.name}</h3>
+                    <p className="popup-address">
+                      {shelf.street}, {shelf.city}
+                    </p>
+                  </div>
+                  {/* Button */}
                   <button
+                    className="popup-button"
                     onClick={() =>
                       setDestination([shelf.latitude, shelf.longitude])
                     }
-                    style={{ marginTop: "10px" }}
                   >
                     Go Here
                   </button>
