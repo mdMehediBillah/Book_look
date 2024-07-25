@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   BorrowBookPage,
+  CreateBookPage,
   CreateShelf,
   DonateBookPage,
   HomePage,
@@ -12,7 +13,11 @@ import {
   UserProfilePage,
   UserUpdatePage,
 } from "./Pages";
-import { NavigationComponent } from "./Components";
+import {
+  CreateBookComponent,
+  NavigationComponent,
+  SearchBookComponent,
+} from "./Components";
 import AdminDashboardPage from "./Pages/dashboardPages/adminDashboardPage/AdminDashboardPage";
 
 function App() {
@@ -28,6 +33,12 @@ function App() {
         <Route path="/create_shelf" element={<CreateShelf />} />
         <Route path="/profile" element={<UserProfilePage />} />
         <Route path="/profile_update" element={<UserUpdatePage />} />
+
+        <Route path="/create_book" element={<CreateBookPage />}>
+          <Route path="createBookSearch" element={<SearchBookComponent />} />
+          <Route path="createBookinput" element={<CreateBookComponent />} />
+        </Route>
+
         <Route path="/terms_condition" element={<TermsConditionPage />} />
         <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
         <Route path="*" element={<NotFoundPage />} />
@@ -58,6 +69,7 @@ const ConditionalNavBar = () => {
     "/profile",
     "/terms_condition",
     "/profile_update",
+    "/create_book",
   ];
 
   return !hideNavBarRoutes.includes(location.pathname) ? (

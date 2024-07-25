@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./GenreForm.scss";
 import axios from "axios";
-import { API } from "../../../utils/security/secreteKey";
+import { API } from "../../../Utils/security/secreteKey.js";
 import { toast } from "react-toastify";
 import { FaBook } from "react-icons/fa6";
 import { MdMessage } from "react-icons/md";
@@ -92,10 +92,7 @@ const GenreForm = ({ setOpenGenre }) => {
             <span className="input-highlight"></span>
           </div>
 
-          <button className="genre-btn">
-           Add Genre 
-          
-          </button>
+          <button className="genre-btn">Add Genre</button>
         </form>
         {/* {error ? <p className="error-message"> {error} </p> : null} */}
       </section>

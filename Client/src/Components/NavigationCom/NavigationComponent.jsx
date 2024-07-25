@@ -50,11 +50,11 @@ const NavigationComponent = () => {
     >
       <div className=" w-2/12 logo">
         <Link to="/" className="flex justify-center items-center gap-2">
-          <GiBlackBook className="min-w-7 min-h-7 text-cyan-400" />
+          <GiBlackBook className="min-w-7 min-h-7 text-cyan-200" />
 
           <div>
-            <span className="text-rose-600 font-semibold text-2xl">Book</span>
-            <span className="text-cyan-600 font-semibold text-2xl">Look</span>
+            <span className="text-rose-400 font-semibold text-2xl">Book</span>
+            <span className="text-cyan-400 font-semibold text-2xl">Look</span>
           </div>
         </Link>
       </div>
@@ -83,19 +83,17 @@ const NavigationComponent = () => {
           <div
             tabIndex={0}
             role="button"
-            className="btn bg-cyan-800 text-white glass btn-xs hover:bg-red-500"
+            className="btn bg-cyan-800 text-white glass btn-sm hover:bg-red-500"
           >
             <FaRegUserCircle />
             <span className="">Hello! {userData ? firstName : "User"}</span>
-
-            {/* {email} */}
           </div>
           <ul
             tabIndex={0}
             className="dropdown-content menu bg-gray-900 z-[1] shadow text-white rounded font-semibold mt-1"
           >
             <Link to="/profile">
-              <li className="bg-cyan-800 px-4 rounded">
+              <li className="bg-cyan-800  rounded">
                 <span>
                   {" "}
                   <MdOutlineLeaderboard />
@@ -105,7 +103,7 @@ const NavigationComponent = () => {
             </Link>
             <li
               // onClick={handleLogout}
-              className="bg-rose-600 px-4 mt-1 rounded"
+              className="bg-rose-600 mt-1 rounded"
             >
               <span onClick={handleLogout}>
                 {" "}

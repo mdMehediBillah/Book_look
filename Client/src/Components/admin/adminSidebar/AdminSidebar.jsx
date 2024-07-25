@@ -7,7 +7,7 @@ import { MdDashboard } from "react-icons/md";
 import { MdInsertComment } from "react-icons/md";
 import { MdCategory } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
-import ButtonLoader from "../../../utils/loader/buttonLoader/ButtonLoader";
+// import ButtonLoader from "../../../utils/loader/buttonLoader/ButtonLoader";
 
 const AdminSidebar = ({ isActive, setIsActive }) => {
   // Global state variables

@@ -1,23 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
-import {
-  GoBackComponent,
-  UpdateUserProfile,
-  UserProfileComponent,
-} from "../../Components";
+import { GoBackComponent, UserProfileComponent } from "../../Components";
 import { useEffect, useState } from "react";
 
 const UserProfilePage = () => {
   const navigate = useNavigate();
 
-  // // Initial state for like status
-  // const [isUpdatingProfile, setUpdatingProfile] = useState(false);
-
-  // // Function to handle the handleUpdateProfile click
-  // const handleUpdateProfile = () => {
-  //   setUpdatingProfile(!isUpdatingProfile);
-  // };
-
-  // verify user is logged in
   useEffect(() => {
     if (!localStorage.getItem("user")) navigate("/registrationPage");
   }, []);

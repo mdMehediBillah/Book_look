@@ -6,8 +6,10 @@ import { AuthContext } from "../../Context/User/AuthContext.jsx";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
+// import { useUserContext } from "../../Context/User/UserContext.jsx";
 
 const UserUpdatePage = () => {
+  // const { user, setUser } = useUserContext();
   const navigate = useNavigate();
   const { logout } = useContext(AuthContext);
 
@@ -113,6 +115,8 @@ const UserUpdatePage = () => {
         updatedFormData
       );
       console.log("User updated successfully:", response.data);
+      // setUser(response.data.result);
+      // localStorage.setItem("user", JSON.stringify(response.data.result));
       setSuccess("Profile updated successfully!");
     } catch (error) {
       console.error("Error updating user:", error);

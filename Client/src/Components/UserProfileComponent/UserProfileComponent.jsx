@@ -51,19 +51,17 @@ const UserProfileComponent = () => {
           <span>{lastName}</span>
         </div>
         <div>
-          <p className="text-right text-md font-semibold container mx-auto text-gray-500 pt-1">
+          <p className="text-right text-sm  container mx-auto text-gray-500 pt-1">
             {email}
           </p>
         </div>
         <div>
-          <p className="text-right text-md font-semibold container mx-auto text-gray-500 ">
+          <p className="text-right text-sm  container mx-auto text-gray-500 ">
             {`Member Since: ${format(createdAt, "dd/MM/yyyy")}`}{" "}
-            {/* {`Member Since: ${createdAt}`}{" "} */}
-            {/* {format(user.createdAt, "dd/MM/yyyy HH:mm")} */}
           </p>
         </div>
       </div>
-      <div className="flex justify-between gap-4 container max-w-screen-lg mx-auto pb-4">
+      <div className="flex justify-between gap-4 container max-w-screen-lg mx-auto pb-4 bg-gray-50">
         <div className="pl-12 w-8/12">
           <p>{aboutMe}</p>
         </div>
@@ -99,28 +97,3 @@ const UserProfileComponent = () => {
 };
 
 export default UserProfileComponent;
-
-// if (!localStorage.getItem("user")) navigate("/registration");
-//     // If user is logged out, clean up the user data from local storage
-//     if (!user) {
-//       localStorage.removeItem("user");
-//     }
-//     // If user is logged out, clean up the user data from the context
-//     if (!user) {
-//       logout();
-//     }
-//     // If user is logged out, redirect to the registration page
-//     if (!user) navigate("/registration");
-//     // If user is logged in, redirect to the home page
-//     if (user) navigate("/");
-//     // If user is logged in, update the user data in the context
-//     if (user) {
-//       const userData = JSON.parse(localStorage.getItem("user"));
-//       setUserData(userData);
-//     }
-//     // If user is logged in, update the user data in the context
-//     if (user) {
-//       const userData = JSON.parse(localStorage.getItem("user"));
-//       setUser(userData);
-//     }
-//     // If user is logged in, update the user data in the context
