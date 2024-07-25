@@ -8,7 +8,7 @@ import MinimapControl from "./MinimapControl";
 
 const customIcon = new L.Icon({
   iconUrl: "https://img.icons8.com/?size=100&id=13800&format=png&color=000000",
-  iconSize: [32, 32],
+  iconSize: [25, 25],
   iconAnchor: [16, 32],
   popupAnchor: [0, -32],
 });
@@ -22,10 +22,11 @@ const MapComponent = ({
 }) => {
   const mapRef = useRef(null); //It is used to directly manipulate the map.
 
-
   useEffect(() => {
-    
+    console.log("MapComponent useEffect called");
     if (mapRef.current) {
+      console.log("Map instance:", mapRef.current);
+
       // Clear previous layers
       mapRef.current.eachLayer((layer) => {
         if (layer instanceof L.TileLayer || layer instanceof L.Marker) {
@@ -55,16 +56,17 @@ const MapComponent = ({
       // Add bookshelf markers
       //==========================================================================
       bookshelves.forEach((shelf) => {
-        if (
-          shelf.location &&          //Checks if the location property exists and is not null or undefined.
-          Array.isArray(shelf.location) &&      //Checks if the location property is an array.
-          shelf.location.length === 2       //Checks if the location array has exactly two elements: latitude and longitude.
-        ) {
-          L.marker(shelf.location)
+        const { latitude, longitude, name, city, street } = shelf;
+        const lat = parseFloat(latitude);
+        const lon = parseFloat(longitude);
+
+        if (!isNaN(lat) && !isNaN(lon)) {
+          console.log("Adding marker for:", shelf);
+          L.marker([lat, lon], { icon: customIcon })
             .addTo(mapRef.current)
-            .bindPopup(`<b>${shelf.name}</b><br>${shelf.country}<br>${shelf.city}<br>${shelf.street}`);
+            .bindPopup(`<b>${name}</b><br>${city}<b>${street}</b>`);
         } else {
-          console.warn("Invalid bookshelf location:", shelf.location);
+          console.warn("Invalid bookshelf location:", { latitude, longitude });
         }
       });
       //==========================================================================
@@ -88,8 +90,9 @@ const MapComponent = ({
       } else {
         console.warn("Invalid user location:", userLocation);
       }
-
+      //==========================================================================
       // Add destination marker
+      //================================================================
       if (
         destination &&
         Array.isArray(destination) &&
@@ -123,35 +126,44 @@ const MapComponent = ({
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {bookshelves.map((shelf, idx) =>
-          shelf.location ? (
-            <Marker key={idx} position={shelf.location} icon={customIcon}>
-              <Popup>
-                <div style={{ maxWidth: "200px" }}>
-                  <h3>{shelf.name}</h3>
-                  <p>{shelf.address}</p>
-                  {shelf.imageUrl && (
-                    <img
-                      src={shelf.imageUrl}
-                      alt={shelf.name}
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        borderRadius: "5px",
-                      }}
-                    />
-                  )}
-                  <button
-                    onClick={() => setDestination(shelf.location)}
-                    style={{ marginTop: "10px" }}
-                  >
-                    Go Here
-                  </button>
-                </div>
-              </Popup>
-            </Marker>
-          ) : null
-        )}
+        
+        {bookshelves.map((shelf, idx) => {
+          const { latitude, longitude, name, city,street } = shelf;
+          const lat = parseFloat(latitude);
+          const lon = parseFloat(longitude);
+
+          if (!isNaN(lat) && !isNaN(lon)) {
+            return (
+              <Marker key={idx} position={[lat, lon]} icon={customIcon}>
+                <Popup>
+                  <div style={{ maxWidth: "200px" }}>
+                    <h3>{name}</h3>
+                    <p>{city}</p>
+                    <p>{street}</p>
+                    {shelf.imageUrl && (
+                      <img
+                        src={shelf.imageUrl}
+                        alt={name}
+                        style={{
+                          width: "100%",
+                          height: "auto",
+                          borderRadius: "5px",
+                        }}
+                      />
+                    )}
+                    <button
+                      onClick={() => setDestination([lat, lon])}
+                      style={{ marginTop: "10px" }}
+                    >
+                      Go Here
+                    </button>
+                  </div>
+                </Popup>
+              </Marker>
+            );
+          }
+          return null;
+        })}
         <LocationMarker />
         {userLocation && destination && (
           <RoutingMachine start={userLocation} end={destination} />
