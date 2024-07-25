@@ -310,6 +310,7 @@ const CreateShelfForm = () => {
               className="absolute left-3 top-3 text-gray-600"
             />
             <div className="flex-1">
+
               <input
                 type="text"
                 id="street"
