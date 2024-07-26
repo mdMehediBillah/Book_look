@@ -1,5 +1,5 @@
 //==========================================================================
-//This code fetches a list of bookshelves from an API, 
+//This code fetches a list of bookshelves from an API,
 //obtains the user's current location, and passes this data to a layout component.
 //==========================================================================
 
@@ -9,6 +9,7 @@ import axios from "axios";
 import { API } from "../../utils/security/secreteKey";
 import { toast } from "react-toastify";
 import SearchComponent from "../SearchComponent/SearchComponent";
+import { updateBookshelvesWithCoordinates } from "./geocoding/geocoding";
 
 const Location = () => {
   const [bookshelves, setBookshelves] = useState([]);
@@ -20,7 +21,7 @@ const Location = () => {
   const [searchTerm, setSearchTerm] = useState(""); // Initialize searchTerm state variable
 
   //==========================================================================
-  // Get all bookshelves
+  // Get all bookshelves /using GeoCoding api (openCage)
   //==========================================================================
   useEffect(() => {
     const fetchBookshelves = async () => {
@@ -29,7 +30,12 @@ const Location = () => {
         const response = await axios.get(
           `http://localhost:8000/api/v1/bookshelves/`
         );
-        setBookshelves(response.data.result);
+        // setBookshelves(response.data.result);
+
+        const updatedShelves = await updateBookshelvesWithCoordinates(
+          response.data.result
+        );
+        setBookshelves(updatedShelves);
       } catch (error) {
         toast.error("Error fetching Bookshelfs");
       }
