@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -14,8 +14,8 @@ import {
   UserUpdatePage,
 } from "./Pages";
 import {
+  BookDetailsCom,
   CreateBookComponent,
-  NavigationComponent,
   SearchBookComponent,
 } from "./Components";
 import AdminDashboardPage from "./Pages/dashboardPages/adminDashboardPage/AdminDashboardPage";
@@ -23,9 +23,7 @@ import AdminDashboardPage from "./Pages/dashboardPages/adminDashboardPage/AdminD
 function App() {
   return (
     <>
-      {/* <ConditionalNavBar /> */}
-
-      <Routes>
+     <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/registrationPage" element={<RegistrationPage />} />
         <Route path="/donate_book" element={<DonateBookPage />} />
@@ -35,9 +33,11 @@ function App() {
         <Route path="/profile_update" element={<UserUpdatePage />} />
 
         <Route path="/create_book" element={<CreateBookPage />}>
+          <Route index element={<SearchBookComponent />} />
           <Route path="createBookSearch" element={<SearchBookComponent />} />
           <Route path="createBookinput" element={<CreateBookComponent />} />
         </Route>
+        <Route path="/createBookSearch/:id" element={<BookDetailsCom />} />
 
         <Route path="/terms_condition" element={<TermsConditionPage />} />
         <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
@@ -60,20 +60,4 @@ function App() {
   );
 }
 
-const ConditionalNavBar = () => {
-  const location = useLocation();
-
-  // Don't display Navbar on these routes
-  const hideNavBarRoutes = [
-    "/registrationPage",
-    "/profile",
-    "/terms_condition",
-    "/profile_update",
-    "/create_book",
-  ];
-
-  return !hideNavBarRoutes.includes(location.pathname) ? (
-    <NavigationComponent />
-  ) : null;
-};
 export default App;

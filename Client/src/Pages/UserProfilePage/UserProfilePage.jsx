@@ -1,12 +1,12 @@
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GoBackComponent, UserProfileComponent } from "../../Components";
-import { useEffect, useState } from "react";
 
 const UserProfilePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!localStorage.getItem("user")) navigate("/registrationPage");
+    if (!localStorage.getItem("token")) navigate("/registrationPage");
   }, []);
 
   return (

@@ -10,6 +10,7 @@ import UpdateUserProfile from "./UpdateUserProfile/UpdateUserProfile.jsx";
 import CreateBookComponent from "./CreateBookComponent/CreateBookComponent.jsx";
 import SearchBookComponent from "./SearchBookComponent/SearchBookComponent.jsx";
 import CreateBook from "./CreateBook/CreateBook.jsx";
+import BookDetailsCom from "./BookDetailsCom/BookDetailsCom.jsx";
 
 // export all components
 export {
@@ -25,4 +26,5 @@ export {
   CreateBookComponent,
   SearchBookComponent,
   CreateBook,
+  BookDetailsCom,
 };
