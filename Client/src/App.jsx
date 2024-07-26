@@ -23,7 +23,7 @@ import AdminDashboardPage from "./Pages/dashboardPages/adminDashboardPage/AdminD
 function App() {
   return (
     <>
-      <ConditionalNavBar />
+      {/* <ConditionalNavBar /> */}
 
       <Routes>
         <Route path="/" element={<HomePage />} />

@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const bookshelfSchema = new Schema(
   {
-    barcode: { type: String, required: true, unique: true },
+    barcode: { type: String, required: false, unique: true },
     image: [{ type: String, required: true }],
     name: { type: String, required: true },
     country: { type: String, required: true },
@@ -12,8 +12,8 @@ const bookshelfSchema = new Schema(
     city: { type: String, required: true },
     zipCode: { type: String, required: true },
     street: { type: String, required: true },
-    longitude: { type: String, required: true },
-    latitude: { type: String, required: true },
+    longitude: { type: String, required: false },
+    latitude: { type: String, required: false },
     openingTime: { type: String, required: true },
     closingTime: { type: String, required: true },
 

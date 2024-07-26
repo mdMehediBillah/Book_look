@@ -4,7 +4,6 @@ import { FaBookMedical } from "react-icons/fa";
 import "./BorrowedBookForm.scss";
 import { API } from "../../../utils/security/secreteKey";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
 
 const initialValues = {
   ISBN: "",
@@ -15,7 +14,6 @@ const initialValues = {
   borrowedFrom: "",
 };
 const BorrowedBookForm = ({ setOpenBorrowedBook }) => {
-  const { currentUser } = useSelector((state) => state.user);
   // Local variables
   const [formData, setFormData] = useState(initialValues);
   const [books, setBooks] = useState([]);
@@ -77,7 +75,7 @@ const BorrowedBookForm = ({ setOpenBorrowedBook }) => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        `${API}/borrowedBooks/new/${currentUser._id}`,
+        `${API}/borrowedBooks/new/currentUser._id`,
         formData
       );
 
