@@ -1,26 +1,27 @@
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../Context/User/AuthContext.jsx";
+import { useAuthContext } from "../../Context/User/AuthContext.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import UserProfileActivitiesCompo from "../UserProfileActivitiesCompo/UserProfileActivitiesCompo.jsx";
 
 const UpdateUserProfile = () => {
   const navigate = useNavigate();
-  const { logout } = useContext(AuthContext);
+  const { user, setUser } = useAuthContext();
+  console.log(user);
 
   // fetching data from local storage
-  const userLocal = localStorage.getItem("user");
-  const user = JSON.parse(userLocal);
-  const { firstName, lastName, email, image, createdAt } = user;
-  console.log(email, firstName, lastName, email, image, createdAt);
+  // const userLocal = localStorage.getItem("user");
+  // const user = JSON.parse(userLocal);
+  // const { firstName, lastName, email, image, createdAt } = user;
+  // console.log(email, firstName, lastName, email, image, createdAt);
   const [loading, setLoading] = useState(false);
 
-  const [userData, setUserData] = useState(userLocal);
+  // const [userData, setUserData] = useState(userLocal);
 
   useEffect(() => {
-    if (!localStorage.getItem("user")) navigate("/registrationPage");
-    setUserData(userLocal);
-  }, [logout]);
+    if (!localStorage.getItem("token")) navigate("/registrationPage");
+    // setUserData(userLocal);
+  }, []);
 
   return (
     <div>
@@ -46,8 +47,9 @@ const UpdateUserProfile = () => {
               name="firstName"
               value={firstName}
               onChange={(e) =>
-                setUserData(
-                  JSON.stringify({ ...userData, firstName: e.target.value })
+                setUser(
+                  { ...user, firstName: e.target.value }
+                  // JSON.stringify({ ...user, firstName: e.target.value })
                 )
               }
               className="mt-1 focus:outline-none focus:ring-2 focus:ring-gray-300 block w-full sm:text-sm border-gray-300 rounded-md"

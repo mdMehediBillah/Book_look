@@ -1,5 +1,12 @@
+import { NavigationComponent } from "../../Components";
+
 const BorrowBookPage = () => {
-  return <div>BorrowBookPage</div>;
+  return (
+    <main>
+      <NavigationComponent />
+      BorrowBookPage
+    </main>
+  );
 };
 
 export default BorrowBookPage;

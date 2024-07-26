@@ -1,15 +1,17 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import { AuthContext } from "../../Context/User/AuthContext.jsx"; // Adjust the path as necessary
+import { useAuthContext } from "../../Context/User/AuthContext.jsx"; // Adjust the path as necessary
+
+const URL = import.meta.env.VITE_REACT_APP_URL;
 
 // =================================================================
 // LoginComponent
 const LoginConponent = ({ toggleForm }) => {
-  const { login } = useContext(AuthContext);
+  const { setUser } = useAuthContext();
   const navigate = useNavigate();
 
   // =================================================================
@@ -56,7 +58,7 @@ const LoginConponent = ({ toggleForm }) => {
   };
 
   // Handle submit
-  const handleSubmit = async (e) => {
+  const handelLogin = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
@@ -65,17 +67,10 @@ const LoginConponent = ({ toggleForm }) => {
     }
     setLoading(true);
     try {
-      // const newUser = {
-      //   email,
-      //   password,
-      //   rememberMe,
-      // };
-      const response = await axios.post(
-        `http://localhost:8000/api/v1/auth/login`,
-        form
-      );
-      console.log(response.data.result.email);
-      login(response.data.result);
+      const response = await axios.post(`${URL}/api/v1/auth/login`, form);
+      localStorage.setItem("token", `Bearer ${response.data.token}`);
+
+      setUser(response.data.result);
       toast.success("Login successfully!");
       handleReset();
       navigate("/");
@@ -101,7 +96,7 @@ const LoginConponent = ({ toggleForm }) => {
       <h2 className="text-xl font-bold mb-6 text-gray-900 mx-auto">
         Log in your account
       </h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handelLogin}>
         {errors.form && (
           <p className="bg-red-600 text-white text-xs p-2 mb-2 rounded-md">
             {errors.form}

@@ -1,37 +1,58 @@
-import React, { createContext, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect, createContext, useContext, useState } from "react";
 
-// Create context
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
-// Create a provider component
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  // const navigate = useNavigate();
+  const URL = import.meta.env.VITE_REACT_APP_URL;
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check for user in localStorage
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+    const fetchUser = async () => {
+      const token = localStorage.getItem("token");
+      try {
+        if (token) {
+          const { data } = await axios.post(
+            `${URL}/api/v1/auth/refresh`,
+            {},
+            {
+              headers: {
+                authorization: token,
+              },
+            }
+          );
+
+          setUser(data.result);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
   }, []);
-
-  const login = (userData) => {
-    setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
-  };
-
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("user");
-    window.location.reload();
-    // navigate("/registrationPage");
-  };
-
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, setUser, isAuthenticated, setIsAuthenticated }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
+
+export const useAuthContext = () => {
+  return useContext(AuthContext);
+};
+
+// const login = (userData) => {
+//   setUser(userData);
+// };
+
+// const logout = () => {
+//   setUser(null);
+// };

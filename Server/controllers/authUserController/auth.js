@@ -98,20 +98,53 @@ export const loginUser = async (req, res, next) => {
         : new Date(Date.now() + 24 * 60 * 60 * 1000);
 
       res
-        .cookie("token", token, {
-          path: "/",
-          httpOnly: false,
-          expires: tokenExpiry,
-          sameSite: "strict",
-          secure: true,
-        })
+        // .cookie("token", token, {
+        //   path: "/",
+        //   httpOnly: false,
+        //   expires: tokenExpiry,
+        //   sameSite: "strict",
+        //   secure: true,
+        // })
 
         .status(200)
         .json({
           success: true,
           result: { ...rest },
           message: "User successfully logged in!",
+          token,
         });
+    }
+  } catch (error) {
+    return next(createError(400, "Server error! Please try again!"));
+  }
+};
+
+//==========================================================================
+// refresh user
+//==========================================================================
+export const refreshUser = async (req, res, next) => {
+  const { user } = req;
+  try {
+    const dataUser = await User.findById(user?.id);
+    if (!dataUser) {
+      // return res.status(401).json({ message: " invalid token!" });
+      return next(createError(401, "Wrong credentials"));
+    }
+
+    if (dataUser) {
+      const {
+        password,
+        bookshelfManager,
+        financeManager,
+        generalManager,
+        ...rest
+      } = dataUser._doc;
+
+      res.status(200).json({
+        success: true,
+        result: { ...rest },
+        message: "User successfully logged in!",
+      });
     }
   } catch (error) {
     return next(createError(400, "Server error! Please try again!"));

@@ -3,18 +3,15 @@ import "./AllBookshelves.scss";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { API } from "../../../utils/security/secreteKey";
+import { API } from "../../../Utils/security/secreteKey.js";
 import { FaTrashAlt } from "react-icons/fa";
 import { MdEditSquare } from "react-icons/md";
 
 const AllBookshelves = () => {
-
   // Local state variable
   const [bookshelfId, setBookshelfId] = useState("");
   const [confirmDeletion, setConfirmDeletion] = useState(false);
   const [openBookshelf, setOpenBookshelf] = useState(false);
-
-
 
   const handleDelete = async (id) => {
     try {
@@ -148,7 +145,6 @@ const AllBookshelves = () => {
       )}
 
       {/* {openBookshelf && <BookshelfForm setOpenBookshelf={setOpenBookshelf} />} */}
-   
     </section>
   );
 };
