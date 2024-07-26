@@ -59,14 +59,21 @@ const LayoutComponent = ({
   //==========================================================================
   // State for show more/less button
   //==========================================================================
-  const [showMore, setShowMore] = useState(false);
-  const displayedBookshelves = showMore
-    ? filteredBookshelves
-    : filteredBookshelves.slice(0, 3); //display only 3 bookshelves ehwn show more is false
+  // const [showMore, setShowMore] = useState(false);
+  // const displayedBookshelves = showMore
+  //   ? filteredBookshelves
+  //   : filteredBookshelves.slice(0, 3); //display only 3 bookshelves ehwn show more is false
+  //==========================================================================
+
+
+  const displayedBookshelves = filteredBookshelves; // to always display all bookshelves
 
   return (
-    <div className="flex flex-col md:flex-row mt-20">
-      <div className="flex flex-col md:w-1/3">
+    <div className="flex flex-col md:flex-row mt-10">
+      <div
+        className="flex flex-col md:w-1/3 h-full overflow-y-auto"    //for scrolling the list of bookshelves
+        style={{ maxHeight: "calc(80vh - 80px)" }}
+      >
         {displayedBookshelves.map((shelf, idx) => (
           <div
             key={idx}
@@ -130,14 +137,14 @@ const LayoutComponent = ({
           </div>
         ))}
 
-        {filteredBookshelves.length > 3 && (
+        {/* {filteredBookshelves.length > 3 && (
           <button
             className="mt-5 py-2 px-6 bg-cyan-700 font-bold text-white rounded hover:bg-rose-500"
             onClick={() => setShowMore(!showMore)}
           >
             {showMore ? "Show Less" : "More"}
           </button>
-        )}
+        )} */}
       </div>
 
       <div className="flex-grow h-1/2 md:h-full">
