@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -16,7 +16,6 @@ import {
 import {
   BookDetailsCom,
   CreateBookComponent,
-  NavigationComponent,
   SearchBookComponent,
 } from "./Components";
 import AdminDashboardPage from "./Pages/dashboardPages/adminDashboardPage/AdminDashboardPage";
@@ -34,6 +33,7 @@ function App() {
         <Route path="/profile_update" element={<UserUpdatePage />} />
 
         <Route path="/create_book" element={<CreateBookPage />}>
+          <Route index element={<SearchBookComponent />} />
           <Route path="createBookSearch" element={<SearchBookComponent />} />
           <Route path="createBookinput" element={<CreateBookComponent />} />
         </Route>

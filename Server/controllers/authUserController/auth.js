@@ -120,6 +120,38 @@ export const loginUser = async (req, res, next) => {
 };
 
 //==========================================================================
+// refresh user
+//==========================================================================
+export const refreshUser = async (req, res, next) => {
+  const { user } = req;
+  try {
+    const dataUser = await User.findById(user?.id);
+    if (!dataUser) {
+      // return res.status(401).json({ message: " invalid token!" });
+      return next(createError(401, "Wrong credentials"));
+    }
+
+    if (dataUser) {
+      const {
+        password,
+        bookshelfManager,
+        financeManager,
+        generalManager,
+        ...rest
+      } = dataUser._doc;
+
+      res.status(200).json({
+        success: true,
+        result: { ...rest },
+        message: "User successfully logged in!",
+      });
+    }
+  } catch (error) {
+    return next(createError(400, "Server error! Please try again!"));
+  }
+};
+
+//==========================================================================
 // Update user account
 //==========================================================================
 export const updateUser = async (req, res, next) => {

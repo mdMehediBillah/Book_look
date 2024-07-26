@@ -1,11 +1,41 @@
-import { createContext, useContext, useState } from "react";
+import axios from "axios";
+import { useEffect, createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const URL = import.meta.env.VITE_REACT_APP_URL;
+
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem("token");
+      try {
+        if (token) {
+          const { data } = await axios.post(
+            `${URL}/api/v1/auth/refresh`,
+            {},
+            {
+              headers: {
+                authorization: token,
+              },
+            }
+          );
+
+          setUser(data.result);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
   return (
     <AuthContext.Provider
       value={{ user, setUser, isAuthenticated, setIsAuthenticated }}
@@ -18,22 +48,6 @@ export const AuthProvider = ({ children }) => {
 export const useAuthContext = () => {
   return useContext(AuthContext);
 };
-
-// useEffect(() => {
-//   // Fetch user data from API
-//   const fetchUser = async () => {
-//     try {
-//       const response = await axios.get('/api/user'); // Replace with your API endpoint
-//       setUser(response.data);
-//     } catch (error) {
-//       console.error('Failed to fetch user:', error);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   fetchUser();
-// }, []);
 
 // const login = (userData) => {
 //   setUser(userData);

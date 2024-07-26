@@ -5,7 +5,9 @@ import {
   loginUser,
   updateUser,
   userLogout,
+  refreshUser,
 } from "../controllers/authUserController/auth.js";
+import { isAuthenticated } from "../middlewares/auth/index.js";
 
 // Auth User Router
 const authUserRouter = express.Router();
@@ -13,6 +15,7 @@ const authUserRouter = express.Router();
 // User Routes
 authUserRouter.post("/register", createUser);
 authUserRouter.post("/login", loginUser);
+authUserRouter.post("/refresh", isAuthenticated, refreshUser);
 authUserRouter.put("/update/:userId", updateUser);
 authUserRouter.get("/logout", userLogout);
 authUserRouter.put("/change-password/:id", changePassword);
