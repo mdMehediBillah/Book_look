@@ -127,20 +127,50 @@ export const updateBookshelf = async (req, res, next) => {
 //==========================================================================
 export const getBookshelves = async (req, res, next) => {
   try {
-    const bookshelves = await Bookshelf.find();
-
-    if (!bookshelves) {
+    const { search } = req.query;
+    let query = {};
+    if (search) {
+      // If search parameter is provided, construct the query with $or conditions
+      query = {
+        $or: [
+          { name: new RegExp(search, 'i') },
+          { country: new RegExp(search, 'i') },
+          { state: new RegExp(search, 'i') },
+          { city: new RegExp(search, 'i') },
+        ],
+      };
+    }
+    // Find bookshelves based on the constructed query or return all if no query
+    const bookshelves = await Bookshelf.find(query);
+    if (!bookshelves || bookshelves.length === 0) {
       return next(createError(400, "Bookshelves not found!"));
     }
-
     return res.status(200).json({
       success: true,
       result: bookshelves,
     });
   } catch (error) {
-    return next(createError(400, "Server error! Please try again!"));
+    return next(createError(500, "Server error! Please try again!"));
   }
 };
+
+
+// export const getBookshelves = async (req, res, next) => {
+//   try {
+//     const bookshelves = await Bookshelf.find();
+
+//     if (!bookshelves) {
+//       return next(createError(400, "Bookshelves not found!"));
+//     }
+
+//     return res.status(200).json({
+//       success: true,
+//       result: bookshelves,
+//     });
+//   } catch (error) {
+//     return next(createError(400, "Server error! Please try again!"));
+//   }
+// };
 
 //==========================================================================
 // Get single bookshelf
