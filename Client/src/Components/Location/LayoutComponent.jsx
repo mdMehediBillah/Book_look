@@ -6,6 +6,8 @@ import React, { useState, useEffect } from "react";
 import MapComponent from "./MapComponent";
 import { getOpeningStatus } from "./getOpeningStatus/getOpeningStatus";
 
+import { Link } from "react-router-dom";
+
 const LayoutComponent = ({
   bookshelves,
   center,
@@ -24,8 +26,8 @@ const LayoutComponent = ({
 
   // Safeguard against undefined properties
   const filteredBookshelves = bookshelves.filter((shelf) => {
-    console.log("Bookshelf:", shelf); // Log each bookshelf item ----> debugging
-    console.log("Search Term:", normalizedSearchTerm); // Log the current search term ----> debugging
+    // console.log("Bookshelf:", shelf); // Log each bookshelf item ----> debugging
+    // console.log("Search Term:", normalizedSearchTerm); // Log the current search term ----> debugging
 
     //search based on name, country, state, and city
     const name = shelf.name?.toLowerCase() || "";
@@ -144,6 +146,18 @@ const LayoutComponent = ({
                   {message} <span className="text-gray-500">{detail}</span>
                 </p>
               </div>
+
+            )}
+
+            {/* Text Content */}
+            <div>
+              <h2 className="text-lg font-semibold">{shelf.name}</h2>
+              <p className="text-gray-700">
+                {shelf.street}, {shelf.city}
+              </p>
+              <Link to={`/create_book/${shelf.id}`}>
+                <button>Add Book</button>
+              </Link>
             </div>
           );
         })}

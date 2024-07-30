@@ -23,6 +23,8 @@ import {
 import BookshelfMap from "../../Components/BookshelfMap/BookshelfMap.jsx";
 
 //==========================================================================
+  //------------------------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------------------------
 // Function to upload image to Cloudinary
 //==========================================================================
 const uploadImageToCloudinary = async (file) => {
@@ -38,6 +40,9 @@ const uploadImageToCloudinary = async (file) => {
  //==========================================================================
 // Function to create a new bookshelf
 //==========================================================================
+
+ //------------------------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------------------------
 const CreateShelfForm = () => {
   const [formData, setFormData] = useState({
     image: null,
@@ -67,36 +72,32 @@ const CreateShelfForm = () => {
 //==========================================================================
 //functions
 //==========================================================================
+  //------------------------------------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------------------------------------
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   // for file upload
   const handleFileChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.files[0] });
   };
-
   // for time selection
   const handleTimeChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
   };
-
   // for location selection
   const handleLocationChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
   };
-
   // for selecting 24 hours or custom time
   const handleRadioChange = (e) => {
     setIs24Hours(e.target.value === "24hours");
   };
-
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Start loading
-
     //------------------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------
     // const data = new FormData();
@@ -120,9 +121,11 @@ const CreateShelfForm = () => {
         ? await uploadImageToCloudinary(formData.image)
         : null;
 
+      // let bannerUrl = formData.banner
+      //   ? await uploadImageToCloudinary(formData.banner)
+      //   : null;
       //------------------------------------------------------------------------------------------------------------
       //------------------------------------------------------------------------------------------------------------
-
       // Create updated form data with URLs
       const updatedFormData = {
         ...formData,
@@ -130,7 +133,6 @@ const CreateShelfForm = () => {
         openingTime: is24Hours ? "00:00" : formData.openingTime,
         closingTime: is24Hours ? "23:59" : formData.closingTime,
       };
-
       //------------------------------------------------------------------------------------------------------------
       //------------------------------------------------------------------------------------------------------------
       // Send the updated form data to the server
@@ -143,7 +145,6 @@ const CreateShelfForm = () => {
           },
         }
       );
-
       toast.success(response.data.message);
     } catch (error) {
       console.error("Error creating bookshelf:", error);
@@ -153,7 +154,7 @@ const CreateShelfForm = () => {
     }
   };
 
-  return (
+return (
     <form
       onSubmit={handleSubmit}
       className="max-w-5xl mx-auto p-6 mt-10 bg-white shadow-md rounded-md"
@@ -161,7 +162,6 @@ const CreateShelfForm = () => {
       <h2 className="text-xl font-bold mb-4 text-center">
         Create New Bookshelf
       </h2>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Left Side */}
         <div className="space-y-4 text-sm">
@@ -179,6 +179,24 @@ const CreateShelfForm = () => {
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Bookshelf Name"
+                required
+                className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
+          <div className="flex items-center mb-4 relative">
+            <FontAwesomeIcon
+              icon={faBarcode}
+              className="absolute left-3 top-3 text-gray-600"
+            />
+            <div className="flex-1">
+              <input
+                type="text"
+                id="barcode"
+                name="barcode"
+                value={formData.barcode}
+                onChange={handleChange}
+                placeholder="Barcode"
                 required
                 className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
@@ -203,6 +221,26 @@ const CreateShelfForm = () => {
               />
             </div>
           </div>
+
+          {/* <div className="flex items-center mb-4">
+            <FontAwesomeIcon icon={faImage} className="mr-2 text-gray-600" />
+            <div className="flex-1">
+              <label
+                htmlFor="banner"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Banner:
+              </label>
+              <input
+                type="file"
+                id="banner"
+                name="banner"
+                onChange={handleFileChange}
+                accept="image/*"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div> */}
           <div className="flex items-center mb-4">
             {/* <FontAwesomeIcon icon={faClock} className="mr-2 text-gray-600" /> */}
             <div className="flex-1">
@@ -230,7 +268,6 @@ const CreateShelfForm = () => {
                   className="time-picker-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
-
               <div className="flex-1">
                 <label
                   htmlFor="closingTime"
@@ -250,7 +287,6 @@ const CreateShelfForm = () => {
             </div>
           )}
         </div>
-
         {/* Right Side */}
         <div className="space-y-4">
           <div className="flex items-center mb-4">
@@ -264,7 +300,6 @@ const CreateShelfForm = () => {
               />
             </div>
           </div>
-
           <div className="flex items-center mb-4 relative">
             <FontAwesomeIcon
               icon={faRoad}
@@ -283,7 +318,6 @@ const CreateShelfForm = () => {
               />
             </div>
           </div>
-
           <div className="flex items-center mb-4 relative">
             <FontAwesomeIcon
               icon={faMap}
@@ -308,6 +342,44 @@ const CreateShelfForm = () => {
       <div>
         <BookshelfMap onLocationSelect={handleLocationSelect} />
       </div>
+          {/* <div className="flex items-center mb-4 relative">
+            <FontAwesomeIcon
+              icon={faMapPin}
+              className="absolute left-3 top-3 text-gray-600"
+            />
+            <div className="flex-1">
+              <input
+                type="text"
+                id="latitude"
+                name="latitude"
+                value={formData.latitude}
+                onChange={handleChange}
+                required
+                placeholder="Latitude"
+                className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div> */}
+          {/* <div className="flex items-center mb-4 relative">
+            <FontAwesomeIcon
+              icon={faMapPin}
+              className="absolute left-3 top-3 text-gray-600"
+            />
+            <div className="flex-1">
+              <input
+                type="text"
+                id="longitude"
+                name="longitude"
+                value={formData.longitude}
+                onChange={handleChange}
+                required
+                placeholder="Longitude"
+                className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div> */}
+        </div>
+      </div>
       <button
         type="submit"
         className="w-full py-2 mt-7 px-4 bg-cyan-700 text-white font-bold rounded-md hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -317,5 +389,41 @@ const CreateShelfForm = () => {
     </form>
   );
 };
-
 export default CreateShelfForm;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,18 +1,22 @@
 import { Link, useNavigate } from "react-router-dom";
 import { GoBackComponent } from "../../Components";
 import bannerImgUrl from "../../assets/images/banner_default.png";
+import profileImgUrl from "../../assets/images/avatar.png";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../Context/User/AuthContext.jsx";
+import { useAuthContext } from "../../Context/User/AuthContext.jsx";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { format } from "date-fns";
+// import { format } from "date-fns";
+// import { useUserContext } from "../../Context/User/UserContext.jsx";
 
 const UserUpdatePage = () => {
+  const url = import.meta.env.VITE_REACT_APP_URL;
+  // const { user, setUser } = useUserContext();
   const navigate = useNavigate();
-  const { logout } = useContext(AuthContext);
+  const { user, setUser } = useAuthContext();
 
-  const userLocal = localStorage.getItem("user");
-  const user = JSON.parse(userLocal);
+  // const userLocal = localStorage.getItem("user");
+  // const user = JSON.parse(userLocal);
   const {
     firstName,
     lastName,
@@ -47,12 +51,12 @@ const UserUpdatePage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [imagePreview, setImagePreview] = useState(image || "");
+  const [imagePreview, setImagePreview] = useState(image || profileImgUrl);
   const [bannerPreview, setBannerPreview] = useState(banner || bannerImgUrl);
 
   useEffect(() => {
-    if (!localStorage.getItem("user")) navigate("/registrationPage");
-  }, [logout]);
+    if (!localStorage.getItem("token")) navigate("/registrationPage");
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
@@ -90,7 +94,7 @@ const UserUpdatePage = () => {
     return response.data.url;
   };
 
-  const handleSubmit = async (e) => {
+  const handelUpdate = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -107,12 +111,25 @@ const UserUpdatePage = () => {
         image: imageUrl,
         banner: bannerUrl,
       };
-
+      // const token = localStorage.getItem("token");
       const response = await axios.put(
-        `http://localhost:8000/api/v1/auth/update/${user._id}`,
-        updatedFormData
+        `${url}/api/v1/auth/update/${user._id}`,
+        updatedFormData,
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        }
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
       );
       console.log("User updated successfully:", response.data);
+
+      setUser(response.data.result);
+      // localStorage.setItem("user", JSON.stringify(response.data.result));
       setSuccess("Profile updated successfully!");
     } catch (error) {
       console.error("Error updating user:", error);
@@ -160,7 +177,7 @@ const UserUpdatePage = () => {
         </div>
       </div>
       <div className="py-2 px-4 container mx-auto justify-between screen-max-lg bg-gray-100 max-w-screen-lg pb-16">
-        <form onSubmit={handleSubmit} className="">
+        <form onSubmit={handelUpdate} className="">
           <div className="flex justify-between ">
             <div className="flex flex-col pt-12 w-56">
               <label className="mt-1 py-2 px-3 rounded cursor-pointer text-center  px-4 bg-cyan-100 w-8/12 mx-auto rounded-xl font-semibold hover:bg-cyan-300 text-sm">
@@ -199,7 +216,7 @@ const UserUpdatePage = () => {
               </div>
               <div className="flex gap-1 text-gray-500 text-sm">
                 <span className="">Member since:</span>
-                <span>{`${format(createdAt, "dd/MM/yyyy")}`} </span>
+                {/* <span>{`${format(createdAt, "dd/MM/yyyy")}`} </span> */}
               </div>
             </div>
           </div>

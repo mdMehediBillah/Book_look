@@ -6,7 +6,7 @@
 import React, { useEffect, useState } from "react";
 import LayoutComponent from "./LayoutComponent";
 import axios from "axios";
-import { API } from "../../utils/security/secreteKey";
+// import { API } from "../../utils/security/secreteKey";
 import { toast } from "react-toastify";
 import SearchComponent from "../SearchComponent/SearchComponent";
 import { updateBookshelvesWithCoordinates } from "./geocoding/geocoding";

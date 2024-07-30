@@ -2,13 +2,13 @@ import { useState } from "react";
 import "./AdminDashboardPage.scss";
 import AdminSidebar from "../../../Components/admin/adminSidebar/AdminSidebar";
 import DashboardSummary from "../../../Components/admin/dashboardSummary/DashboardSummary";
-
-
+import { NavigationComponent } from "../../../Components";
 
 const AdminDashboardPage = () => {
   const [isActive, setIsActive] = useState(1);
   return (
     <main className="admin-dashboard-page">
+      <NavigationComponent />
       <section className="admin-dashboard-page-container">
         <h1 className="admin-dashboard-page-title"> Admin Dashboard page </h1>
 
