@@ -23,7 +23,7 @@ import AdminDashboardPage from "./Pages/dashboardPages/adminDashboardPage/AdminD
 function App() {
   return (
     <>
-     <Routes>
+      <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/registrationPage" element={<RegistrationPage />} />
         <Route path="/donate_book" element={<DonateBookPage />} />
@@ -32,7 +32,7 @@ function App() {
         <Route path="/profile" element={<UserProfilePage />} />
         <Route path="/profile_update" element={<UserUpdatePage />} />
 
-        <Route path="/create_book" element={<CreateBookPage />}>
+        <Route path="/create_book/:id" element={<CreateBookPage />}>
           <Route index element={<SearchBookComponent />} />
           <Route path="createBookSearch" element={<SearchBookComponent />} />
           <Route path="createBookinput" element={<CreateBookComponent />} />
