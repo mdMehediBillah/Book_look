@@ -9,8 +9,9 @@ import GoBackComponent from "../GoBackComponent/GoBackComponent";
 
 const URL = "https://openlibrary.org/works/";
 
-const BookDetails = () => {
+const BookDetails = ({ shelf }) => {
   const { id } = useParams();
+  console.log(shelf);
   const [loading, setLoading] = useState(false);
   const [book, setBook] = useState(null);
   const navigate = useNavigate();
