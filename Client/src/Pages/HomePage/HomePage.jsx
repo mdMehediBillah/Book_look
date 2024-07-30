@@ -14,6 +14,11 @@ const HomePage = () => {
     if (!localStorage.getItem("token")) navigate("/registrationPage");
   }, []);
   return (
+    <main>
+      <section>
+        {/* <SearchComponent /> */}
+      </section>
+      <div className="container mx-auto flex-grow p-4">
     <main
       className="w-full min-h-max h-screen object-cover  bg-cover bg-center bg-no-repeat max-w-screen-lg mx-auto bg-gray-100 px-2"
       // style={{

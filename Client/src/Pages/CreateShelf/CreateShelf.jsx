@@ -10,7 +10,6 @@ import CountryStateCitySelector from "../../Components/CreateShelfComponent/Coun
 import TimeSelectionOptions from "../../Components/CreateShelfComponent/TimeSelectionOptions.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBarcode,
   faImage,
   faBook,
   faClock,
@@ -21,9 +20,13 @@ import {
   faCity,
   faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
+import BookshelfMap from "../../Components/BookshelfMap/BookshelfMap.jsx";
+
+//==========================================================================
   //------------------------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------------------------
 // Function to upload image to Cloudinary
+//==========================================================================
 const uploadImageToCloudinary = async (file) => {
   const cloud_name = import.meta.env.VITE_CLOUD_NAME;
   const upload_preset = import.meta.env.VITE_UPLOAD_PRESET;
@@ -34,13 +37,15 @@ const uploadImageToCloudinary = async (file) => {
   const response = await axios.post(cloud_URL, data);
   return response.data.url;
 };
+ //==========================================================================
+// Function to create a new bookshelf
+//==========================================================================
+
  //------------------------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------------------------
 const CreateShelfForm = () => {
   const [formData, setFormData] = useState({
-    barcode: "",
     image: null,
-    // banner: null,
     name: "",
     openingTime: "",
     closingTime: "",
@@ -49,14 +54,24 @@ const CreateShelfForm = () => {
     city: "",
     street: "",
     zipCode: "",
-    // latitude: "",
-    // longitude: "",
   });
-  //------------------------------------------------------------------------------------------------------------
-  //------------------------------------------------------------------------------------------------------------
+
+
+   const handleLocationSelect = (addressData) => {
+     setFormData((prevState) => ({
+       ...prevState,
+       ...addressData,
+     }));
+   };
+  //==========================================================================
+  //==========================================================================
+
   const [images, setImages] = useState([]);
   const [is24Hours, setIs24Hours] = useState(false);
   const [loading, setLoading] = useState(false);
+//==========================================================================
+//functions
+//==========================================================================
   //------------------------------------------------------------------------------------------------------------
   //------------------------------------------------------------------------------------------------------------
   const handleChange = (e) => {
@@ -105,6 +120,7 @@ const CreateShelfForm = () => {
       let imageUrl = formData.image
         ? await uploadImageToCloudinary(formData.image)
         : null;
+
       // let bannerUrl = formData.banner
       //   ? await uploadImageToCloudinary(formData.banner)
       //   : null;
@@ -114,7 +130,8 @@ const CreateShelfForm = () => {
       const updatedFormData = {
         ...formData,
         image: imageUrl,
-        // banner: bannerUrl,
+        openingTime: is24Hours ? "00:00" : formData.openingTime,
+        closingTime: is24Hours ? "23:59" : formData.closingTime,
       };
       //------------------------------------------------------------------------------------------------------------
       //------------------------------------------------------------------------------------------------------------
@@ -147,7 +164,8 @@ return (
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Left Side */}
-        <div className="space-y-4">
+        <div className="space-y-4 text-sm">
+          Bookshelf Name:
           <div className="flex items-center mb-4 relative">
             <FontAwesomeIcon
               icon={faBook}
@@ -185,7 +203,7 @@ return (
             </div>
           </div>
           <div className="flex items-center mb-4">
-            <FontAwesomeIcon icon={faImage} className="mr-2 text-gray-600" />
+            {/* <FontAwesomeIcon icon={faImage} className="mr-2 text-gray-600" /> */}
             <div className="flex-1">
               <label
                 htmlFor="image"
@@ -203,6 +221,7 @@ return (
               />
             </div>
           </div>
+
           {/* <div className="flex items-center mb-4">
             <FontAwesomeIcon icon={faImage} className="mr-2 text-gray-600" />
             <div className="flex-1">
@@ -223,7 +242,7 @@ return (
             </div>
           </div> */}
           <div className="flex items-center mb-4">
-            <FontAwesomeIcon icon={faClock} className="mr-2 text-gray-600" />
+            {/* <FontAwesomeIcon icon={faClock} className="mr-2 text-gray-600" /> */}
             <div className="flex-1">
               <TimeSelectionOptions
                 is24Hours={is24Hours}
@@ -271,10 +290,10 @@ return (
         {/* Right Side */}
         <div className="space-y-4">
           <div className="flex items-center mb-4">
-            <FontAwesomeIcon
+            {/* <FontAwesomeIcon
               icon={faMapMarkerAlt}
               className="mr-2 text-gray-600"
-            />
+            /> */}
             <div className="flex-1">
               <CountryStateCitySelector
                 onLocationChange={handleLocationChange}
@@ -317,6 +336,12 @@ return (
               />
             </div>
           </div>
+        </div>
+      </div>
+
+      <div>
+        <BookshelfMap onLocationSelect={handleLocationSelect} />
+      </div>
           {/* <div className="flex items-center mb-4 relative">
             <FontAwesomeIcon
               icon={faMapPin}
