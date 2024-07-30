@@ -20,6 +20,7 @@ import {
   faCity,
   faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
+import BookshelfMap from "../../Components/BookshelfMap/BookshelfMap.jsx";
 
 //==========================================================================
 // Function to upload image to Cloudinary
@@ -50,6 +51,13 @@ const CreateShelfForm = () => {
     zipCode: "",
   });
 
+
+   const handleLocationSelect = (addressData) => {
+     setFormData((prevState) => ({
+       ...prevState,
+       ...addressData,
+     }));
+   };
   //==========================================================================
   //==========================================================================
 
@@ -297,6 +305,9 @@ const CreateShelfForm = () => {
         </div>
       </div>
 
+      <div>
+        <BookshelfMap onLocationSelect={handleLocationSelect} />
+      </div>
       <button
         type="submit"
         className="w-full py-2 mt-7 px-4 bg-cyan-700 text-white font-bold rounded-md hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
