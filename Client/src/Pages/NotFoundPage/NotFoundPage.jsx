@@ -3,6 +3,7 @@ import { ImSad } from "react-icons/im";
 
 import imgUrl from "../../assets/images/bg-color_terms.png";
 import { GoBackComponent } from "../../Components";
+import { Link } from "react-router-dom";
 
 const NotFoundPage = () => {
   return (
@@ -12,6 +13,29 @@ const NotFoundPage = () => {
         backgroundImage: `url(${imgUrl})`,
       }}
     >
+      <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900 max-w-screen-lg">
+        <div className="w-3/12">
+          <GoBackComponent />
+        </div>
+        <div className="flex items-center gap-4 w-6/12 justify-center">
+          <div>
+            <Link
+              to="/"
+              className="flex justify-center items-center gap-2 text-xl"
+            >
+              <h3>
+                <span className="text-rose-500 font-semibold ">Book</span>
+                <span className="text-cyan-600 font-semibold ">Look</span>
+              </h3>
+            </Link>
+          </div>
+        </div>
+        <div className="w-3/12 flex justify-end">
+          <div className="py-1 px-3 font-semibold text-white">
+            <h4>Update Profile</h4>
+          </div>
+        </div>
+      </section>
       <div className="container mx-auto">
         <GoBackComponent />
         <div className="container mx-auto  bg-gray-100 p-4">

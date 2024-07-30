@@ -14,6 +14,7 @@ import DonateBookPage from "./DonateBookPage/DonateBookPage.jsx";
 import NotFoundPage from "./NotFoundPage/NotFoundPage.jsx";
 import TermsConditionPage from "./TermsConditionPage/TermsConditionPage.jsx";
 import UserUpdatePage from "./UserUpdatePage/UserUpdatePage.jsx";
+import CreateBookPage from "./CreateBookPage/CreateBookPage.jsx";
 
 // export all pages
 export {
@@ -33,4 +34,5 @@ export {
   DonateBookPage,
   TermsConditionPage,
   UserUpdatePage,
+  CreateBookPage,
 };

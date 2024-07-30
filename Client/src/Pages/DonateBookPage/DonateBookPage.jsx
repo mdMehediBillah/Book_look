@@ -1,5 +1,12 @@
+import { NavigationComponent } from "../../Components";
+
 const DonateBookPage = () => {
-  return <div>DonateBookPage</div>;
+  return (
+    <main>
+      <NavigationComponent />
+      DonateBookPage
+    </main>
+  );
 };
 
 export default DonateBookPage;

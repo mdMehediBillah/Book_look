@@ -12,11 +12,11 @@
   "dependencies": {
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
-    "@mui/material": "^5.16.4",
-    "@mui/x-data-grid": "^7.11.0",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
+
+
     "axios": "^1.7.2",
     "country-state-city": "^3.2.1",
     "date-fns": "^3.6.0",
@@ -24,6 +24,8 @@
     "framer-motion": "^11.3.6",
     "js-cookie": "^3.0.5",
     "leaflet": "^1.9.4",
+    "leaflet-control-geocoder": "^2.4.0",
+    "leaflet-geosearch": "^4.0.0",
     "leaflet-routing-machine": "^3.2.12",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -33,10 +35,12 @@
     "react-loader-spinner": "^6.1.6",
     "react-router-dom": "^6.25.1",
     "react-spinners": "^0.14.1",
+    "react-time-picker": "^7.0.0",
     "react-toastify": "^10.0.5",
     "recharts": "^2.12.7",
     "sass": "^1.77.8",
-    "react-time-picker": "^7.0.0",
+
+
     "yup": "^1.4.0"
   },
   "devDependencies": {
@@ -50,6 +54,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
     "postcss": "^8.4.39",
+    "sass": "^1.77.8",
     "tailwindcss": "^3.4.6",
     "vite": "^5.2.0"
   }

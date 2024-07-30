@@ -31,8 +31,6 @@ app.use(
 );
 app.use(express.json());
 
-
-
 // Routes
 app.use("/api/v1/auth", authUserRouter);
 app.use("/api/v1/users", userRouter);
@@ -51,7 +49,7 @@ app.use(express.static("assets"));
 app.use(globalErrorHandler);
 
 // Server Listener
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 8000;
 
 // Invalid endpoint
 app.get("/*", (req, res) => {
