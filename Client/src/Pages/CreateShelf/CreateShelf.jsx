@@ -6,8 +6,7 @@ import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import "./CustomTimePicker.css";
-import CountryStateCitySelector from "../../Components/CreateShelfComponent/CountryStateCitySelector.jsx";
-import TimeSelectionOptions from "../../Components/CreateShelfComponent/TimeSelectionOptions.jsx";
+import TimeSelectionOptions from "../../Components/CreateShelfComponent/TimeSelectionOptions/TimeSelectionOptions.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faImage,
@@ -20,12 +19,10 @@ import {
   faCity,
   faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
-import BookshelfMap from "../../Components/BookshelfMap/BookshelfMap.jsx";
-import { FaBarcode } from "react-icons/fa";
-
+import BookshelfMap from "../../Components/CreateShelfComponent/BookshelfMap/BookshelfMap.jsx";
+import MapSearch from "../../Components/CreateShelfComponent/MapSearch/MapSearch.jsx";
+import AddressInput from "../../Components/CreateShelfComponent/AddressInput/AddressInput.jsx";
 //==========================================================================
-//------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------
 // Function to upload image to Cloudinary
 //==========================================================================
 const uploadImageToCloudinary = async (file) => {
@@ -42,38 +39,24 @@ const uploadImageToCloudinary = async (file) => {
 // Function to create a new bookshelf
 //==========================================================================
 
-//------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------
 const CreateShelfForm = () => {
   const [formData, setFormData] = useState({
     image: null,
     name: "",
     openingTime: "",
     closingTime: "",
-    country: "",
-    state: "",
-    city: "",
-    street: "",
-    zipCode: "",
   });
 
-  const handleLocationSelect = (addressData) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      ...addressData,
-    }));
-  };
   //==========================================================================
   //==========================================================================
 
-  const [images, setImages] = useState([]);
-  const [is24Hours, setIs24Hours] = useState(false);
-  const [loading, setLoading] = useState(false);
+   const [is24Hours, setIs24Hours] = useState(false);
+   const [loading, setLoading] = useState(false);
+   const [useMap, setUseMap] = useState(true);
   //==========================================================================
   //functions
   //==========================================================================
-  //------------------------------------------------------------------------------------------------------------
-  //------------------------------------------------------------------------------------------------------------
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -87,9 +70,9 @@ const CreateShelfForm = () => {
     setFormData({ ...formData, [name]: value });
   };
   // for location selection
-  const handleLocationChange = (name, value) => {
-    setFormData({ ...formData, [name]: value });
-  };
+  // const handleLocationChange = (name, value) => {
+  //   setFormData({ ...formData, [name]: value });
+  // };
   // for selecting 24 hours or custom time
   const handleRadioChange = (e) => {
     setIs24Hours(e.target.value === "24hours");
@@ -98,8 +81,8 @@ const CreateShelfForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Start loading
-    //------------------------------------------------------------------------------------------------------------
-    //------------------------------------------------------------------------------------------------------------
+    //==========================================================================
+    //==========================================================================
     // const data = new FormData();
     // data.append("barcode", formData.barcode);
     // data.append("image", formData.image);
@@ -113,29 +96,24 @@ const CreateShelfForm = () => {
     // data.append("zipCode", formData.zipCode);
     // data.append("latitude", formData.latitude);
     // data.append("longitude", formData.longitude);
-    //------------------------------------------------------------------------------------------------------------
-    //------------------------------------------------------------------------------------------------------------
+    //==========================================================================
+    // Upload images if they are selected
+    //==========================================================================
     try {
-      // Upload images if they are selected
       let imageUrl = formData.image
         ? await uploadImageToCloudinary(formData.image)
         : null;
-
-      // let bannerUrl = formData.banner
-      //   ? await uploadImageToCloudinary(formData.banner)
-      //   : null;
-      //------------------------------------------------------------------------------------------------------------
-      //------------------------------------------------------------------------------------------------------------
+      //==========================================================================
       // Create updated form data with URLs
+      //==========================================================================
       const updatedFormData = {
         ...formData,
         image: imageUrl,
         openingTime: is24Hours ? "00:00" : formData.openingTime,
         closingTime: is24Hours ? "23:59" : formData.closingTime,
       };
-      //------------------------------------------------------------------------------------------------------------
-      //------------------------------------------------------------------------------------------------------------
-      // Send the updated form data to the server
+      //==========================================================================
+      //==========================================================================
       const response = await axios.post(
         "http://localhost:8000/api/v1/bookshelves/new",
         updatedFormData,
@@ -153,7 +131,19 @@ const CreateShelfForm = () => {
       setLoading(false); // Set loading to false after the request completes
     }
   };
+  const handleLocationSelect = (addressData) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      ...addressData,
+    }));
+  };
 
+  const handleLocationManual = (addressData) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      ...addressData,
+    }));
+  };
   return (
     <form
       onSubmit={handleSubmit}
@@ -184,24 +174,6 @@ const CreateShelfForm = () => {
               />
             </div>
           </div>
-          <div className="flex items-center mb-4 relative">
-            <FontAwesomeIcon
-              icon={FaBarcode}
-              className="absolute left-3 top-3 text-gray-600"
-            />
-            <div className="flex-1">
-              <input
-                type="text"
-                id="barcode"
-                name="barcode"
-                value={formData.barcode}
-                onChange={handleChange}
-                placeholder="Barcode"
-                required
-                className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </div>
-          </div>
           <div className="flex items-center mb-4">
             {/* <FontAwesomeIcon icon={faImage} className="mr-2 text-gray-600" /> */}
             <div className="flex-1">
@@ -221,25 +193,6 @@ const CreateShelfForm = () => {
               />
             </div>
           </div>
-          {/* <div className="flex items-center mb-4">
-            <FontAwesomeIcon icon={faImage} className="mr-2 text-gray-600" />
-            <div className="flex-1">
-              <label
-                htmlFor="banner"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Banner:
-              </label>
-              <input
-                type="file"
-                id="banner"
-                name="banner"
-                onChange={handleFileChange}
-                accept="image/*"
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </div>
-          </div> */}
           <div className="flex items-center mb-4">
             {/* <FontAwesomeIcon icon={faClock} className="mr-2 text-gray-600" /> */}
             <div className="flex-1">
@@ -289,59 +242,36 @@ const CreateShelfForm = () => {
         {/* Right Side */}
         <div className="space-y-4">
           <div className="flex items-center mb-4">
-            {/* <FontAwesomeIcon
-              icon={faMapMarkerAlt}
-              className="mr-2 text-gray-600"
-            /> */}
-            <div className="flex-1">
-              <CountryStateCitySelector
-                onLocationChange={handleLocationChange}
-              />
-            </div>
+            <button
+              type="button"
+              onClick={() => setUseMap(true)}
+              className={`mr-2 py-2 px-4 ${
+                useMap ? "bg-cyan-700 text-white" : "bg-gray-200 text-gray-700"
+              } font-bold rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
+            >
+              Use Map
+            </button>
+            <button
+              type="button"
+              onClick={() => setUseMap(false)}
+              className={`py-2 px-4 ${
+                !useMap ? "bg-blue-700 text-white" : "bg-gray-200 text-gray-700"
+              } font-bold rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
+            >
+              Add Manually
+            </button>
           </div>
-          <div className="flex items-center mb-4 relative">
-            <FontAwesomeIcon
-              icon={faRoad}
-              className="absolute left-3 top-3 text-gray-600"
+          {useMap ? (
+            <BookshelfMap onLocationSelect={handleLocationSelect} />
+          ) : (
+            <AddressInput
+              formData={formData}
+              handleChange={handleChange}
+              handleLocationChange={handleLocationManual}
             />
-            <div className="flex-1">
-              <input
-                type="text"
-                id="street"
-                name="street"
-                value={formData.street}
-                onChange={handleChange}
-                placeholder="Street"
-                required
-                className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </div>
-          </div>
-          <div className="flex items-center mb-4 relative">
-            <FontAwesomeIcon
-              icon={faMap}
-              className="absolute left-3 top-3 text-gray-600"
-            />
-            <div className="flex-1">
-              <input
-                type="text"
-                id="zipCode"
-                name="zipCode"
-                value={formData.zipCode}
-                onChange={handleChange}
-                placeholder="Zip Code"
-                required
-                className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </div>
-          </div>
+          )}
         </div>
       </div>
-
-      <div>
-        <BookshelfMap onLocationSelect={handleLocationSelect} />
-      </div>
-
       <button
         type="submit"
         className="w-full py-2 mt-7 px-4 bg-cyan-700 text-white font-bold rounded-md hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

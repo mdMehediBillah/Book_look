@@ -90,14 +90,14 @@ const LayoutComponent = ({
             >
               {/* Heart Icon */}
               <button
-                className="absolute bottom-2 right-2 text-red-500"
+                className="absolute top-2 right-2 text-red-500"
                 onClick={() => handleLikeToggle(shelf._id)}
               >
                 {likedBookshelves.has(shelf._id) ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
-                    viewBox="0 0 24 24"
+                    viewBox="0 0 20 22"
                     className="w-5 h-5"
                   >
                     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
@@ -134,22 +134,15 @@ const LayoutComponent = ({
                   />
                 </div>
               )}
-              {/* Text Content */}
-              <div>
-                <h3 className="text-lg font-semibold">{shelf.name}</h3>
-                <p className="text-gray-700">
-                  {shelf.street}, {shelf.city}
-                </p>
-                <p className={`text-${isOpen ? "green" : "red"}-500`}>
-                  {message} <span className="text-gray-500">{detail}</span>
-                </p>
-              </div>
-
+            
               {/* Text Content */}
               <div>
                 <h2 className="text-lg font-semibold">{shelf.name}</h2>
                 <p className="text-gray-700">
                   {shelf.street}, {shelf.city}
+                </p>
+                <p className={`text-${isOpen ? "green" : "red"}-500`}>
+                  {message} <span className="text-gray-500">{detail}</span>
                 </p>
                 <Link to={`/create_book/${shelf.id}`}>
                   <button>Add Book</button>

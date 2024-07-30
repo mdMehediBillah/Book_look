@@ -18,7 +18,7 @@ import {
   CreateBookComponent,
   SearchBookComponent,
 } from "./Components";
-import AdminDashboardPage from "./Pages/dashboardPages/adminDashboardPage/AdminDashboardPage";
+// import AdminDashboardPage from "./Pages/dashboardPages/adminDashboardPage/AdminDashboardPage";
 
 function App() {
   return (
@@ -40,7 +40,7 @@ function App() {
         <Route path="/createBookSearch/:id" element={<BookDetailsCom />} />
 
         <Route path="/terms_condition" element={<TermsConditionPage />} />
-        <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+        {/* <Route path="/admin/dashboard" element={<AdminDashboardPage />} /> */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <ToastContainer
