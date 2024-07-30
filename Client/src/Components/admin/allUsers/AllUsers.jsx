@@ -45,4 +45,4 @@ const AllUsers = () => {
   );
 };
 
-export default AllUsers
+export default AllUsers;

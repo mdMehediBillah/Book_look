@@ -1,13 +1,10 @@
 //==========================================================================
 //this code integrates a searchInput, a list of bookshelves, and a mapComponent.
 //==========================================================================
-
 import React, { useState, useEffect } from "react";
 import MapComponent from "./MapComponent";
 import { getOpeningStatus } from "./getOpeningStatus/getOpeningStatus";
-
 import { Link } from "react-router-dom";
-
 const LayoutComponent = ({
   bookshelves,
   center,
@@ -23,18 +20,15 @@ const LayoutComponent = ({
   //==========================================================================
   // Ensure searchTerm is a lowercase string
   const normalizedSearchTerm = (searchTerm || "").toLowerCase();
-
   // Safeguard against undefined properties
   const filteredBookshelves = bookshelves.filter((shelf) => {
     // console.log("Bookshelf:", shelf); // Log each bookshelf item ----> debugging
     // console.log("Search Term:", normalizedSearchTerm); // Log the current search term ----> debugging
-
     //search based on name, country, state, and city
     const name = shelf.name?.toLowerCase() || "";
     const country = shelf.country?.toLowerCase() || "";
     const state = shelf.state?.toLowerCase() || "";
     const city = shelf.city?.toLowerCase() || "";
-
     return (
       name.includes(normalizedSearchTerm) ||
       country.includes(normalizedSearchTerm) ||
@@ -42,12 +36,10 @@ const LayoutComponent = ({
       city.includes(normalizedSearchTerm)
     );
   });
-
   //==========================================================================
   // State for display liked bookshelves
   //==========================================================================
   const [likedBookshelves, setLikedBookshelves] = useState(new Set());
-
   const handleLikeToggle = (shelfId) => {
     setLikedBookshelves((prevLiked) => {
       const updatedLiked = new Set(prevLiked);
@@ -67,9 +59,7 @@ const LayoutComponent = ({
   //   ? filteredBookshelves
   //   : filteredBookshelves.slice(0, 3); //display only 3 bookshelves ehwn show more is false
   //==========================================================================
-
   const displayedBookshelves = filteredBookshelves; // to always display all bookshelves
-
   return (
     <div className="flex flex-col md:flex-row mt-10">
       <div
@@ -82,7 +72,6 @@ const LayoutComponent = ({
             shelf.openingTime,
             shelf.closingTime
           );
-
           return (
             <div
               key={idx}
@@ -119,7 +108,6 @@ const LayoutComponent = ({
                   </svg>
                 )}
               </button>
-
               {/* Image Container */}
               {shelf.image && shelf.image.length > 0 && (
                 <div className="flex-shrink-0 mr-4">
@@ -135,7 +123,6 @@ const LayoutComponent = ({
                   />
                 </div>
               )}
-
               {/* Text Content */}
               <div>
                 <h3 className="text-lg font-semibold">{shelf.name}</h3>
@@ -146,9 +133,6 @@ const LayoutComponent = ({
                   {message} <span className="text-gray-500">{detail}</span>
                 </p>
               </div>
-
-            )}
-
             {/* Text Content */}
             <div>
               <h2 className="text-lg font-semibold">{shelf.name}</h2>
@@ -159,10 +143,10 @@ const LayoutComponent = ({
                 <button>Add Book</button>
               </Link>
             </div>
+            </div>
           );
         })}
       </div>
-
       <div className="flex-grow h-1/2 md:h-full">
         <MapComponent
           bookshelves={filteredBookshelves}
@@ -175,5 +159,25 @@ const LayoutComponent = ({
     </div>
   );
 };
-
 export default LayoutComponent;
+
+
+
+
+
+
+
+
+
+
+
+Nachricht an Anna [WD-51 / Bashar], Mehedi Billah [WD-051/ Bashar], Yohannes [WD-051 / Bashar]
+
+
+
+
+
+
+
+
+
