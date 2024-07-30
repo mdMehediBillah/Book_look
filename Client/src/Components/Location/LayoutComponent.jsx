@@ -119,7 +119,6 @@ const LayoutComponent = ({
                   </svg>
                 )}
               </button>
-
               {/* Image Container */}
               {shelf.image && shelf.image.length > 0 && (
                 <div className="flex-shrink-0 mr-4">
@@ -135,7 +134,6 @@ const LayoutComponent = ({
                   />
                 </div>
               )}
-
               {/* Text Content */}
               <div>
                 <h3 className="text-lg font-semibold">{shelf.name}</h3>
@@ -147,17 +145,16 @@ const LayoutComponent = ({
                 </p>
               </div>
 
-            )}
-
-            {/* Text Content */}
-            <div>
-              <h2 className="text-lg font-semibold">{shelf.name}</h2>
-              <p className="text-gray-700">
-                {shelf.street}, {shelf.city}
-              </p>
-              <Link to={`/create_book/${shelf.id}`}>
-                <button>Add Book</button>
-              </Link>
+              {/* Text Content */}
+              <div>
+                <h2 className="text-lg font-semibold">{shelf.name}</h2>
+                <p className="text-gray-700">
+                  {shelf.street}, {shelf.city}
+                </p>
+                <Link to={`/create_book/${shelf.id}`}>
+                  <button>Add Book</button>
+                </Link>
+              </div>
             </div>
           );
         })}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
 import L from "leaflet";
@@ -38,8 +38,7 @@ const LocationPicker = ({ onLocationSelect }) => {
   return position ? <Marker position={position} icon={icon}></Marker> : null;
 };
 
-const BookshelfMap
- = ({ onLocationSelect }) => {
+const BookshelfMap = ({ onLocationSelect }) => {
   return (
     <MapContainer
       center={[51.505, -0.09]}
@@ -55,5 +54,4 @@ const BookshelfMap
   );
 };
 
-export default BookshelfMap
-;
+export default BookshelfMap;
