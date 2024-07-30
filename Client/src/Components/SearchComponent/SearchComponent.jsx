@@ -16,7 +16,7 @@ const SearchComponent = ({ searchTerm, setSearchTerm, setCenter }) => {
   };
 
   return (
-    <section className="container mx-auto mt-4">
+    <section className="container mx-auto">
       <div className="bg-gray-300 flex w-5/12 min-w-[500px] mx-auto rounded-full items-center justify-between">
         <input
           type="text"

@@ -11,7 +11,7 @@ const GoBackComponent = () => {
     <div>
       {" "}
       <button onClick={handleGoBack} className="back-button">
-        <div className="flex items-center gap-1 py-1 px-4 bg-gray-50 rounded-full justify-center hover:bg-gray-200">
+        <div className="flex items-center gap-1 py-1 px-4 bg-cyan-700 rounded-full justify-center hover:bg-cyan-600 text-white text-sm">
           <IoIosArrowBack /> <span>Back</span>
         </div>
       </button>

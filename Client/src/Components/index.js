@@ -7,6 +7,10 @@ import UserProfileComponent from "./UserProfileComponent/UserProfileComponent.js
 import UserProfileActivitiesCompo from "./UserProfileActivitiesCompo/UserProfileActivitiesCompo.jsx";
 import LikeComponent from "./LikeComponent/LikeComponent.jsx";
 import UpdateUserProfile from "./UpdateUserProfile/UpdateUserProfile.jsx";
+import CreateBookComponent from "./CreateBookComponent/CreateBookComponent.jsx";
+import SearchBookComponent from "./SearchBookComponent/SearchBookComponent.jsx";
+import CreateBook from "./CreateBook/CreateBook.jsx";
+import BookDetailsCom from "./BookDetailsCom/BookDetailsCom.jsx";
 
 // export all components
 export {
@@ -19,4 +23,8 @@ export {
   UserProfileActivitiesCompo,
   LikeComponent,
   UpdateUserProfile,
+  CreateBookComponent,
+  SearchBookComponent,
+  CreateBook,
+  BookDetailsCom,
 };

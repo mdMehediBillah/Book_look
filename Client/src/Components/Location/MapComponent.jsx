@@ -1,12 +1,12 @@
 import React, { useRef, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L from "leaflet";     //Leaflet library object for interacting with the map directly.
-import "leaflet/dist/leaflet.css";   //Leaflet’s default styling
+import L from "leaflet"; //Leaflet library object for interacting with the map directly.
+import "leaflet/dist/leaflet.css"; //Leaflet’s default styling
 import RoutingMachine from "./RoutingMachine";
 import LocationMarker from "./LocationMarker";
 import MinimapControl from "./MinimapControl";
-import "./MapComponent.css"; 
-
+import "./MapComponent.css";
+import { getOpeningStatus } from "./getOpeningStatus/getOpeningStatus";
 
 const customIcon = new L.Icon({
   iconUrl: "https://img.icons8.com/?size=100&id=13800&format=png&color=000000",
@@ -134,44 +134,59 @@ const MapComponent = ({
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {bookshelves.map((shelf, idx) =>
-          shelf.latitude && shelf.longitude ? (
-            <Marker
-              key={idx}
-              position={[shelf.latitude, shelf.longitude]}
-              icon={customIcon}
-            >
-              <Popup>
-                <div className="popup-container">
-                  {/* Image */}
-                  {shelf.image && shelf.image.length > 0 && (
-                    <img
-                      src={shelf.image[0]}
-                      alt={shelf.name}
-                      className="popup-image"
-                    />
-                  )}
-                  {/* Title and Address */}
-                  <div className="popup-text">
-                    <h3 className="popup-title">{shelf.name}</h3>
-                    <p className="popup-address">
-                      {shelf.street}, {shelf.city}
-                    </p>
+        {bookshelves.map((shelf, idx) => {
+          if (shelf.latitude && shelf.longitude) {
+            const location = [shelf.latitude, shelf.longitude];
+            // Use getOpeningStatus to determine the opening status
+            const { isOpen, message, detail } = getOpeningStatus(
+              shelf.openingTime,
+              shelf.closingTime
+            );
+
+            return (
+              <Marker key={idx} position={location} icon={customIcon}>
+                <Popup>
+                  <div className="popup-container">
+                    {/* Image */}
+                    {shelf.image && shelf.image.length > 0 && (
+                      <img
+                        src={shelf.image[0]}
+                        alt={shelf.name}
+                        className="popup-image"
+                        style={{
+                          width: "100%",
+                          height: "auto",
+                          borderRadius: "5px",
+                        }}
+                      />
+                    )}
+                    {/* Title and Address */}
+                    <div className="popup-text">
+                      <h3 className="popup-title">{shelf.name}</h3>
+                      <p className="popup-address">
+                        {shelf.street}, {shelf.city}
+                      </p>
+                      <p className="text-gray-500">
+                        {shelf.openingTime === "00:00" &&
+                        shelf.closingTime === "23:59"
+                          ? "Open 24 hours"
+                          : `Opening Hours: ${shelf.openingTime} - ${shelf.closingTime}`}
+                      </p>
+                    </div>
+                    <button
+                      className="popup-button"
+                      onClick={() => setDestination(location)}
+                    >
+                      Go Here
+                    </button>
                   </div>
-                  {/* Button */}
-                  <button
-                    className="popup-button"
-                    onClick={() =>
-                      setDestination([shelf.latitude, shelf.longitude])
-                    }
-                  >
-                    Go Here
-                  </button>
-                </div>
-              </Popup>
-            </Marker>
-          ) : null
-        )}
+                </Popup>
+              </Marker>
+            );
+          }
+          return null;
+        })}
+
         <LocationMarker />
         {userLocation && destination && (
           <RoutingMachine start={userLocation} end={destination} />

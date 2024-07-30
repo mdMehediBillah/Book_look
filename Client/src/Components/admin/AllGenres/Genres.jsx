@@ -3,9 +3,9 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import axios from "axios";
 import { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
-import { API } from "../../../utils/security/secreteKey";
 import { toast } from "react-toastify";
 import GenreForm from "../../forms/genre/GenreForm";
+import { API } from "../../../Utils/security/secreteKey.js";
 
 const Genres = () => {
   const [genreId, setGenreId] = useState("");
