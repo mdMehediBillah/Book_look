@@ -1,9 +1,10 @@
 //==========================================================================
 //this code integrates a searchInput, a list of bookshelves, and a mapComponent.
-  //==========================================================================
+//==========================================================================
 
 import React, { useState, useEffect } from "react";
 import MapComponent from "./MapComponent";
+import { Link } from "react-router-dom";
 
 const LayoutComponent = ({
   bookshelves,
@@ -23,8 +24,8 @@ const LayoutComponent = ({
 
   // Safeguard against undefined properties
   const filteredBookshelves = bookshelves.filter((shelf) => {
-    console.log("Bookshelf:", shelf); // Log each bookshelf item ----> debugging
-    console.log("Search Term:", normalizedSearchTerm); // Log the current search term ----> debugging
+    // console.log("Bookshelf:", shelf); // Log each bookshelf item ----> debugging
+    // console.log("Search Term:", normalizedSearchTerm); // Log the current search term ----> debugging
 
     //search based on name, country, state, and city
     const name = shelf.name?.toLowerCase() || "";
@@ -122,10 +123,13 @@ const LayoutComponent = ({
 
             {/* Text Content */}
             <div>
-              <h3 className="text-lg font-semibold">{shelf.name}</h3>
+              <h2 className="text-lg font-semibold">{shelf.name}</h2>
               <p className="text-gray-700">
                 {shelf.street}, {shelf.city}
               </p>
+              <Link to={`/create_book/${shelf.id}`}>
+                <button>Add Book</button>
+              </Link>
             </div>
           </div>
         ))}

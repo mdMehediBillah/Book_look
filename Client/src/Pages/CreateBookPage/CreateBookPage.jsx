@@ -1,8 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { CreateBook, GoBackComponent } from "../../Components";
+import axios from "axios";
+import { useState } from "react";
 // import { Outlet } from "react-router-dom";
 
 const CreateBookPage = () => {
+  const URL = import.meta.env.VITE_REACT_APP_URL;
+  const { id } = useParams();
+
+  const [shelf, setShelf] = useState(null);
+
+  console.log(id);
+  // fetch single shelf data here
+  const fetchSingleShelf = async () => {
+    try {
+      const response = await axios.get(` ${URL}/api/v1/bookshelves/${id}`);
+      setShelf(response.data.result);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  console.log(fetchSingleShelf);
+  console.log(shelf);
   return (
     <main className="">
       <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900 max-w-screen-lg">

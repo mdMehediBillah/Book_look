@@ -15,6 +15,8 @@ const BookDetails = () => {
   const [book, setBook] = useState(null);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
+  const [authorData, setAuthorData] = useState({});
+  const [imageData, setImageData] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -22,7 +24,24 @@ const BookDetails = () => {
       try {
         const response = await fetch(`${URL}${id}.json`);
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
+
+        // =================================================================
+        // get author name
+        // console.log(data.authors[0].author.key);
+        const authorKey = data.authors[0].author.key;
+        // http://openlibrary.org/search.json?author=/authors/$OL3732231A}
+        const authorNameurl = `http://openlibrary.org/search.json?author=${authorKey}`;
+        console.log(authorNameurl);
+
+        const authorResponse = await fetch(authorNameurl);
+        const authorData = await authorResponse.json();
+        // console.log(authorData.docs[0].author_name);
+        const author = authorData.docs[0].author_name;
+        setAuthorData(author);
+        console.log(authorData.docs[0].author_name);
+        // =================================================================
+
         setFormData(data);
         if (data) {
           const {
@@ -65,10 +84,20 @@ const BookDetails = () => {
 
   const handleBookSubmit = (event) => {
     event.preventDefault();
+    const imageFormData = formData.covers[0];
+
+    // fetch image from openlibrary
+    console.log(imageFormData);
+    const url = `https://covers.openlibrary.org/b/id/${imageFormData}-L.jpg`;
+    // setImageData(url);
+    // console.log(url);
+    // console.log(imageData);
+
+    // create new book object with updated data
     const newBook = {
       title: formData.title,
-      image: formData.covers[0],
-      author: formData.author,
+      image: url,
+      author: authorData[0],
       description: formData.description,
       subjects: formData.subjects,
     };
@@ -76,9 +105,10 @@ const BookDetails = () => {
     // save changes to database
     console.log(newBook.title);
     console.log(newBook.author);
-    const img = newBook.image;
-    const url = `https://covers.openlibrary.org/b/id/${img}-L.jpg`;
-    console.log(url);
+    console.log(newBook.image);
+    // const img = newBook.image;
+    // const url = `https://covers.openlibrary.org/b/id/${img}-L.jpg`;
+    // setImageData(url);
   };
 
   return (
