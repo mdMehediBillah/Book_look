@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Country } from "country-state-city";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -45,18 +46,20 @@ const CreateShelfForm = () => {
     name: "",
     openingTime: "",
     closingTime: "",
+    street: "",
+    zipCode: "",
   });
 
   //==========================================================================
   //==========================================================================
 
-   const [is24Hours, setIs24Hours] = useState(false);
-   const [loading, setLoading] = useState(false);
-   const [useMap, setUseMap] = useState(true);
+  const [is24Hours, setIs24Hours] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [useMap, setUseMap] = useState(true);
   //==========================================================================
   //functions
   //==========================================================================
- 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -69,10 +72,7 @@ const CreateShelfForm = () => {
   const handleTimeChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
   };
-  // for location selection
-  // const handleLocationChange = (name, value) => {
-  //   setFormData({ ...formData, [name]: value });
-  // };
+
   // for selecting 24 hours or custom time
   const handleRadioChange = (e) => {
     setIs24Hours(e.target.value === "24hours");
@@ -81,7 +81,7 @@ const CreateShelfForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Start loading
-    
+
     //==========================================================================
     // Upload images if they are selected
     //==========================================================================
@@ -92,6 +92,7 @@ const CreateShelfForm = () => {
       //==========================================================================
       // Create updated form data with URLs
       //==========================================================================
+      console.log(" formData", formData);
       const updatedFormData = {
         ...formData,
         image: imageUrl,
@@ -100,15 +101,23 @@ const CreateShelfForm = () => {
       };
       //==========================================================================
       //==========================================================================
+      console.log(" updatedFormData", updatedFormData);
+      console.log(Country.getAllCountries());
+
+      const x = Country.getAllCountries().filter(
+        (country) => country.isoCode === updatedFormData.country
+      );
+
+      const formReq = { ...updatedFormData, country: x[0].name };
+
       const response = await axios.post(
         "http://localhost:8000/api/v1/bookshelves/new",
-        updatedFormData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        formReq
       );
+      // const response = await axios.post(
+      //   "http://localhost:8000/api/v1/bookshelves/new",
+      //   updatedFormData
+      // );
       toast.success(response.data.message);
     } catch (error) {
       console.error("Error creating bookshelf:", error);
@@ -125,6 +134,11 @@ const CreateShelfForm = () => {
   };
 
   const handleLocationManual = (addressData) => {
+    // setFormData((prevState) => ({
+    //   ...prevState,
+    //   addressData,
+    // }));
+    console.log(addressData);
     setFormData((prevState) => ({
       ...prevState,
       ...addressData,

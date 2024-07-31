@@ -21,7 +21,7 @@ const AddressInput = ({ formData, handleChange, handleLocationChange }) => {
         <div className="flex-1">
           <input
             type="text"
-            id="street"
+            id="road"
             name="street"
             value={formData.street}
             onChange={handleChange}
@@ -39,11 +39,11 @@ const AddressInput = ({ formData, handleChange, handleLocationChange }) => {
         <div className="flex-1">
           <input
             type="text"
-            id="zipCode"
+            id="postcode"
             name="zipCode"
             value={formData.zipCode}
             onChange={handleChange}
-            placeholder="Zip Code"
+            placeholder="zipCode"
             required
             className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
