@@ -21,7 +21,6 @@ const LayoutComponent = ({
   //==========================================================================
   // Filter bookshelves based on search term
   //==========================================================================
-  // Ensure searchTerm is a lowercase string
   const normalizedSearchTerm = (searchTerm || "").toLowerCase();
 
   // Safeguard against undefined properties
@@ -59,13 +58,7 @@ const LayoutComponent = ({
       return updatedLiked;
     });
   };
-  //==========================================================================
-  // State for show more/less button
-  //==========================================================================
-  // const [showMore, setShowMore] = useState(false);
-  // const displayedBookshelves = showMore
-  //   ? filteredBookshelves
-  //   : filteredBookshelves.slice(0, 3); //display only 3 bookshelves ehwn show more is false
+  
   //==========================================================================
 
   const displayedBookshelves = filteredBookshelves; // to always display all bookshelves
@@ -74,7 +67,7 @@ const LayoutComponent = ({
     <div className="flex flex-col md:flex-row mt-10">
       <div
         className="flex flex-col md:w-1/3 h-full overflow-y-auto"
-        style={{ maxHeight: "calc(80vh - 80px)" }}
+        style={{ maxHeight: "calc(60vh - 80px)" }}
       >
         {displayedBookshelves.map((shelf, idx) => {
           // Compute opening status
@@ -86,11 +79,11 @@ const LayoutComponent = ({
           return (
             <div
               key={idx}
-              className="flex flex-row items-start mt-3 p-1 border border-gray-300 rounded bg-gray-50 relative"
+              className=" text-sm flex flex-row items-start mt-1 p-1 border border-gray-300 rounded bg-gray-50 relative"
             >
               {/* Heart Icon */}
               <button
-                className="absolute top-2 right-2 text-red-500"
+                className="absolute top-1 right-1 text-red-500"
                 onClick={() => handleLikeToggle(shelf._id)}
               >
                 {likedBookshelves.has(shelf._id) ? (
