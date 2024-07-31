@@ -126,7 +126,7 @@ const BookDetails = ({ shelf }) => {
     // const url = `https://covers.openlibrary.org/b/id/${img}-L.jpg`;
     // setImageData(url);
     try {
-      const responce = await axios.post(`${URLLocal}/api/v1/books/new`, {
+      const response = await axios.post(`${URLLocal}/api/v1/books/new`, {
         title: newBook.title,
         author: newBook.author,
         coverImageUrl: newBook.coverImageUrl,
@@ -138,7 +138,7 @@ const BookDetails = ({ shelf }) => {
         // publishedDate: newBook.publishedDate,
         // language: newBook.language,
       });
-      console.log(responce.data);
+      console.log(response.data);
       toast.success("Add Book successfully!");
       navigate("/");
     } catch (error) {
