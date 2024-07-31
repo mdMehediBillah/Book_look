@@ -81,21 +81,7 @@ const CreateShelfForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Start loading
-    //==========================================================================
-    //==========================================================================
-    // const data = new FormData();
-    // data.append("barcode", formData.barcode);
-    // data.append("image", formData.image);
-    // data.append("name", formData.name);
-    // data.append("openingTime", is24Hours ? "00:00" : formData.openingTime);
-    // data.append("closingTime", is24Hours ? "23:59" : formData.closingTime);
-    // data.append("country", formData.country);
-    // data.append("state", formData.state);
-    // data.append("city", formData.city);
-    // data.append("street", formData.street);
-    // data.append("zipCode", formData.zipCode);
-    // data.append("latitude", formData.latitude);
-    // data.append("longitude", formData.longitude);
+    
     //==========================================================================
     // Upload images if they are selected
     //==========================================================================
