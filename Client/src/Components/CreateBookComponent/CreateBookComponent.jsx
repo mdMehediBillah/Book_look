@@ -1,42 +1,86 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
+import imgPlaceholder from "../../assets/images/placeholder-image.jpg";
+import { useShelfContext } from "../../Context/Shelf/shelfContext.jsx"; // Adjust the path as necessary
+import { useNavigate } from "react-router-dom";
+
+// Create a new book
 const CreateBookComponent = () => {
+  const navigate = useNavigate();
+  const { shelfData, setShelfData } = useShelfContext();
+  const shelfId = shelfData._id;
+  console.log(shelfId);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [imagePreview, setImagePreview] = useState(imgPlaceholder);
+
   const [formData, setFormData] = useState({
     title: "",
-    covers: [],
     author: "",
-    description: "",
-    subjects: "",
+    coverImageUrl: "",
+    language: "eng",
+    summary: "",
+    bookshelf: shelfId,
   });
 
+  const url = import.meta.env.VITE_REACT_APP_URL;
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+    const { name, value, type, files } = e.target;
+    if (type === "file") {
+      const file = files[0];
+      setFormData({
+        ...formData,
+        coverImageUrl: file,
+      });
+      setImagePreview(URL.createObjectURL(file));
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  };
+
+  const uploadImageToCloudinary = async (file) => {
+    const cloud_name = import.meta.env.VITE_CLOUD_NAME;
+    const upload_preset = import.meta.env.VITE_UPLOAD_PRESET;
+    const cloud_URL = `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`;
+
+    const data = new FormData();
+    data.append("file", file);
+    data.append("cloud_name", cloud_name);
+    data.append("upload_preset", upload_preset);
+
+    const response = await axios.post(cloud_URL, data);
+    return response.data.url;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newBook = {
-      title: formData.title,
-      image: formData.covers[0], // Assuming covers is an array of image URLs
-      author: formData.author,
-      description: formData.description,
-      subjects: formData.subjects,
-    };
-    console.log(newBook);
+    setLoading(true);
 
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:5000/api/v1/books",
-    //     newBook
-    //   );
-    //   console.log("Book created successfully:", response.data);
-    // } catch (error) {
-    //   console.error("Error creating book:", error);
-    // }
+    try {
+      let imageUrl = formData.image
+        ? await uploadImageToCloudinary(formData.image)
+        : image;
+
+      const updatedFormData = {
+        ...formData,
+        image: imageUrl,
+      };
+      // const token = localStorage.getItem("token");
+      const response = await axios.put(
+        `${url}/api/v1/books/new`,
+        updatedFormData
+      );
+      console.log("Book added successfully:", response.data);
+    } catch (error) {
+      console.error("Error updating user:", error);
+      setError("Server error! Please try again!");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,7 +91,7 @@ const CreateBookComponent = () => {
           onSubmit={handleSubmit}
           className="max-w-[600px] min-w-[380px] mx-auto p-4 bg-cyan-800 rounded-lg text-white"
         >
-          <div className="flex flex-col">
+          <div className="flex flex-col mb-4">
             <label className="text-sm text-white mb-1">Title</label>
             <input
               type="text"
@@ -56,11 +100,11 @@ const CreateBookComponent = () => {
               onChange={handleChange}
               placeholder="Book title"
               required
-              className="mb-1 border-2 border-gray-200 rounded-lg py-2 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50"
+              className="border-2 border-gray-200 rounded-lg py-2 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50"
             />
           </div>
 
-          <div>
+          <div className="flex flex-col mb-4">
             <label className="text-sm text-white mb-1">Author</label>
             <input
               type="text"
@@ -69,40 +113,58 @@ const CreateBookComponent = () => {
               onChange={handleChange}
               placeholder="Author name"
               required
-              className=" mb-1 border-2 border-gray-200 rounded-lg py-2 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50"
-            />
-          </div>
-          <div>
-            <label className="text-sm text-white mb-1">Subjects</label>
-            <input
-              type="text"
-              name="subjects"
-              value={formData.subjects}
-              onChange={handleChange}
-              placeholder="Book subjects"
-              className=" mb-1 border-2 border-gray-200 rounded-lg py-2 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50"
-            />
-          </div>
-          <div>
-            <label className="text-sm text-white mb-1">Description</label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              placeholder="Book description"
-              className="mb-1 border-2 border-gray-200 rounded-lg py-2 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50 min-h-[120px]"
+              className="border-2 border-gray-200 rounded-lg py-2 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50"
             />
           </div>
 
-          <div className="flex flex-col ">
-            <label className="">Upload photo</label>
-            <input
-              type="file"
-              name="banner"
+          <div className="flex flex-col mb-4">
+            <label className="text-sm text-white mb-1">Language</label>
+            <select
+              name="language"
+              value={formData.language}
               onChange={handleChange}
-              className=""
+              className="border-2 border-gray-200 rounded-lg py-2 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50"
+            >
+              <option value="eng">English</option>
+              <option value="deu">German</option>
+              <option value="fre">French</option>
+              <option value="ita">Italian</option>
+              <option value="spa">Spanish</option>
+              <option value="ara">Arabic</option>
+              <option value="ben">Bengali</option>
+            </select>
+          </div>
+
+          <div className="flex flex-col mb-4">
+            <label className="text-sm text-white mb-1">Summary</label>
+            <textarea
+              name="summary"
+              value={formData.summary}
+              onChange={handleChange}
+              placeholder="Write something about the book"
+              className="border-2 border-gray-200 rounded-lg py-2 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50 min-h-[120px]"
             />
           </div>
+
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex flex-col">
+              <label className="text-sm text-white">Upload Photo</label>
+              <input
+                type="file"
+                name="coverImageUrl"
+                onChange={handleChange}
+                className="border-2 border-gray-200 rounded-lg py-2 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-50"
+              />
+            </div>
+            <div>
+              <img
+                src={imagePreview}
+                alt="Preview"
+                className="w-36 h-20 object-cover rounded-md"
+              />
+            </div>
+          </div>
+
           <button
             type="submit"
             className="bg-rose-500 text-white w-full py-2 rounded-lg mt-4 hover:bg-cyan-500"

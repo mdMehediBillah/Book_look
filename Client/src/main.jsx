@@ -6,17 +6,18 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./Context/User/AuthContext.jsx";
 // import { UserProvider } from "./Context/User/UserContext.jsx";
 import { AppProvider } from "./Context/Book/context.jsx";
+import { ShelfProvider } from "./Context/Shelf/shelfContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthProvider>
-      {/* <UserProvider> */}
-      <AppProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </AppProvider>
-      {/* </UserProvider> */}
+      <ShelfProvider>
+        <AppProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </AppProvider>
+      </ShelfProvider>
     </AuthProvider>
   </React.StrictMode>
 );

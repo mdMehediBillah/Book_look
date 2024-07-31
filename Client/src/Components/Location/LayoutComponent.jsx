@@ -2,7 +2,7 @@
 //this code integrates a searchInput, a list of bookshelves, and a mapComponent.
 //==========================================================================
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import MapComponent from "./MapComponent";
 import { getOpeningStatus } from "./getOpeningStatus/getOpeningStatus";
 
@@ -69,7 +69,6 @@ const LayoutComponent = ({
   //==========================================================================
 
   const displayedBookshelves = filteredBookshelves; // to always display all bookshelves
-
   return (
     <div className="flex flex-col md:flex-row mt-10">
       <div
@@ -151,7 +150,7 @@ const LayoutComponent = ({
                 <p className="text-gray-700">
                   {shelf.street}, {shelf.city}
                 </p>
-                <Link to={`/create_book/${shelf.id}`}>
+                <Link to={`/create_book/${shelf._id}`}>
                   <button>Add Book</button>
                 </Link>
               </div>
