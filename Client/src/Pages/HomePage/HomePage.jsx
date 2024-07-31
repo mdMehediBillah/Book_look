@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import imgUrl from "../../assets/images/bg-color_terms.png";
 import { NavigationComponent, SearchComponent } from "../../Components";
 import Location from "../../Components/Location/Location";
+import heroImg from "../../assets/images/heroSection.png";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -19,6 +20,9 @@ const HomePage = () => {
       // }}
     >
       <NavigationComponent />
+      <div>
+        <img src={heroImg} alt="Hero image" className="w-7/12 mx-auto" />
+      </div>
       <div className="container mx-auto flex-grow p-4">
         <div className="bg-white p-6 rounded-lg shadow-lg bg-red-400 ">
           <Location />
