@@ -1,6 +1,6 @@
 import { Link, Outlet, NavLink } from "react-router-dom";
 
-const CreateBook = ({ shelf }) => {
+const CreateBook = () => {
   const NavStyle = ({ isActive }) => {
     return isActive ? "font-bold text-rose-600" : "text-gray-500";
   };
@@ -18,7 +18,7 @@ const CreateBook = ({ shelf }) => {
           </li>
         </NavLink>
       </ul>
-      <Outlet shelf={shelf} />
+      <Outlet />
     </section>
   );
 };

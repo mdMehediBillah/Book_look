@@ -2,11 +2,14 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { CreateBook, GoBackComponent } from "../../Components";
 import axios from "axios";
+import { useShelfContext } from "../../Context/Shelf/shelfContext.jsx"; // Adjust the path as necessary
+
 // import { Outlet } from "react-router-dom";
 
 const CreateBookPage = () => {
   const URL = import.meta.env.VITE_REACT_APP_URL;
   const { id } = useParams();
+  const { shelfData, setShelfData } = useShelfContext();
 
   const [shelf, setShelf] = useState(null);
 
@@ -15,6 +18,7 @@ const CreateBookPage = () => {
     try {
       const response = await axios.get(` ${URL}/api/v1/bookshelves/${id}`);
       setShelf(response.data.result);
+      setShelfData(response.data.result); // Update the context data here if needed. For example, to set the book data in the ShelfContext.
     } catch (error) {
       console.error(error);
     }
@@ -23,6 +27,7 @@ const CreateBookPage = () => {
     fetchSingleShelf();
   }, [id]);
   console.log(shelf);
+  console.log(shelfData);
 
   return (
     <main className="">
@@ -74,7 +79,7 @@ const CreateBookPage = () => {
           </h2>
         </div>
       </div>
-      <CreateBook shelf={shelf} />
+      <CreateBook />
     </main>
   );
 };
