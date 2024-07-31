@@ -18,6 +18,7 @@ const LayoutComponent = ({
   searchTerm,
   setSearchTerm,
 }) => {
+
   //==========================================================================
   // Filter bookshelves based on search term
   //==========================================================================
@@ -121,27 +122,31 @@ const LayoutComponent = ({
               {/* Image Container */}
               {shelf.image && shelf.image.length > 0 && (
                 <div className="flex-shrink-0 mr-4">
-                  <img
-                    src={shelf.image[0]}
-                    alt={shelf.name}
-                    className="w-24 h-24 object-cover rounded"
-                    style={{
-                      width: "85px",
-                      height: "96px",
-                      borderRadius: "5px",
-                    }}
-                  />
+                  <Link to={`/${shelf._id}`}>
+                    <img
+                      src={shelf.image[0]}
+                      alt={shelf.name}
+                      className="w-24 h-24 object-cover rounded"
+                      style={{
+                        width: "85px",
+                        height: "96px",
+                        borderRadius: "5px",
+                      }}
+                    />
+                  </Link>
                 </div>
               )}
               {/* Text Content */}
               <div>
-                <h3 className="text-lg font-semibold">{shelf.name}</h3>
-                <p className="text-gray-700">
-                  {shelf.street}, {shelf.city}
-                </p>
-                <p className={`text-${isOpen ? "green" : "red"}-500`}>
-                  {message} <span className="text-gray-500">{detail}</span>
-                </p>
+                <Link to={`/${shelf._id}`}>
+                  <h3 className="text-lg font-semibold">{shelf.name}</h3>
+                  <p className="text-gray-700">
+                    {shelf.street}, {shelf.city}
+                  </p>
+                  <p className={`text-${isOpen ? "green" : "red"}-500`}>
+                    {message} <span className="text-gray-500">{detail}</span>
+                  </p>
+                </Link>
               </div>
 
               {/* Text Content */}
