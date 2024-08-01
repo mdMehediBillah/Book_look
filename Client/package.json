@@ -20,6 +20,7 @@
     "axios": "^1.7.2",
     "country-state-city": "^3.2.1",
     "date-fns": "^3.6.0",
+    "dotenv": "^16.4.5",
     "formik": "^2.4.6",
     "framer-motion": "^11.3.6",
     "js-cookie": "^3.0.5",

@@ -7,7 +7,7 @@ import ShelfPage from "./ShelfPage/ShelfPage.jsx";
 import BooksPage from "./BooksPage/BooksPage.jsx";
 import BookPage from "./BookPage/BookPage.jsx";
 import UserProfilePage from "./UserProfilePage/UserProfilePage.jsx";
-import AdminPage from "./AdminPage/AdminPage.jsx";
+// import AdminPage from "./AdminPage/AdminPage.jsx";
 import CreateShelf from "./CreateShelf/CreateShelf.jsx";
 import BorrowBookPage from "./BorrowBookPage/BorrowBookPage.jsx";
 import DonateBookPage from "./DonateBookPage/DonateBookPage.jsx";
@@ -30,7 +30,7 @@ export {
   BooksPage,
   BookPage,
   UserProfilePage,
-  AdminPage,
+  // AdminPage,
   NotFoundPage,
   CreateShelf,
   BorrowBookPage,

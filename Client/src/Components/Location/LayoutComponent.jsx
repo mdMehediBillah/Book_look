@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import MapComponent from "./MapComponent";
 import { getOpeningStatus } from "./getOpeningStatus/getOpeningStatus";
 import { Link } from "react-router-dom";
+import SearchComponent from "../SearchComponent/SearchComponent";
+
 const LayoutComponent = ({
   bookshelves,
   center,
@@ -20,7 +22,6 @@ const LayoutComponent = ({
   //==========================================================================
   // Filter bookshelves based on search term
   //==========================================================================
-  // Ensure searchTerm is a lowercase string
   const normalizedSearchTerm = (searchTerm || "").toLowerCase();
   // Safeguard against undefined properties
   const filteredBookshelves = bookshelves.filter((shelf) => {
@@ -53,23 +54,34 @@ const LayoutComponent = ({
       return updatedLiked;
     });
   };
-  //==========================================================================
-  // State for show more/less button
-  //==========================================================================
-  // const [showMore, setShowMore] = useState(false);
-  // const displayedBookshelves = showMore
-  //   ? filteredBookshelves
-  //   : filteredBookshelves.slice(0, 3); //display only 3 bookshelves ehwn show more is false
+
   //==========================================================================
   const displayedBookshelves = filteredBookshelves; // to always display all bookshelves
   return (
-    <div className="flex flex-col md:flex-row mt-10">
-      <div
-        className="flex flex-col md:w-1/3 h-full overflow-y-auto"
-        style={{ maxHeight: "calc(80vh - 80px)" }}
-      >
+    <div className="flex flex-col mt-10">
+      {/* Map Container */}
+      <div className="relative h-1/2 md:h-full">
+        {/* Search Component inside the map */}
+        <div className="absolute w-20 top-3 left-10 z-[1000] p-2 rounded">
+          <SearchComponent
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            setCenter={setCenter}
+          />
+        </div>
+
+        <MapComponent
+          bookshelves={filteredBookshelves}
+          center={center}
+          userLocation={userLocation}
+          destination={destination}
+          setDestination={setDestination}
+        />
+      </div>
+
+      {/* Bookshelves Container */}
+      <div className="flex flex-row overflow-x-auto mt-4 pb-4">
         {displayedBookshelves.map((shelf, idx) => {
-          // Compute opening status
           const { isOpen, message, detail } = getOpeningStatus(
             shelf.openingTime,
             shelf.closingTime
@@ -77,18 +89,18 @@ const LayoutComponent = ({
           return (
             <div
               key={idx}
-              className="flex flex-row items-start mt-3 p-1 border border-gray-300 rounded bg-gray-50 relative"
+              className="min-w-[300px] max-w-xs flex-shrink-0 text-sm flex flex-col items-start mr-4 p-1 border border-gray-300 rounded bg-gray-50 relative"
             >
               {/* Heart Icon */}
               <button
-                className="absolute bottom-2 right-2 text-red-500"
+                className="absolute top-1 right-1 text-red-500"
                 onClick={() => handleLikeToggle(shelf._id)}
               >
                 {likedBookshelves.has(shelf._id) ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
-                    viewBox="0 0 24 24"
+                    viewBox="0 0 20 22"
                     className="w-5 h-5"
                   >
                     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
@@ -110,6 +122,7 @@ const LayoutComponent = ({
                   </svg>
                 )}
               </button>
+
               {/* Image Container */}
               {shelf.image && shelf.image.length > 0 && (
                 <div className="flex-shrink-0 mr-4">
@@ -127,24 +140,15 @@ const LayoutComponent = ({
                   </Link>
                 </div>
               )}
-              {/* Text Content */}
-              <div>
-                <Link to={`/${shelf._id}`}>
-                  <h3 className="text-lg font-semibold">{shelf.name}</h3>
-                  <p className="text-gray-700">
-                    {shelf.street}, {shelf.city}
-                  </p>
-                  <p className={`text-${isOpen ? "green" : "red"}-500`}>
-                    {message} <span className="text-gray-500">{detail}</span>
-                  </p>
-                </Link>
-              </div>
 
               {/* Text Content */}
               <div>
-                <h2 className="text-lg font-semibold">{shelf.name}</h2>
+                <h2 className="text-sm font-semibold">{shelf.name}</h2>
                 <p className="text-gray-700">
                   {shelf.street}, {shelf.city}
+                </p>
+                <p className={`text-${isOpen ? "green" : "red"}-500`}>
+                  {message} <span className="text-gray-500">{detail}</span>
                 </p>
                 <Link to={`/create_book/${shelf._id}`}>
                   <button>Add Book</button>
@@ -154,15 +158,7 @@ const LayoutComponent = ({
           );
         })}
       </div>
-      <div className="flex-grow h-1/2 md:h-full">
-        <MapComponent
-          bookshelves={filteredBookshelves}
-          center={center}
-          userLocation={userLocation}
-          destination={destination}
-          setDestination={setDestination}
-        />
-      </div>
+
     </div>
   );
 };
