@@ -18,7 +18,6 @@ const LayoutComponent = ({
   searchTerm,
   setSearchTerm,
 }) => {
-
   //==========================================================================
   // Filter bookshelves based on search term
   //==========================================================================
@@ -59,18 +58,26 @@ const LayoutComponent = ({
       return updatedLiked;
     });
   };
-  
+
   //==========================================================================
 
   const displayedBookshelves = filteredBookshelves; // to always display all bookshelves
   return (
-    <div className="flex flex-col md:flex-row mt-10">
-      <div
-        className="flex flex-col md:w-1/3 h-full overflow-y-auto"
-        style={{ maxHeight: "calc(60vh - 80px)" }}
-      >
+    <div className="flex flex-col mt-10">
+      {/* Map Container */}
+      <div className="h-1/2 md:h-full">
+        <MapComponent
+          bookshelves={filteredBookshelves}
+          center={center}
+          userLocation={userLocation}
+          destination={destination}
+          setDestination={setDestination}
+        />
+      </div>
+
+      {/* Bookshelves Container */}
+      <div className="flex flex-row overflow-x-auto mt-4 pb-4">
         {displayedBookshelves.map((shelf, idx) => {
-          // Compute opening status
           const { isOpen, message, detail } = getOpeningStatus(
             shelf.openingTime,
             shelf.closingTime
@@ -79,7 +86,7 @@ const LayoutComponent = ({
           return (
             <div
               key={idx}
-              className=" text-sm flex flex-row items-start mt-1 p-1 border border-gray-300 rounded bg-gray-50 relative"
+              className="min-w-[300px] max-w-xs flex-shrink-0 text-sm flex flex-col items-start mr-4 p-1 border border-gray-300 rounded bg-gray-50 relative"
             >
               {/* Heart Icon */}
               <button
@@ -112,6 +119,7 @@ const LayoutComponent = ({
                   </svg>
                 )}
               </button>
+
               {/* Image Container */}
               {shelf.image && shelf.image.length > 0 && (
                 <div className="flex-shrink-0 mr-4">
@@ -146,16 +154,6 @@ const LayoutComponent = ({
             </div>
           );
         })}
-      </div>
-
-      <div className="flex-grow h-1/2 md:h-full">
-        <MapComponent
-          bookshelves={filteredBookshelves}
-          center={center}
-          userLocation={userLocation}
-          destination={destination}
-          setDestination={setDestination}
-        />
       </div>
     </div>
   );
