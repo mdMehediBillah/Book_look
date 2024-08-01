@@ -1,6 +1,6 @@
 import HomePage from "./HomePage/HomePage.jsx";
 import RegistrationPage from "./RegistrationPage/RegistrationPage.jsx";
-import ShalvesPage from "./ShalvesPage/ShalvesPage.jsx";
+import ShalvesPage from "./bookshelfPage/BookshelfPage.jsx";
 import UsersPage from "./UsersPage/UsersPage.jsx";
 import UserPage from "./UserPage/UserPage.jsx";
 import ShelfPage from "./ShelfPage/ShelfPage.jsx";

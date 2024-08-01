@@ -1,16 +1,22 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-// import Loading from "../Loader/Loader";
-// import coverImg from "../../images/cover_not_found.jpg";
-// import "./BookDetails.css";
+import { useShelfContext } from "../../Context/Shelf/shelfContext.jsx";
+import coverImg from "../../assets/images/bookCover.png";
+import { toast } from "react-toastify";
+const URLLocal = import.meta.env.VITE_REACT_APP_URL;
+
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import GoBackComponent from "../GoBackComponent/GoBackComponent";
+import axios from "axios";
 
 const URL = "https://openlibrary.org/works/";
 
-const BookDetails = () => {
+const BookDetails = ({ shelf }) => {
+  const { shelfData } = useShelfContext();
+  console.log(shelfData._id);
   const { id } = useParams();
+  console.log(shelf);
   const [loading, setLoading] = useState(false);
   const [book, setBook] = useState(null);
   const navigate = useNavigate();
@@ -52,6 +58,7 @@ const BookDetails = () => {
             subject_times,
             subjects,
           } = data;
+
           const newBook = {
             description: description
               ? description.value
@@ -82,33 +89,62 @@ const BookDetails = () => {
   }, [id]);
   // if (loading) return <Loading />;
 
-  const handleBookSubmit = (event) => {
-    event.preventDefault();
+  const handleBookSubmit = async (e) => {
+    e.preventDefault();
     const imageFormData = formData.covers[0];
 
     // fetch image from openlibrary
     console.log(imageFormData);
     const url = `https://covers.openlibrary.org/b/id/${imageFormData}-L.jpg`;
     // setImageData(url);
-    // console.log(url);
+    console.log(url);
     // console.log(imageData);
 
     // create new book object with updated data
     const newBook = {
+      ISBN: "",
       title: formData.title,
-      image: url,
       author: authorData[0],
-      description: formData.description,
+      coverImageUrl: url,
+      summary: formData.description,
       subjects: formData.subjects,
+      bookshelf: shelfData._id,
+      genre: "",
+      publisher: "",
+      publishedDate: "",
+      language: "",
     };
+
     setFormData(newBook);
     // save changes to database
+    // console.log(formData);
     console.log(newBook.title);
     console.log(newBook.author);
-    console.log(newBook.image);
+    console.log(newBook.coverImageUrl);
+    console.log(newBook.bookshelf);
     // const img = newBook.image;
     // const url = `https://covers.openlibrary.org/b/id/${img}-L.jpg`;
     // setImageData(url);
+    try {
+      const responce = await axios.post(`${URLLocal}/api/v1/books/new`, {
+        title: newBook.title,
+        author: newBook.author,
+        coverImageUrl: newBook.coverImageUrl,
+        // summary: newBook.summary,
+        // subjects: newBook.subjects,
+        bookshelf: newBook.bookshelf,
+        // genre: newBook.genre,
+        // publisher: newBook.publisher,
+        // publishedDate: newBook.publishedDate,
+        // language: newBook.language,
+      });
+      console.log(responce.data);
+      toast.success("Add Book successfully!");
+      navigate("/");
+    } catch (error) {
+      console.error(error.message);
+      toast.error("Book not added. Please try again.");
+    }
   };
 
   return (

@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import coverImg from "../../assets/images/banner_default.png"; // Placeholder image
 import "./SearchBookComponent.css";
 
-const SearchBookComponent = () => {
+const SearchBookComponent = ({ shelf }) => {
+  console.log(shelf);
   const { books, loading, resultTitle, setSearchTerm, fetchBooks } =
     useGlobalContext();
   const searchText = useRef("");
