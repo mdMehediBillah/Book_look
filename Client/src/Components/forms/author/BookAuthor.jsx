@@ -1,7 +1,7 @@
 import "./BookAuthor.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { API } from "../../../utils/security/secreteKey.js";
+import { API } from "../../../Utils/security/secreteKey.js";
 import { toast } from "react-toastify";
 import { FaBookMedical } from "react-icons/fa";
 import { FaUserTie } from "react-icons/fa";

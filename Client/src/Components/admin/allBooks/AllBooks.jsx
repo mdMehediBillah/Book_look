@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import "./AllBooks.scss";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import axios from "axios";
-import { API } from "../../../utils/security/secreteKey.js";
+import { API } from "../../../Utils/security/secreteKey.js";
 import { FaTrashAlt } from "react-icons/fa";
 import { useState } from "react";
 import BookForm from "../../forms/book/BookForm";
