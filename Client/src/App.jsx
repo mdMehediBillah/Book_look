@@ -23,7 +23,7 @@ import {
   CreateBookComponent,
   SearchBookComponent,
 } from "./Components";
-import AdminDashboardPage from "./Pages/dashboardPages/adminDashboardPage/AdminDashboardPage";
+// import AdminDashboardPage from "./Pages/dashboardPages/adminDashboardPage/AdminDashboardPage";
 import BookshelfPage from "./Pages/bookshelfPage/BookshelfPage";
 
 function App() {
