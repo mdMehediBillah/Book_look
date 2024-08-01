@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import GenreForm from "../../forms/genre/GenreForm";
-import { API } from "../../../utils/security/secreteKey.js";
+import { API } from "../../../Utils/security/secreteKey.js";
 
 const Genres = () => {
   const [genreId, setGenreId] = useState("");

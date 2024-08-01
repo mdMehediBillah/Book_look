@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { API } from "../../Utils/security/secreteKey";
 import Rating from "../../Components/bookshelf/ratings/Rating";
-import "./BookPage.scss"
+import "./BookPage.scss";
 import BorrowedBookForm from "../../Components/forms/borrow/BorrowedBookForm";
 
 const BookPage = () => {

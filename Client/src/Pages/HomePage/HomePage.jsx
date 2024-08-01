@@ -7,6 +7,7 @@ import {
   HeroText,
   NavigationComponent,
   SearchComponent,
+  FooterComponent,
 } from "../../Components";
 import Location from "../../Components/Location/Location";
 import heroImg from "../../assets/images/heroSection.png";
