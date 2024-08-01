@@ -4,12 +4,12 @@ const ContactUsPage = () => {
   return (
     <main>
       <NavigationComponent />
-      <div className="bg-stone-100">
+      <div className=" max-w-screen-lg mx-auto">
         <div className=" flex justify-center py-9 ">
           <h4 className="text-4xl font-medium cursor-default">Contact Us</h4>
         </div>
         <div className=" flex justify-center">
-          <div className=" flex justify-evenly size-7/12 pb-9">
+          <div className=" flex justify-evenly size-9/12 pb-9">
             <form
               className="flex flex-col  border-2 border-gray-300  py-3 px-3 bg-cyan-100 rounded-md "
               action=""

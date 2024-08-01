@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 const FooterComponent = () => {
   return (
-    <div className="bg-cyan-900 min-h-48 text-white">
+    <div className="bg-cyan-900 min-h-48 text-white max-w-screen-lg mx-auto">
       <div className="flex justify-evenly py-3">
         <div className="py-3 grid grid-cols-1 gap-2">
           <img
@@ -50,8 +50,14 @@ const FooterComponent = () => {
             <Link to="/how_it_works">
               <li className="hover:text-cyan-200 text-sm">How it Works</li>
             </Link>
-            <li className="hover:text-cyan-200 text-sm">FAQ</li>
-            <li className="hover:text-cyan-200 text-sm">Terms & Conditions</li>
+            <Link to="/faq">
+              <li className="hover:text-cyan-200 text-sm">FAQ</li>
+            </Link>
+            <Link to="/terms_and_conditions">
+              <li className="hover:text-cyan-200 text-sm">
+                Terms & Conditions
+              </li>
+            </Link>
           </ul>
         </div>
         <div className="">

@@ -4,12 +4,12 @@ const AboutUsPage = () => {
   return (
     <main>
       <NavigationComponent />
-      <div className="bg-stone-100 cursor-default ">
+      <div className=" cursor-default max-w-screen-lg mx-auto">
         <div className="flex justify-center py-9 ">
           <h4 className="text-4xl font-medium  ">About Us</h4>
         </div>
         <div className="flex justify-center pb-9">
-          <div className=" flex flex-col justify-center size-7/12  ">
+          <div className=" flex flex-col justify-center size-9/12  ">
             <div className="YOHANNES bg-cyan-100 flex justify-center gap-11 py-3 px-3 items-center border-2 border-gray-300 rounded-xl my-2 ">
               <p>
                 <p className="font-semibold text-xl">Yohannes Habtemariam</p>
