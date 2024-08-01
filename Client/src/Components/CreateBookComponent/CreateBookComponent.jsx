@@ -1,15 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
 import imgPlaceholder from "../../assets/images/placeholder-image.jpg";
-import { useShelfContext } from "../../Context/Shelf/shelfContext.jsx"; // Adjust the path as necessary
+import { useShelfContext } from "../../Context/Shelf/shelfContext.jsx";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-// Create a new book
 const CreateBookComponent = () => {
   const navigate = useNavigate();
-  const { shelfData, setShelfData } = useShelfContext();
-  const shelfId = shelfData._id;
-  console.log(shelfId);
+  const { shelfData } = useShelfContext();
+  const shelfId = shelfData?._id || "";
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [imagePreview, setImagePreview] = useState(imgPlaceholder);
@@ -59,34 +58,40 @@ const CreateBookComponent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError("");
 
     try {
-      let imageUrl = formData.image
-        ? await uploadImageToCloudinary(formData.image)
-        : image;
+      const imageUrl = formData.coverImageUrl
+        ? await uploadImageToCloudinary(formData.coverImageUrl)
+        : formData.coverImageUrl;
 
       const updatedFormData = {
         ...formData,
-        image: imageUrl,
+        coverImageUrl: imageUrl,
       };
-      // const token = localStorage.getItem("token");
-      const response = await axios.put(
+
+      const response = await axios.post(
         `${url}/api/v1/books/new`,
         updatedFormData
       );
-      console.log("Book added successfully:", response.data);
+      console.log(response.data);
+
+      toast.success("Add Book successfully!");
+      navigate("/");
     } catch (error) {
-      console.error("Error updating user:", error);
+      console.error("Error creating book:", error);
       setError("Server error! Please try again!");
+      toast.error("Book not added. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main className=" container screen-max-lg rounded-lg">
+    <main className="container screen-max-lg rounded-lg">
       <div className="container mx-auto p-4">
-        <h2 className="text-lg py-4  text-center ">Type book's information</h2>
+        <h2 className="text-lg py-4 text-center">Type book's information</h2>
+        {error && <p className="text-red-500 text-center">{error}</p>}
         <form
           onSubmit={handleSubmit}
           className="max-w-[600px] min-w-[380px] mx-auto p-4 bg-cyan-800 rounded-lg text-white"
@@ -168,8 +173,9 @@ const CreateBookComponent = () => {
           <button
             type="submit"
             className="bg-rose-500 text-white w-full py-2 rounded-lg mt-4 hover:bg-cyan-500"
+            disabled={loading}
           >
-            Create Book
+            {loading ? "Creating..." : "Create Book"}
           </button>
         </form>
       </div>

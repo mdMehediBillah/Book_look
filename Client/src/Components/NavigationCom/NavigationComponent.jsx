@@ -14,11 +14,7 @@ const NavigationComponent = () => {
   const navigate = useNavigate();
 
   const { firstName } = user;
-  // console.log(firstName);
-  // localStorage.setItem("userName", user.firstName);
-  // const firstName = localStorage.getItem("userName");
 
-  // verify user is logged in
   useEffect(() => {
     if (!localStorage.getItem("token")) navigate("/registrationPage");
   }, []);
