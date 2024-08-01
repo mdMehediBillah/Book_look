@@ -133,10 +133,10 @@ export const getBookshelves = async (req, res, next) => {
       // If search parameter is provided, construct the query with $or conditions
       query = {
         $or: [
-          { name: new RegExp(search, 'i') },
-          { country: new RegExp(search, 'i') },
-          { state: new RegExp(search, 'i') },
-          { city: new RegExp(search, 'i') },
+          { name: new RegExp(search, "i") },
+          { country: new RegExp(search, "i") },
+          { state: new RegExp(search, "i") },
+          { city: new RegExp(search, "i") },
         ],
       };
     }
@@ -153,7 +153,6 @@ export const getBookshelves = async (req, res, next) => {
     return next(createError(500, "Server error! Please try again!"));
   }
 };
-
 
 // export const getBookshelves = async (req, res, next) => {
 //   try {
@@ -215,5 +214,34 @@ export const deleteBookshelf = async (req, res, next) => {
     });
   } catch (error) {
     return next(createError(500, "Internal server error"));
+  }
+};
+
+//==========================================================================
+// Get single bookshelf books
+//==========================================================================
+export const getAllBooksInBookshelf = async (req, res, next) => {
+  const bookshelfId = req.params.id;
+
+  try {
+    const bookshelf = await Bookshelf.findById(bookshelfId)
+      .populate({ path: "books", model: "Book" })
+      .populate({ path: "donatedBooks", model: "Book" })
+      .populate({ path: "borrowedBooks", model: "Book" });
+
+    if (!bookshelf) {
+      return next(createError(400, "Bookshelf not found!"));
+    }
+
+    const { books, donatedBooks, borrowedBooks } = bookshelf;
+
+    res.status(200).json({
+      success: true,
+      books,
+      donatedBooks,
+      borrowedBooks,
+    });
+  } catch (error) {
+    return next(createError(400, "Server error! Please try again!"));
   }
 };

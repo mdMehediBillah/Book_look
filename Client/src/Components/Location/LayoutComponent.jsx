@@ -1,7 +1,8 @@
 //==========================================================================
 //this code integrates a searchInput, a list of bookshelves, and a mapComponent.
 //==========================================================================
-import React, { useState, useEffect } from "react";
+
+import { useState, useEffect } from "react";
 import MapComponent from "./MapComponent";
 import { getOpeningStatus } from "./getOpeningStatus/getOpeningStatus";
 import { Link } from "react-router-dom";
@@ -15,6 +16,7 @@ const LayoutComponent = ({
   searchTerm,
   setSearchTerm,
 }) => {
+
   //==========================================================================
   // Filter bookshelves based on search term
   //==========================================================================
@@ -111,35 +113,40 @@ const LayoutComponent = ({
               {/* Image Container */}
               {shelf.image && shelf.image.length > 0 && (
                 <div className="flex-shrink-0 mr-4">
-                  <img
-                    src={shelf.image[0]}
-                    alt={shelf.name}
-                    className="w-24 h-24 object-cover rounded"
-                    style={{
-                      width: "85px",
-                      height: "96px",
-                      borderRadius: "5px",
-                    }}
-                  />
+                  <Link to={`/${shelf._id}`}>
+                    <img
+                      src={shelf.image[0]}
+                      alt={shelf.name}
+                      className="w-24 h-24 object-cover rounded"
+                      style={{
+                        width: "85px",
+                        height: "96px",
+                        borderRadius: "5px",
+                      }}
+                    />
+                  </Link>
                 </div>
               )}
               {/* Text Content */}
-              {/* <div>
-                <h3 className="text-lg font-semibold">{shelf.name}</h3>
-                <p className="text-gray-700">
-                  {shelf.street}, {shelf.city}
-                </p>
-                <p className={`text-${isOpen ? "green" : "red"}-500`}>
-                  {message} <span className="text-gray-500">{detail}</span>
-                </p>
-              </div> */}
+              <div>
+                <Link to={`/${shelf._id}`}>
+                  <h3 className="text-lg font-semibold">{shelf.name}</h3>
+                  <p className="text-gray-700">
+                    {shelf.street}, {shelf.city}
+                  </p>
+                  <p className={`text-${isOpen ? "green" : "red"}-500`}>
+                    {message} <span className="text-gray-500">{detail}</span>
+                  </p>
+                </Link>
+              </div>
+
               {/* Text Content */}
               <div>
                 <h2 className="text-lg font-semibold">{shelf.name}</h2>
                 <p className="text-gray-700">
                   {shelf.street}, {shelf.city}
                 </p>
-                <Link to={`/create_book/${shelf.id}`}>
+                <Link to={`/create_book/${shelf._id}`}>
                   <button>Add Book</button>
                 </Link>
               </div>

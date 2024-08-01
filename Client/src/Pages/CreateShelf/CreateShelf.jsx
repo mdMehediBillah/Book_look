@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -21,6 +21,7 @@ import {
   faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
 import BookshelfMap from "../../Components/BookshelfMap/BookshelfMap.jsx";
+import { FaBarcode } from "react-icons/fa";
 
 //==========================================================================
 //------------------------------------------------------------------------------------------------------------
@@ -185,7 +186,7 @@ const CreateShelfForm = () => {
           </div>
           <div className="flex items-center mb-4 relative">
             <FontAwesomeIcon
-              icon={faBarcode}
+              icon={FaBarcode}
               className="absolute left-3 top-3 text-gray-600"
             />
             <div className="flex-1">

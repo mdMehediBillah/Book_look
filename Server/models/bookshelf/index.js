@@ -17,7 +17,7 @@ const bookshelfSchema = new Schema(
     openingTime: { type: String, required: true },
     closingTime: { type: String, required: true },
 
-    books: [{ _id: { type: mongoose.Types.ObjectId, ref: "Book" } }],
+    books: [{ type: Schema.Types.ObjectId, ref: "Book" }],
 
     donatedBooks: [
       { _id: { type: mongoose.Types.ObjectId, ref: "DonatedBook" } },
@@ -41,8 +41,6 @@ const bookshelfSchema = new Schema(
         createdAt: { type: Date, default: Date.now() },
       },
     ],
-
- 
   },
   { timestamps: true }
 );
