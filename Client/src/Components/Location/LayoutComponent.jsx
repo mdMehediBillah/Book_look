@@ -2,12 +2,10 @@
 //this code integrates a searchInput, a list of bookshelves, and a mapComponent.
 //==========================================================================
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import MapComponent from "./MapComponent";
 import { getOpeningStatus } from "./getOpeningStatus/getOpeningStatus";
-
 import { Link } from "react-router-dom";
-
 const LayoutComponent = ({
   bookshelves,
   center,
@@ -18,22 +16,20 @@ const LayoutComponent = ({
   searchTerm,
   setSearchTerm,
 }) => {
+
   //==========================================================================
   // Filter bookshelves based on search term
   //==========================================================================
   const normalizedSearchTerm = (searchTerm || "").toLowerCase();
-
   // Safeguard against undefined properties
   const filteredBookshelves = bookshelves.filter((shelf) => {
     // console.log("Bookshelf:", shelf); // Log each bookshelf item ----> debugging
     // console.log("Search Term:", normalizedSearchTerm); // Log the current search term ----> debugging
-
     //search based on name, country, state, and city
     const name = shelf.name?.toLowerCase() || "";
     const country = shelf.country?.toLowerCase() || "";
     const state = shelf.state?.toLowerCase() || "";
     const city = shelf.city?.toLowerCase() || "";
-
     return (
       name.includes(normalizedSearchTerm) ||
       country.includes(normalizedSearchTerm) ||
@@ -41,12 +37,10 @@ const LayoutComponent = ({
       city.includes(normalizedSearchTerm)
     );
   });
-
   //==========================================================================
   // State for display liked bookshelves
   //==========================================================================
   const [likedBookshelves, setLikedBookshelves] = useState(new Set());
-
   const handleLikeToggle = (shelfId) => {
     setLikedBookshelves((prevLiked) => {
       const updatedLiked = new Set(prevLiked);
@@ -60,9 +54,7 @@ const LayoutComponent = ({
   };
   
   //==========================================================================
-
   const displayedBookshelves = filteredBookshelves; // to always display all bookshelves
-
   return (
     <div className="flex flex-col md:flex-row mt-10">
       <div
@@ -75,7 +67,6 @@ const LayoutComponent = ({
             shelf.openingTime,
             shelf.closingTime
           );
-
           return (
             <div
               key={idx}
@@ -115,29 +106,41 @@ const LayoutComponent = ({
               {/* Image Container */}
               {shelf.image && shelf.image.length > 0 && (
                 <div className="flex-shrink-0 mr-4">
-                  <img
-                    src={shelf.image[0]}
-                    alt={shelf.name}
-                    className="w-24 h-24 object-cover rounded"
-                    style={{
-                      width: "85px",
-                      height: "96px",
-                      borderRadius: "5px",
-                    }}
-                  />
+                  <Link to={`/${shelf._id}`}>
+                    <img
+                      src={shelf.image[0]}
+                      alt={shelf.name}
+                      className="w-24 h-24 object-cover rounded"
+                      style={{
+                        width: "85px",
+                        height: "96px",
+                        borderRadius: "5px",
+                      }}
+                    />
+                  </Link>
                 </div>
               )}
             
+              {/* Text Content */}
+              <div>
+                <Link to={`/${shelf._id}`}>
+                  <h3 className="text-lg font-semibold">{shelf.name}</h3>
+                  <p className="text-gray-700">
+                    {shelf.street}, {shelf.city}
+                  </p>
+                  <p className={`text-${isOpen ? "green" : "red"}-500`}>
+                    {message} <span className="text-gray-500">{detail}</span>
+                  </p>
+                </Link>
+              </div>
+
               {/* Text Content */}
               <div>
                 <h2 className="text-lg font-semibold">{shelf.name}</h2>
                 <p className="text-gray-700">
                   {shelf.street}, {shelf.city}
                 </p>
-                <p className={`text-${isOpen ? "green" : "red"}-500`}>
-                  {message} <span className="text-gray-500">{detail}</span>
-                </p>
-                <Link to={`/create_book/${shelf.id}`}>
+                <Link to={`/create_book/${shelf._id}`}>
                   <button>Add Book</button>
                 </Link>
               </div>
@@ -145,7 +148,6 @@ const LayoutComponent = ({
           );
         })}
       </div>
-
       <div className="flex-grow h-1/2 md:h-full">
         <MapComponent
           bookshelves={filteredBookshelves}
@@ -158,5 +160,4 @@ const LayoutComponent = ({
     </div>
   );
 };
-
 export default LayoutComponent;

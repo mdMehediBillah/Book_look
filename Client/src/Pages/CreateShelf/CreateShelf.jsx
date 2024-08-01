@@ -272,6 +272,46 @@ const CreateShelfForm = () => {
           )}
         </div>
       </div>
+
+      <div>
+        <BookshelfMap onLocationSelect={handleLocationSelect} />
+      </div>
+      {/* <div className="flex items-center mb-4 relative">
+            <FontAwesomeIcon
+              icon={faMapPin}
+              className="absolute left-3 top-3 text-gray-600"
+            />
+            <div className="flex-1">
+              <input
+                type="text"
+                id="latitude"
+                name="latitude"
+                value={formData.latitude}
+                onChange={handleChange}
+                required
+                placeholder="Latitude"
+                className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div> */}
+      {/* <div className="flex items-center mb-4 relative">
+            <FontAwesomeIcon
+              icon={faMapPin}
+              className="absolute left-3 top-3 text-gray-600"
+            />
+            <div className="flex-1">
+              <input
+                type="text"
+                id="longitude"
+                name="longitude"
+                value={formData.longitude}
+                onChange={handleChange}
+                required
+                placeholder="Longitude"
+                className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div> */}
       <button
         type="submit"
         className="w-full py-2 mt-7 px-4 bg-cyan-700 text-white font-bold rounded-md hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

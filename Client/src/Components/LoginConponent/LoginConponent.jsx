@@ -170,7 +170,7 @@ const LoginConponent = ({ toggleForm }) => {
       </form>
       <div>
         <p className="text-center text-gray-700 mt-4 text-sm">
-          Don't have an account?{" "}
+          Don`t have an account?{" "}
           <button
             onClick={toggleForm}
             className="text-gray-900  pl-2 hover:underline font-semibold"

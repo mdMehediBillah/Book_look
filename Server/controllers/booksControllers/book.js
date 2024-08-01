@@ -8,69 +8,55 @@ import Bookshelf from "../../models/bookshelf/index.js";
 
 export const createBook = async (req, res, next) => {
   const {
-    ISBN,
     title,
-    genre,
-    publishedDate,
-    language,
-    publisher,
+    author,
     coverImageUrl,
+    language,
     summary,
-    shelfId,
+    bookshelf: shelfId,
   } = req.body;
 
-  if (
-    !ISBN ||
-    !title ||
-    !genre ||
-    !publishedDate ||
-    !language ||
-    !publisher ||
-    !coverImageUrl ||
-    !shelfId
-  ) {
+  // Validate required fields
+  if (!title || !author || !shelfId) {
     return res
       .status(400)
-      .json({ message: "All required fields must be provided" });
+      .json({ message: "Title, author, and bookshelf ID are required" });
   }
 
   try {
-    const book = await Book.findOne({ ISBN });
-
-    if (book) {
-      return next(createError(400, "Book already exist!"));
-    }
-
+    // Create new book instance
     const newBook = new Book({
-      ISBN,
       title,
-      genre,
-      publishedDate,
-      language,
-      publisher,
+      author,
       coverImageUrl,
+      language,
       summary,
-      shelfId,
+      bookshelf: shelfId, // Ensure correct property name matches your schema
     });
 
+    console.log("New Book:", newBook); // Log the new book object for debugging
+
+    // Save the new book
     const savedBook = await newBook.save();
 
+    // Find the bookshelf by ID and add the new book to it
     const bookshelf = await Bookshelf.findById(shelfId);
     if (!bookshelf) {
       return res
         .status(404)
-        .json({ success: true, message: "Bookshelf not found" });
+        .json({ success: false, message: "Bookshelf not found" });
     }
 
-    bookshelf.books.push(savedBook._id);
+    bookshelf.books.push(savedBook._id); // Add the book ID to the bookshelf
     await bookshelf.save();
-
 
     res.status(201).json({
       success: true,
       message: "Book created and added to the bookshelf successfully",
+      book: savedBook,
     });
   } catch (error) {
+    console.error("Error creating book:", error); // Log the error for debugging
     return next(createError(500, "Server error! please try again!"));
   }
 };

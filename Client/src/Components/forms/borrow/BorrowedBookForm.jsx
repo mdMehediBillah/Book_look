@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { FaBookMedical } from "react-icons/fa";
 import "./BorrowedBookForm.scss";
-import { API } from "../../../utils/security/secreteKey";
+
 import { toast } from "react-toastify";
+import { API } from "../../../Utils/security/secreteKey";
 
 const initialValues = {
   ISBN: "",
@@ -38,7 +39,7 @@ const BorrowedBookForm = ({ setOpenBorrowedBook }) => {
     // Fetch books and bookshelves from the backend
     const fetchBooks = async () => {
       try {
-        const { data } = await axios.get(`${API}/books`);
+        const { data } = await axios.get(`${API}/api/v1/books`);
         setBooks(data.result);
       } catch (error) {
         console.error("Error fetching data:", error);
