@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import { Country } from "country-state-city";
+import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
