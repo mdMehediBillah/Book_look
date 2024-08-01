@@ -4,8 +4,6 @@ import "react-toastify/dist/ReactToastify.css";
 import {
   BookPage,
   BooksPage,
-  BookPage,
-  BooksPage,
   BorrowBookPage,
   CreateBookPage,
   CreateShelf,

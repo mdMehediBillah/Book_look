@@ -158,15 +158,7 @@ const LayoutComponent = ({
           );
         })}
       </div>
-      <div className="flex-grow h-1/2 md:h-full">
-        <MapComponent
-          bookshelves={filteredBookshelves}
-          center={center}
-          userLocation={userLocation}
-          destination={destination}
-          setDestination={setDestination}
-        />
-      </div>
+
     </div>
   );
 };
