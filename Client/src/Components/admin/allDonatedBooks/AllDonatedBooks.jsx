@@ -3,7 +3,7 @@ import "./AllDonatedBooks.scss";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import DonatedBookForm from "../../forms/DonatedBook/DonatedBookForm";
 import axios from "axios";
-import { API } from "../../../Utils/security/secreteKey.js";
+import { API } from "../../../utils/security/secreteKey.js";
 import { toast } from "react-toastify";
 import { FaTrashAlt } from "react-icons/fa";
 

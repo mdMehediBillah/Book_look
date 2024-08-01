@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./GenreForm.scss";
 import axios from "axios";
-import { API } from "../../../Utils/security/secreteKey.js";
+import { API } from "../../../utils/security/secreteKey.js";
 import { toast } from "react-toastify";
 import { FaBook } from "react-icons/fa6";
 import { MdMessage } from "react-icons/md";

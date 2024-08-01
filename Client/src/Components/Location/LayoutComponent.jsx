@@ -124,7 +124,7 @@ const LayoutComponent = ({
                 </div>
               )}
               {/* Text Content */}
-              <div>
+              {/* <div>
                 <h3 className="text-lg font-semibold">{shelf.name}</h3>
                 <p className="text-gray-700">
                   {shelf.street}, {shelf.city}
@@ -132,17 +132,17 @@ const LayoutComponent = ({
                 <p className={`text-${isOpen ? "green" : "red"}-500`}>
                   {message} <span className="text-gray-500">{detail}</span>
                 </p>
+              </div> */}
+              {/* Text Content */}
+              <div>
+                <h2 className="text-lg font-semibold">{shelf.name}</h2>
+                <p className="text-gray-700">
+                  {shelf.street}, {shelf.city}
+                </p>
+                <Link to={`/create_book/${shelf.id}`}>
+                  <button>Add Book</button>
+                </Link>
               </div>
-            {/* Text Content */}
-            <div>
-              <h2 className="text-lg font-semibold">{shelf.name}</h2>
-              <p className="text-gray-700">
-                {shelf.street}, {shelf.city}
-              </p>
-              <Link to={`/create_book/${shelf.id}`}>
-                <button>Add Book</button>
-              </Link>
-            </div>
             </div>
           );
         })}
@@ -160,24 +160,3 @@ const LayoutComponent = ({
   );
 };
 export default LayoutComponent;
-
-
-
-
-
-
-
-
-
-
-
-Nachricht an Anna [WD-51 / Bashar], Mehedi Billah [WD-051/ Bashar], Yohannes [WD-051 / Bashar]
-
-
-
-
-
-
-
-
-

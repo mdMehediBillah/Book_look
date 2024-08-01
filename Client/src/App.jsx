@@ -12,6 +12,9 @@ import {
   TermsConditionPage,
   UserProfilePage,
   UserUpdatePage,
+  AboutUsPage,
+  ContactUsPage,
+  HowItWorksPage,
 } from "./Pages";
 import {
   BookDetailsCom,
@@ -38,6 +41,9 @@ function App() {
           <Route path="createBookinput" element={<CreateBookComponent />} />
         </Route>
         <Route path="/createBookSearch/:id" element={<BookDetailsCom />} />
+        <Route path="/about_us" element={<AboutUsPage />} />
+        <Route path="/contact_us" element={<ContactUsPage />} />
+        <Route path="/how_it_works" element={<HowItWorksPage />} />
 
         <Route path="/terms_condition" element={<TermsConditionPage />} />
         <Route path="/admin/dashboard" element={<AdminDashboardPage />} />

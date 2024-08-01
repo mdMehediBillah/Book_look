@@ -11,7 +11,7 @@ import {
   cloud_name,
   cloud_URL,
   upload_preset,
-} from "../../../Utils/security/secreteKey.js";
+} from "../../../utils/security/secreteKey.js";
 import { toast } from "react-toastify";
 import BookAuthor from "../author/BookAuthor";
 const initialValues = {

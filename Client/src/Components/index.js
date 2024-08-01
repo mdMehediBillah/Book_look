@@ -11,6 +11,7 @@ import CreateBookComponent from "./CreateBookComponent/CreateBookComponent.jsx";
 import SearchBookComponent from "./SearchBookComponent/SearchBookComponent.jsx";
 import CreateBook from "./CreateBook/CreateBook.jsx";
 import BookDetailsCom from "./BookDetailsCom/BookDetailsCom.jsx";
+import FooterComponent from "./FooterComponent/FooterComponent.jsx";
 
 // export all components
 export {
@@ -27,4 +28,5 @@ export {
   SearchBookComponent,
   CreateBook,
   BookDetailsCom,
+  FooterComponent,
 };
