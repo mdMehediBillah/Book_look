@@ -1,17 +1,20 @@
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import imgPlaceholder from "../../assets/images/placeholder-image.jpg";
-import { useShelfContext } from "../../Context/Shelf/shelfContext.jsx";
-import { useNavigate } from "react-router-dom";
+// import { useShelfContext } from "../../Context/Shelf/shelfContext.jsx";
 import { toast } from "react-toastify";
 
 const CreateBookComponent = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
-  const { shelfData } = useShelfContext();
-  const shelfId = shelfData?._id || "";
+  // const { shelfData } = useShelfContext();
+  // const shelfId = shelfData?._id || "";
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [imagePreview, setImagePreview] = useState(imgPlaceholder);
+
+  console.log(id);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -19,7 +22,7 @@ const CreateBookComponent = () => {
     coverImageUrl: "",
     language: "eng",
     summary: "",
-    bookshelf: shelfId,
+    bookshelf: id,
   });
 
   const url = import.meta.env.VITE_REACT_APP_URL;

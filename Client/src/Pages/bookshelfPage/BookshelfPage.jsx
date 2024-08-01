@@ -6,6 +6,8 @@ import { API } from "../../Utils/security/secreteKey";
 import { toast } from "react-toastify";
 import { GoBackComponent } from "../../Components";
 import { getOpeningStatus } from "../../Components/Location/getOpeningStatus/getOpeningStatus.jsx";
+import LikeButton from "../../Components/LikeButtonComponent/LikeButtonComponent.jsx";
+import { LuBook } from "react-icons/lu";
 
 const BookshelfPage = () => {
   const { bookshelfId } = useParams();
@@ -29,7 +31,7 @@ const BookshelfPage = () => {
     fetchBookshelf();
   }, []);
 
-  console.log(bookshelf);
+  // console.log(bookshelf);
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -70,10 +72,14 @@ const BookshelfPage = () => {
   }, [bookshelfId]);
 
   // Compute opening status
-  // const { isOpen, message, detail } = getOpeningStatus(
-  //   bookshelf?.openingTime,
-  //   bookshelf?.closingTime
-  // );
+  // console.log(bookshelf);
+  if (bookshelf === null) {
+    return <div>Loading...</div>;
+  }
+  const { isOpen, message, detail } = getOpeningStatus(
+    bookshelf?.openingTime,
+    bookshelf?.closingTime
+  );
 
   return (
     <main className="bookshelf-page">
@@ -101,7 +107,6 @@ const BookshelfPage = () => {
         </div>
       </section>
       <section className="flex flex-col py-4 container mx-auto screen-max-lg max-w-screen-lg ">
-        {/* <h1 className="bookshelf-page-title"> {bookshelf?.name} </h1> */}
         <article className="flex flex-col gap-4  mx-auto p-3 rounded-md bg-gray-200">
           <div>
             <div className="flex gap-2">
@@ -144,25 +149,30 @@ const BookshelfPage = () => {
                       </div>
                     </div>
                   </div>
-                  {/* <p> Available Books: {books?.length - borrowedBooks?.length} </p> */}
-                  {/* <p>
-                    {" "}
-                    Borrowed Books: {borrowedBooks ? borrowedBooks?.length : 0}{" "}
-                  </p>
-                  <p> Donated Books: {donatedBooks ? donatedBooks?.length : 0} </p> */}
                 </aside>
               </div>
             </div>
-            {/* <div className="text-center py-1 bg-gray-100 w-full rounded-md mt-3">
+            <div className="text-center py-1 bg-gray-100 w-full rounded-md mt-3">
               <p className={`text-${isOpen ? "green" : "red"}-500`}>
                 {message} <span className="text-gray-500">{detail}</span>
               </p>{" "}
-            </div> */}
+            </div>
             <div className="flex justify-between gap-2 mt-1  items-center">
-              <div className="bg-rose-200 w-full rounded-md">
-                <Link to={`/create_book/${bookshelf?._id}`}>
-                  <p className="text-center py-1">Add Book</p>
+              <div className="bg-cyan-600 w-10/12 rounded-md text-white">
+                <Link
+                  to={`/create_book/${bookshelf?._id}`}
+                  className="flex items-center justify-center gap-1"
+                >
+                  <div>
+                    <LuBook />
+                  </div>
+                  <div>
+                    <p className="text-center py-1">Add Book</p>
+                  </div>
                 </Link>
+              </div>
+              <div className="w-4/12">
+                <LikeButton />
               </div>
             </div>
           </div>
