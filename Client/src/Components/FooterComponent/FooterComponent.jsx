@@ -8,6 +8,7 @@ import {
 import { FaXTwitter } from "react-icons/fa6";
 import { GiBlackBook } from "react-icons/gi";
 import { Link } from "react-router-dom";
+import NewsletterSubscription from "../NewsletterSubscription/NewsletterSubscription";
 
 const FooterComponent = () => {
   return (
@@ -58,7 +59,8 @@ const FooterComponent = () => {
           <h6 className="font-medium text-2xl  pb-4 py-3 cursor-default">
             Newsletter
           </h6>
-          <form action="" className="py-2">
+          <NewsletterSubscription />
+          {/* <form action="" className="py-2">
             <div className="flex  h-4 items-center  ">
               <input
                 type=""
@@ -74,7 +76,7 @@ const FooterComponent = () => {
                 Subscribe
               </button>
             </div>
-          </form>
+          </form> */}
           <ul className="flex py-4 gap-1 cursor-pointer">
             <li className="px-0.5 text-3xl hover:text-green-600 ">
               <FaWhatsapp color="" />
