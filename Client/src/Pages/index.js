@@ -15,6 +15,9 @@ import NotFoundPage from "./NotFoundPage/NotFoundPage.jsx";
 import TermsConditionPage from "./TermsConditionPage/TermsConditionPage.jsx";
 import UserUpdatePage from "./UserUpdatePage/UserUpdatePage.jsx";
 import CreateBookPage from "./CreateBookPage/CreateBookPage.jsx";
+import AboutUsPage from "./AboutUsPage/AboutUsPage.jsx";
+import ContactUsPage from "./ContactUsPage/ContactUsPage.jsx";
+import HowItWorksPage from "./HowItWorksPage/HowItWorksPage.jsx";
 
 // export all pages
 export {
@@ -35,4 +38,7 @@ export {
   TermsConditionPage,
   UserUpdatePage,
   CreateBookPage,
+  AboutUsPage,
+  ContactUsPage,
+  HowItWorksPage,
 };

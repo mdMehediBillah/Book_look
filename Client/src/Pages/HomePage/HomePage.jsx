@@ -7,13 +7,13 @@ import {
   HeroText,
   NavigationComponent,
   SearchComponent,
+  FooterComponent,
 } from "../../Components";
 import Location from "../../Components/Location/Location";
 import heroImg from "../../assets/images/heroSection.png";
 
 const HomePage = () => {
   const navigate = useNavigate();
-
   // verify user is logged in
   useEffect(() => {
     if (!localStorage.getItem("token")) navigate("/registrationPage");
@@ -51,9 +51,9 @@ const HomePage = () => {
         <div className="bg-white p-6 rounded-lg shadow-lg bg-red-400 ">
           <Location />
         </div>
+        <FooterComponent />
       </div>
     </main>
   );
 };
-
 export default HomePage;

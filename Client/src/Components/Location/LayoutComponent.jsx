@@ -5,9 +5,7 @@
 import { useState, useEffect } from "react";
 import MapComponent from "./MapComponent";
 import { getOpeningStatus } from "./getOpeningStatus/getOpeningStatus";
-
 import { Link } from "react-router-dom";
-
 const LayoutComponent = ({
   bookshelves,
   center,
@@ -24,18 +22,15 @@ const LayoutComponent = ({
   //==========================================================================
   // Ensure searchTerm is a lowercase string
   const normalizedSearchTerm = (searchTerm || "").toLowerCase();
-
   // Safeguard against undefined properties
   const filteredBookshelves = bookshelves.filter((shelf) => {
     // console.log("Bookshelf:", shelf); // Log each bookshelf item ----> debugging
     // console.log("Search Term:", normalizedSearchTerm); // Log the current search term ----> debugging
-
     //search based on name, country, state, and city
     const name = shelf.name?.toLowerCase() || "";
     const country = shelf.country?.toLowerCase() || "";
     const state = shelf.state?.toLowerCase() || "";
     const city = shelf.city?.toLowerCase() || "";
-
     return (
       name.includes(normalizedSearchTerm) ||
       country.includes(normalizedSearchTerm) ||
@@ -43,12 +38,10 @@ const LayoutComponent = ({
       city.includes(normalizedSearchTerm)
     );
   });
-
   //==========================================================================
   // State for display liked bookshelves
   //==========================================================================
   const [likedBookshelves, setLikedBookshelves] = useState(new Set());
-
   const handleLikeToggle = (shelfId) => {
     setLikedBookshelves((prevLiked) => {
       const updatedLiked = new Set(prevLiked);
@@ -68,7 +61,6 @@ const LayoutComponent = ({
   //   ? filteredBookshelves
   //   : filteredBookshelves.slice(0, 3); //display only 3 bookshelves ehwn show more is false
   //==========================================================================
-
   const displayedBookshelves = filteredBookshelves; // to always display all bookshelves
   return (
     <div className="flex flex-col md:flex-row mt-10">
@@ -82,7 +74,6 @@ const LayoutComponent = ({
             shelf.openingTime,
             shelf.closingTime
           );
-
           return (
             <div
               key={idx}
@@ -163,7 +154,6 @@ const LayoutComponent = ({
           );
         })}
       </div>
-
       <div className="flex-grow h-1/2 md:h-full">
         <MapComponent
           bookshelves={filteredBookshelves}
@@ -176,5 +166,4 @@ const LayoutComponent = ({
     </div>
   );
 };
-
 export default LayoutComponent;

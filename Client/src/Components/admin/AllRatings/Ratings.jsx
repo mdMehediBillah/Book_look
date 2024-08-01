@@ -14,7 +14,7 @@ const Ratings = () => {
   const rows = [];
   return (
     <section className="user-sidebar-container">
-      <h3 className="user-sidebar-title"> List of Ratings  </h3>
+      <h3 className="user-sidebar-title"> List of Ratings </h3>
       <DataGrid
         // Rows
         rows={rows}
@@ -44,4 +44,4 @@ const Ratings = () => {
     </section>
   );
 };
-export default Ratings
+export default Ratings;
