@@ -32,8 +32,7 @@ export const createBookshelf = async (req, res, next) => {
       return next(createError(400, "Bookshelf already exists!"));
     }
 
-    // Create a new bookshelf instance
-    const newBookshelf = new Bookshelf({
+    const newBookshelf = {
       barcode,
       image,
       name,
@@ -46,10 +45,27 @@ export const createBookshelf = async (req, res, next) => {
       latitude,
       openingTime,
       closingTime,
-    });
+    };
+    console.log(newBookshelf);
 
+    await Bookshelf.create(newBookshelf);
+    // Create a new bookshelf instance
+    // const newBookshelf = new Bookshelf({
+    //   barcode,
+    //   image,
+    //   name,
+    //   country,
+    //   state,
+    //   city,
+    //   postcode,
+    //   road,
+    //   longitude,
+    //   latitude,
+    //   openingTime,
+    //   closingTime,
+    // });
     // Save the new bookshelf to the database
-    await newBookshelf.save();
+    // await newBookshelf.save();
 
     // Respond with success message
     res.status(201).json({

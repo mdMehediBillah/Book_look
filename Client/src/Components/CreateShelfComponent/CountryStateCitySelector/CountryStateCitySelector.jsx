@@ -4,6 +4,7 @@ import { Country, State, City } from "country-state-city";
 
 const CountryStateCitySelector = ({ onLocationChange }) => {
   const [countries, setCountries] = useState([]);
+  // const [countryToDB, setCountryToDB] = useState("");
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
 
@@ -21,6 +22,7 @@ const CountryStateCitySelector = ({ onLocationChange }) => {
       setCities([]);
       setSelectedState("");
       setSelectedCity("");
+      
     }
   }, [selectedCountry]);
 
@@ -32,20 +34,26 @@ const CountryStateCitySelector = ({ onLocationChange }) => {
   }, [selectedState]);
 
   const handleCountryChange = (e) => {
+    // console.log(countries);
     setSelectedCountry(e.target.value);
-    onLocationChange("country", e.target.value);
+    onLocationChange({ country: e.target.value });
+    // onLocationChange(e.target.value);
   };
 
   const handleStateChange = (e) => {
     setSelectedState(e.target.value);
-    onLocationChange("state", e.target.value);
+    onLocationChange({ state: e.target.value });
+    // onLocationChange("state", e.target.value);
   };
 
   const handleCityChange = (e) => {
+    console.log(e.target.value);
     setSelectedCity(e.target.value);
-    onLocationChange("city", e.target.value);
+    onLocationChange({ city: e.target.value });
+    // onLocationChange("city", e.target.value);
   };
 
+  // console.log("country", countries);
   return (
     <div>
       <div className="mb-4">
@@ -59,7 +67,7 @@ const CountryStateCitySelector = ({ onLocationChange }) => {
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         >
           <option value="">Select Country</option>
-          {countries.map((country) => (
+          {countries?.map((country) => (
             <option key={country.isoCode} value={country.isoCode}>
               {country.name}
             </option>
@@ -77,7 +85,7 @@ const CountryStateCitySelector = ({ onLocationChange }) => {
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         >
           <option value="">Select State</option>
-          {states.map((state) => (
+          {states?.map((state) => (
             <option key={state.isoCode} value={state.isoCode}>
               {state.name}
             </option>
@@ -93,7 +101,7 @@ const CountryStateCitySelector = ({ onLocationChange }) => {
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         >
           <option value="">Select City</option>
-          {cities.map((city) => (
+          {cities?.map((city) => (
             <option key={city.name} value={city.name}>
               {city.name}
             </option>

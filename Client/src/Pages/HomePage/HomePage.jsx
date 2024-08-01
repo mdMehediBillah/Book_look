@@ -10,6 +10,7 @@ import {
   FooterComponent,
 } from "../../Components";
 import Location from "../../Components/Location/Location";
+import ChatbotLayout from "../../Components/Chatbot/ChatbotLayout/ChatbotLayout";
 import heroImg from "../../assets/images/heroSection.png";
 
 const HomePage = () => {
@@ -50,6 +51,9 @@ const HomePage = () => {
       <div className="container mx-auto flex-grow p-4">
         <div className="bg-white p-6 rounded-lg shadow-lg bg-red-400 ">
           <Location />
+        </div>
+        <div className="bg-white p-6 rounded-lg shadow-lg bg-red-400 ">
+          <ChatbotLayout/>
         </div>
         <FooterComponent />
       </div>
