@@ -110,6 +110,9 @@ const MapComponent = ({
       } else {
         console.warn("Invalid destination location:", destination);
       }
+
+      // Adding zoom control to the bottom right corner
+      // L.control.zoom({ position: "bottomright" }).addTo(mapRef.current);
     }
   }, [bookshelves, center, userLocation, destination]);
 

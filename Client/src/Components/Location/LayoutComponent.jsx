@@ -7,6 +7,7 @@ import MapComponent from "./MapComponent";
 import { getOpeningStatus } from "./getOpeningStatus/getOpeningStatus";
 
 import { Link } from "react-router-dom";
+import SearchComponent from "../SearchComponent/SearchComponent";
 
 const LayoutComponent = ({
   bookshelves,
@@ -65,7 +66,16 @@ const LayoutComponent = ({
   return (
     <div className="flex flex-col mt-10">
       {/* Map Container */}
-      <div className="h-1/2 md:h-full">
+      <div className="relative h-1/2 md:h-full">
+        {/* Search Component inside the map */}
+        <div className="absolute w-20 top-3 left-10 z-[1000] p-2 rounded">
+          <SearchComponent
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            setCenter={setCenter}
+          />
+        </div>
+
         <MapComponent
           bookshelves={filteredBookshelves}
           center={center}
