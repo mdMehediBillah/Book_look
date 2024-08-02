@@ -58,7 +58,7 @@ const DonatedBookChart = () => {
     <section className="donated-books-chart-container">
       <h4 className="chart-title"> Books Chart </h4>
       <AreaChart
-        width={1240}
+        width={990}
         height={450}
         data={data}
         margin={{ top: 10, right: 30, left: 0, bottom: 0 }}

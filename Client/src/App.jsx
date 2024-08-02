@@ -23,7 +23,7 @@ import {
   CreateBookComponent,
   SearchBookComponent,
 } from "./Components";
-// import AdminDashboardPage from "./Pages/dashboardPages/adminDashboardPage/AdminDashboardPage";
+import AdminDashboardPage from "./Pages/dashboardPages/adminDashboardPage/AdminDashboardPage";
 import BookshelfPage from "./Pages/bookshelfPage/BookshelfPage";
 
 function App() {
@@ -58,7 +58,7 @@ function App() {
         <Route path="/how_it_works" element={<HowItWorksPage />} />
 
         <Route path="/terms_condition" element={<TermsConditionPage />} />
-        {/* <Route path="/admin/dashboard" element={<AdminDashboardPage />} /> */}
+      <Route path="/admin/dashboard" element={<AdminDashboardPage />} /> 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <ToastContainer
