@@ -1,15 +1,17 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { API } from "../../Utils/security/secreteKey";
-import Rating from "../../Components/bookshelf/ratings/Rating";
 import "./BookPage.scss";
 import BorrowedBookForm from "../../Components/forms/borrow/BorrowedBookForm";
+import debounce from "lodash.debounce";
+import Rating from "../../Components/bookshelf/ratings/Rating";
 
 const BookPage = () => {
   const { bookId } = useParams();
   const [book, setBook] = useState({});
   const [openBorrowedBook, setOpenBorrowedBook] = useState(false);
+  const [averageRating, setAverageRating] = useState(0);
 
   // Get a single book
   useEffect(() => {
@@ -26,6 +28,36 @@ const BookPage = () => {
       fetchBook();
     }
   }, [bookId]);
+
+  const fetchRating = async () => {
+    try {
+      const response = await axios.get(`${API}/books/${bookId}/rating`);
+      setAverageRating(response.data.averageRating);
+    } catch (error) {
+      console.error("Error fetching rating:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchRating();
+  }, [book._id]);
+
+  const updateRating = async (newRating) => {
+    try {
+      const response = await axios.put(`${API}/books/${bookId}/rating`, {
+        rating: newRating,
+      });
+      setAverageRating(response.data.averageRating);
+    } catch (error) {
+      console.error("Error updating rating:", error);
+    }
+  };
+
+  const debouncedUpdateRating = useCallback(debounce(updateRating, 500), []);
+
+  const handleRatingChange = (newRating) => {
+    debouncedUpdateRating(newRating);
+  };
 
   return (
     <main className="book-page">
@@ -48,11 +80,16 @@ const BookPage = () => {
               by Justin G. Longenecker (Author), J. William Petty (Author),
               Leslie E. Palich (Author), Frank Hoy (Author)
             </small>
-            <p className="book-rating">
-              Rating: <Rating />
-            </p>
 
             <hr />
+
+            <p className="book-rating">
+              Average Rating: {averageRating?.toFixed(1)}
+              <Rating
+                initialRating={averageRating} // Pass the averageRating to Rating component
+                onRatingChange={handleRatingChange}
+              />
+            </p>
 
             <p className="book-summary">{book.summary}</p>
 

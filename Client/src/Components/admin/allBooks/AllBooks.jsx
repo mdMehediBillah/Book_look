@@ -2,37 +2,54 @@ import { toast } from "react-toastify";
 import "./AllBooks.scss";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import axios from "axios";
-import { API } from "../../../Utils/security/secreteKey.js";
+import { API } from "../../../Utils/security/secreteKey";
 import { FaTrashAlt } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BookForm from "../../forms/book/BookForm";
+import { MdEditSquare } from "react-icons/md";
 
 const AllBooks = () => {
+  // Local state variables
+  const [books, setBooks] = useState([]);
   const [bookId, setBookId] = useState("");
   const [confirmDeletion, setConfirmDeletion] = useState(false);
   const [openBook, setOpenBook] = useState(false);
 
-  const handleDelete = async (id) => {
-    try {
-      const { data } = await axios.delete(`${API}/books/${id}`);
-      toast.success(data.message);
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
-
-    // allUsers();
-  };
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const { data } = await axios.get(`${API}/api/v1/books`);
+        setBooks(data.result);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchUsers();
+  }, []);
 
   const columns = [
-    { field: "ISBN", headerName: "ISBN", width: 150 },
+    {
+      field: "coverImageUrl",
+      headerName: "Cover Page",
+      width: 100,
+      renderCell: (params) => (
+        <img
+          src={params.value || "NULL"}
+          alt={params.row.title}
+          style={{ width: "3rem", height: "2rem", objectFit: "contain" }}
+        />
+      ),
+    },
     { field: "title", headerName: "Title", width: 200 },
-    { field: "genre", headerName: "Genre", width: 150 },
-    { field: "publishedDate", headerName: "Published Date", width: 150 },
+
+    {
+      field: "author",
+      headerName: "Authors",
+      width: 300,
+    },
     { field: "language", headerName: "Language", width: 100 },
-    { field: "publisher", headerName: "Publisher", width: 150 },
-    { field: "coverImageUrl", headerName: "Cover", width: 150 },
-    { field: "summary", headerName: "Summary", width: 150 },
-    { field: "shelfId", headerName: "Bookshelf", width: 150 },
+
+    { field: "summary", headerName: "Summary", width: 300 },
 
     {
       field: "action",
@@ -41,8 +58,13 @@ const AllBooks = () => {
       renderCell: (params) => {
         return (
           <div className="action-wrapper">
+            <MdEditSquare className="edit" />
+
             <FaTrashAlt
-              onClick={() => setBookId(params.id) || setConfirmDeletion(true)}
+              onClick={() => {
+                setBookId(params.id);
+                setConfirmDeletion(true);
+              }}
               className="delete"
             />
           </div>
@@ -51,10 +73,27 @@ const AllBooks = () => {
     },
   ];
 
-  const rows = [];
+  const rows = books.map((book) => ({
+    ...book,
+    id: book._id,
+  }));
+
+  const handleDelete = async (id) => {
+    try {
+      const { data } = await axios.delete(`${API}/books/${id}`);
+      toast.success(data.message);
+      // dispatch(fetchBooks()); // Re-fetch books after deletion
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+
   return (
-    <section className="books-table-container">
-      <h3 className="books-table-title"> List of Books </h3>
+    <section
+      className="books-table-container"
+      style={{ height: "400px", width: "100%" }}
+    >
+      <h3 className="books-table-title">List of Books</h3>
 
       <aside className="add-new-book">
         <h3 className="add-new-book-title">Add New Genre</h3>
@@ -64,30 +103,23 @@ const AllBooks = () => {
       </aside>
 
       <DataGrid
-        // Rows
         rows={rows}
-        // Columns
         columns={columns}
-        // Initial state
         initialState={{
           pagination: {
             paginationModel: { page: 0, pageSize: 10 },
           },
         }}
-        // Create search bar
         slots={{ toolbar: GridToolbar }}
-        // Search a specific user
         slotProps={{
           toolbar: {
             showQuickFilter: true,
             quickFilterProps: { debounceMs: 500 },
           },
         }}
-        // Page size optons
         pageSizeOptions={[5, 10]}
         checkboxSelection
         disableRowSelectionOnClick
-        //
       />
 
       {confirmDeletion && (
@@ -100,20 +132,20 @@ const AllBooks = () => {
           </span>
 
           <h3 className="you-want-delete-user">
-            Are you sure you want delete this service?
+            Are you sure you want to delete this book?
           </h3>
           <aside className="cancel-or-confirm-delete">
             <p
-              className={`cancel-delete`}
+              className="cancel-delete"
               onClick={() => setConfirmDeletion(false)}
             >
-              cancel
+              Cancel
             </p>
             <h3
-              className={`confirm-delete`}
+              className="confirm-delete"
               onClick={() => setConfirmDeletion(false) || handleDelete(bookId)}
             >
-              confirm
+              Confirm
             </h3>
           </aside>
         </article>

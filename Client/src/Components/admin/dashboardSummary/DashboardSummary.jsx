@@ -1,5 +1,4 @@
 import DonatedBookChart from "../../charts/books/DonatedBookChart";
-import BookshelvesChart from "../../charts/bookshelves/BookshelvesChart";
 import PerformanceOverviewChart from "../../charts/performance/PerformanceOverviewChart";
 import UsersChart from "../../charts/users/UsersChart";
 import AdminInbox from "../adminInbox/AdminInbox";
@@ -30,35 +29,27 @@ const DashboardSummary = ({ isActive }) => {
             </aside>
           </section>
 
-          <section className="users-participation-wrapper">
-            <DonatedBookChart />
+          <div className="line-pie-charts-container">
+            <section className="line-chart">
+              <DonatedBookChart />
 
-            <aside className="box-text">
-              <h4 className="box-title"> Donated Books </h4>
-              <h4 className="box-count"> Counts: 60 </h4>
-              <p className="box-link">Link to</p>
-            </aside>
-          </section>
+              <aside className="box-text">
+                <h4 className="box-title"> Donated Books </h4>
+                <h4 className="box-count"> Counts: 60 </h4>
+                <p className="box-link">Link to</p>
+              </aside>
+            </section>
 
-          <section className="users-participation-wrapper">
-            <BookshelvesChart />
+            <section className="pie-chart">
+              <PerformanceOverviewChart />
 
-            <aside className="box-text">
-              <h4 className="box-title"> Bookshelves Chart </h4>
-              <h4 className="box-count"> Counts: 160 </h4>
-              <p className="box-link">Link to</p>
-            </aside>
-          </section>
-
-          <section className="users-participation-wrapper">
-            <PerformanceOverviewChart />
-
-            <aside className="box-text">
-              <h4 className="box-title"> Performance Overview </h4>
-              <h4 className="box-count"> Counts: 60 </h4>
-              <p className="box-link">Link to</p>
-            </aside>
-          </section>
+              <aside className="box-text">
+                <h4 className="box-title"> Performance Overview </h4>
+                <h4 className="box-count"> Counts: 60 </h4>
+                <p className="box-link">Link to</p>
+              </aside>
+            </section>
+          </div>
         </section>
       )}
 

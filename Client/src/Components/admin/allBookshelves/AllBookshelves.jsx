@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./AllBookshelves.scss";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import axios from "axios";
@@ -9,9 +9,84 @@ import { MdEditSquare } from "react-icons/md";
 
 const AllBookshelves = () => {
   // Local state variable
+  const [bookshelves, setBookshelves] = useState([]);
   const [bookshelfId, setBookshelfId] = useState("");
-  const [confirmDeletion, setConfirmDeletion] = useState(false);
   const [openBookshelf, setOpenBookshelf] = useState(false);
+  const [confirmDeletion, setConfirmDeletion] = useState(false);
+
+  console.log("shelves =", bookshelves);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const { data } = await axios.get(`${API}/api/v1/bookshelves`);
+        setBookshelves(data.result);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchUsers();
+  }, []);
+
+  const columns = [
+    {
+      field: "image",
+      headerName: "Photo",
+      width: 70,
+      renderCell: (params) => (
+        <img
+          src={params.value[0] || "NULL"}
+          alt={params.row.name}
+          style={{ width: "3rem", height: "2rem", objectFit: "contain" }}
+        />
+      ),
+    },
+    { field: "barcode", headerName: "Barcode", width: 250 },
+    { field: "name", headerName: "Name", width: 200 },
+    { field: "street", headerName: "Street", width: 200 },
+    { field: "zipCode", headerName: "Zip Code", width: 100 },
+    { field: "city", headerName: "City", width: 100 },
+    { field: "state", headerName: "State", width: 100 },
+    { field: "country", headerName: "Country", width: 100 },
+    { field: "openingTime", headerName: "Opening Time", width: 150 },
+    { field: "closingTime", headerName: "Closing Time", width: 150 },
+
+    {
+      field: "action",
+      headerName: "Action",
+      width: 150,
+      renderCell: (params) => (
+        <div className="action-wrapper">
+          <MdEditSquare
+            className="edit"
+            onClick={() => setOpenBookshelf(true)}
+          />
+
+          <FaTrashAlt
+            onClick={() => {
+              setBookshelfId(params.id);
+              setConfirmDeletion(true);
+            }}
+            className="delete"
+          />
+        </div>
+      ),
+    },
+  ];
+
+  const rows = bookshelves.map((bookshelf) => ({
+    id: bookshelf._id,
+    barcode: bookshelf.barcode,
+    image: bookshelf.image,
+    name: bookshelf.name,
+    street: bookshelf.street,
+    zipCode: bookshelf.zipCode,
+    city: bookshelf.city,
+    state: bookshelf.state,
+    country: bookshelf.country,
+    openingTime: bookshelf.openingTime,
+    closingTime: bookshelf.closingTime,
+  }));
 
   const handleDelete = async (id) => {
     try {
@@ -24,93 +99,45 @@ const AllBookshelves = () => {
     // allUsers();
   };
 
-  const columns = [
-    { field: "image", headerName: "Photo", width: 150 },
-    { field: "name", headerName: "Name", width: 150 },
-    { field: "location", headerName: "Location", width: 200 },
-    { field: "street", headerName: "Address", width: 200 },
-    { field: "zipCode", headerName: "Zip Code", width: 100 },
-    { field: "city", headerName: "City", width: 150 },
-    { field: "state", headerName: "State", width: 150 },
-    { field: "country", headerName: "Country", width: 150 },
-    { field: "openingHours", headerName: "Opening Hours", width: 150 },
-    {
-      field: "action",
-      headerName: "Action",
-      width: 150,
-      renderCell: (params) => {
-        return (
-          <div className="action-wrapper">
-            <MdEditSquare
-              className="edit"
-              onClick={() => setOpenBookshelf(true)}
-            />
-
-            <FaTrashAlt
-              onClick={() =>
-                setBookshelfId(params.id) || setConfirmDeletion(true)
-              }
-              className="delete"
-            />
-          </div>
-        );
-      },
-    },
-  ];
-
-  const rows = [
-    {
-      id: "sfs13",
-      barcode: "bookshelf",
-      image: "photo",
-      name: "start bookshelf",
-      location: "lat: 2, lon: 34",
-      street: "rabenstr. 50z",
-      zipCode: "25421",
-      city: "Pinneberg",
-      state: "Schleswig-holstein",
-      country: "Germany",
-      openingHours: "8:00 - 18:00",
-    },
-  ];
   return (
-    <section className="bookshelves-table-container">
+    <section
+      className="bookshelves-table-container"
+      style={{ height: "400px", width: "100%" }}
+    >
       <h3 className="bookshelves-table-title"> List of Bookshelves </h3>
 
       <aside className="add-new-bookshelf">
-        <h3 className="add-new-bookshelf-title">Add New Bookshelf</h3>
-        <button
-          onClick={() => setOpenBookshelf(true)}
-          className="add-new-bookshelf-btn"
-        >
-          Add New
-        </button>
+        <h3 className="add-new-bookshelf-title">
+          Options to Add New Bookshelf
+        </h3>
+        <div>
+          <button
+            onClick={() => setOpenBookshelf(true)}
+            className="add-new-bookshelf-btn"
+          >
+            Add Bookshelf
+          </button>
+        </div>
       </aside>
+
       <DataGrid
-        // Rows
         rows={rows}
-        // Columns
         columns={columns}
-        // Initial state
         initialState={{
           pagination: {
             paginationModel: { page: 0, pageSize: 10 },
           },
         }}
-        // Create search bar
         slots={{ toolbar: GridToolbar }}
-        // Search a specific user
         slotProps={{
           toolbar: {
             showQuickFilter: true,
             quickFilterProps: { debounceMs: 500 },
           },
         }}
-        // Page size optons
         pageSizeOptions={[5, 10]}
         checkboxSelection
         disableRowSelectionOnClick
-        //
       />
 
       {confirmDeletion && (
@@ -123,7 +150,7 @@ const AllBookshelves = () => {
           </span>
 
           <h3 className="you-want-delete-user">
-            Are you sure you want delete this service?
+            Are you sure you want delete this bookshelf?
           </h3>
           <aside className="cancel-or-confirm-delete">
             <p
@@ -134,9 +161,10 @@ const AllBookshelves = () => {
             </p>
             <h3
               className={`confirm-delete`}
-              onClick={() =>
-                setConfirmDeletion(false) || handleDelete(bookshelfId)
-              }
+              onClick={() => {
+                setConfirmDeletion(false);
+                handleDelete(bookshelfId);
+              }}
             >
               confirm
             </h3>
@@ -144,7 +172,11 @@ const AllBookshelves = () => {
         </article>
       )}
 
-      {/* {openBookshelf && <BookshelfForm setOpenBookshelf={setOpenBookshelf} />} */}
+      {/* {openBookshelf && (
+        <ClickOnMapBookshelf
+          setOpenClickMapBookshelf={setOpenClickMapBookshelf}
+        />
+      )} */}
     </section>
   );
 };
