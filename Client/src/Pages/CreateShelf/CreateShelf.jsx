@@ -8,6 +8,7 @@ import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import "./CustomTimePicker.css";
 import imgPlaceholder from "../../assets/images/shelfDefault.png";
+import ChatbotLayout from "../../Components/Chatbot/ChatbotLayout/ChatbotLayout";
 
 import TimeSelectionOptions from "../../Components/CreateShelfComponent/TimeSelectionOptions/TimeSelectionOptions.jsx";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -314,6 +315,7 @@ const CreateShelfForm = () => {
           Create Bookshelf
         </button>
       </form>
+      <ChatbotLayout />
     </main>
   );
 };
