@@ -11,74 +11,85 @@ const UsersChart = () => {
   const data = [
     {
       month: "January",
-      baptism: 1,
-      marriage: 1,
-      prayer: 2,
+      bookshelf: 1,
+      books: 1,
+      donatedBooks: 2,
+      borrowedBooks: 2,
     },
     {
       month: "February",
-      baptism: 3,
-      marriage: 0,
-      prayer: 1,
+      bookshelf: 12,
+      books: 21,
+      donatedBooks: 22,
+      borrowedBooks: 22,
     },
     {
       month: "March",
-      baptism: 1,
-      marriage: 1,
-      prayer: 2,
+      bookshelf: 18,
+      books: 19,
+      donatedBooks: 20,
+      borrowedBooks: 2,
     },
     {
       month: "April",
-      baptism: 1,
-      marriage: 0,
-      prayer: 0,
+      bookshelf: 51,
+      books: 16,
+      donatedBooks: 32,
+      borrowedBooks: 12,
     },
     {
       month: "June",
-      baptism: 1,
-      marriage: 0,
-      prayer: 0,
+      bookshelf: 1,
+      books: 34,
+      donatedBooks: 21,
+      borrowedBooks: 7,
     },
     {
       month: "July",
-      baptism: 2,
-      marriage: 1,
-      prayer: 2,
+      bookshelf: 13,
+      books: 24,
+      donatedBooks: 21,
+      borrowedBooks: 17,
     },
 
     {
       month: "August",
-      baptism: 1,
-      marriage: 0,
-      prayer: 0,
+      bookshelf: 3,
+      books: 24,
+      donatedBooks: 11,
+      borrowedBooks: 9,
     },
 
     {
       month: "September",
-      baptism: 0,
-      marriage: 1,
-      prayer: 1,
+      bookshelf: 33,
+      books: 44,
+      donatedBooks: 31,
+      borrowedBooks: 19,
     },
 
     {
       month: "October",
-      baptism: 1,
-      marriage: 1,
-      prayer: 1,
+      bookshelf: 22,
+      books: 31,
+      donatedBooks: 22,
+      borrowedBooks: 9,
     },
 
     {
       month: "November",
-      baptism: 3,
-      marriage: 0,
-      prayer: 2,
+      bookshelf: 32,
+      books: 21,
+      donatedBooks: 12,
+      borrowedBooks: 12,
     },
 
     {
       month: "December",
-      baptism: 2,
-      marriage: 0,
-      prayer: 1,
+      bookshelf: 12,
+      books: 11,
+      donatedBooks: 5,
+      borrowedBooks: 2,
     },
   ];
   return (
@@ -102,13 +113,15 @@ const UsersChart = () => {
             cursor={{ fill: "none" }}
           />
 
-          <Bar dataKey="baptism" fill="#8884d8" />
-          <Bar dataKey="marriage" fill="#82ca9d" />
-          <Bar dataKey="prayer" fill="#82ca9d" />
+          <Bar dataKey="bookshelf" fill="#8884d8" />
+          <Bar dataKey="books" fill="#a2d2ff" />
+          <Bar dataKey="donatedBooks" fill="#82ca9d" />
+          <Bar dataKey="borrowedBooks" fill="#0077b6" />
         </BarChart>
       </ResponsiveContainer>
     </section>
   );
 };
+
 
 export default UsersChart;

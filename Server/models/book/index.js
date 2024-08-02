@@ -27,16 +27,8 @@ const bookSchema = new Schema(
       default: "available",
       enum: ["available", "borrowed"],
     },
-    ratings: { type: Number },
-    reviews: [
-      {
-        user: { type: Object },
-        rating: { type: Number },
-        comment: { type: String },
-        shelfId: { type: String },
-        createdAt: { type: Date, default: Date.now() },
-      },
-    ],
+    
+    ratings: [{ type: Number }],
   },
   {
     timestamps: true,

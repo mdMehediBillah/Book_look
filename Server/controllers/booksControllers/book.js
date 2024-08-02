@@ -158,3 +158,94 @@ export const deleteBook = async (req, res, next) => {
     return next(createError(400, "Server error! Please try again!"));
   }
 };
+
+//==========================================================================
+// Count all books
+//==========================================================================
+
+export const countBooks = async (req, res, next) => {
+  try {
+    const count = await Book.countDocuments();
+
+    if (count === 0) {
+      return next(createError(404, "No books found."));
+    }
+
+    return res.status(200).json({
+      success: true,
+      result: count,
+    });
+  } catch (error) {
+    console.error("Error counting books:", error);
+    return next(
+      createError(500, "Failed to count books. Please try again later.")
+    );
+  }
+};
+
+//==========================================================================
+// Update book rating
+//==========================================================================
+
+export const updateBookRating = async (req, res, next) => {
+  const { bookId } = req.params;
+  const { rating } = req.body;
+
+  // Ensure rating is valid
+  if (rating < 1 || rating > 5) {
+    return res.status(400).json({ message: "Rating must be between 1 and 5" });
+  }
+
+  try {
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    book.ratings.push(rating);
+    await book.save();
+
+    const averageRating =
+      book.ratings.reduce((acc, rating) => acc + rating, 0) /
+      book.ratings.length;
+
+    res.status(200).json({
+      success: true,
+      book,
+      averageRating,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+//==========================================================================
+// Update book rating
+//==========================================================================
+
+export const getBookRating = async (req, res, next) => {
+  const { bookId } = req.params;
+
+  try {
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    const averageRating =
+      book.ratings.length > 0
+        ? book.ratings.reduce((acc, rating) => acc + rating, 0) /
+          book.ratings.length
+        : 0;
+
+    res.status(200).json({
+      success: true,
+      averageRating,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
