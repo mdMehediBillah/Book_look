@@ -64,7 +64,7 @@ const LayoutComponent = ({
       {/* Map Container */}
       <div className="relative h-1/2 md:h-full">
         {/* Search Component inside the map */}
-        <div className="absolute w-[50%] left-[25%] z-[1000] p-2 rounded">
+        <div className="absolute w-[50%] left-[25%] z-[1000]  rounded top-4">
           <SearchComponent
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}

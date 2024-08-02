@@ -21,10 +21,10 @@ const HomePage = () => {
   }, []);
   return (
     <main
-      className="w-full object-cover  bg-cover bg-center bg-no-repeat  bg-rose-50 "
-      style={{
-        backgroundImage: `url(${imgUrl})`,
-      }}
+      className="w-full object-cover  bg-cover bg-center bg-no-repeat  bg-gray-50 "
+      // style={{
+      //   backgroundImage: `url(${imgUrl})`,
+      // }}
     >
       <NavigationComponent />
       <section className="max-w-screen-lg mx-auto">

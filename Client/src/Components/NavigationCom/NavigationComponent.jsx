@@ -30,80 +30,73 @@ const NavigationComponent = () => {
     // logout();
     navigate("/registrationPage");
   };
+  // max-w-screen-lg mx-auto container
   return (
-    <motion.header
-      initial={{ x: 5, opacity: 0.9, scale: 0.99 }}
-      animate={{ x: 0, opacity: 1, scale: 1 }}
-      transition={{ type: "spring", duration: 0.3 }}
-      className="flex container mx-auto justify-between items-center gap-2 p-3 bg-cyan-900 shadow rounded-b-lg max-w-screen-lg"
-    >
-      <div className=" w-2/12 logo">
-        <Link to="/" className="flex justify-center items-center gap-2">
-          <GiBlackBook className="min-w-7 min-h-7 text-cyan-200" />
+    <section className=" justify-between items-center gap-2 p-3 mb-4">
+      <motion.header
+        initial={{ x: 5, opacity: 0.9, scale: 0.99 }}
+        animate={{ x: 0, opacity: 1, scale: 1 }}
+        transition={{ type: "spring", duration: 0.3 }}
+        className="flex container mx-auto justify-between items-center gap-2 p-3  "
+      >
+        <div className=" w-2/12 logo">
+          <Link to="/" className="flex justify-center items-center gap-2">
+            <GiBlackBook className="min-w-7 min-h-7 text-gray-900" />
 
-          <div>
-            <span className="text-rose-400 font-semibold text-2xl">Book</span>
-            <span className="text-cyan-400 font-semibold text-2xl">Look</span>
-          </div>
-        </Link>
-      </div>
-
-      <nav className="flex items-center w-full justify-between  w-10/12">
-        <div className="flex  mx-auto w-5/12">
-          <ol className="flex gap-2 mx-auto">
-            {/* <li className="py-1 px-4 bg-cyan-100 rounded-full text-center cursor-pointer text-xs hover:bg-cyan-200">
-              <NavLink className={navLinkStyles} to="/donate_book">
-                Donate
-              </NavLink>
-            </li> */}
-            {/* <li className="py-1 px-4 bg-cyan-100 rounded-full text-center cursor-pointer text-xs hover:bg-cyan-200">
-              <NavLink className={navLinkStyles} to="/borrow_book">
-                Borrow
-              </NavLink>
-            </li> */}
-            <li className="py-1 px-6 bg-cyan-400 rounded-full text-center cursor-pointer text-sm hover:bg-cyan-200">
-              <NavLink className={navLinkStyles} to="/create_shelf">
-                <span className="text-gray-900">Create Shelf</span>
-              </NavLink>
-            </li>
-          </ol>
+            <div>
+              <span className="text-rose-500 font-semibold text-2xl">Book</span>
+              <span className="text-cyan-600 font-semibold text-2xl">Look</span>
+            </div>
+          </Link>
         </div>
-        <div className="dropdown">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn bg-cyan-800 text-white glass btn-sm hover:bg-red-500"
-          >
-            <FaRegUserCircle />
-            <span className="">Hello! {user ? firstName : "User"}</span>
+
+        <nav className="flex items-center w-full justify-between  w-10/12">
+          <div className="flex  mx-auto w-5/12">
+            <ol className="flex gap-2 mx-auto">
+              <li className="py-2 px-12 bg-rose-100 rounded-lg text-center cursor-pointer text-sm hover:bg-cyan-200 shadow-md hover:scale-110 transition-transform duration-300 hover:shadow-lg">
+                <NavLink className={navLinkStyles} to="/create_shelf">
+                  <span className="text-gray-800">Create Shelf</span>
+                </NavLink>
+              </li>
+            </ol>
           </div>
-          <ul
-            tabIndex={0}
-            className="dropdown-content menu bg-gray-900 z-[1] shadow text-white rounded font-semibold mt-1"
-          >
-            <Link to="/profile">
-              <li className="bg-cyan-800  rounded">
-                <span>
+          <div className="dropdown">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn bg-cyan-800 text-white glass btn-sm hover:bg-red-500"
+            >
+              <FaRegUserCircle />
+              <span className="">Hello! {user ? firstName : "User"}</span>
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu bg-gray-900 z-[1] shadow text-white rounded font-semibold mt-1"
+            >
+              <Link to="/profile">
+                <li className="bg-cyan-800  rounded">
+                  <span>
+                    {" "}
+                    <MdOutlineLeaderboard />
+                    Profile
+                  </span>
+                </li>
+              </Link>
+              <li
+                // onClick={handleLogout}
+                className="bg-rose-600 mt-1 rounded"
+              >
+                <span onClick={handleLogout}>
                   {" "}
-                  <MdOutlineLeaderboard />
-                  Profile
+                  <GrLogout />
+                  Logout
                 </span>
               </li>
-            </Link>
-            <li
-              // onClick={handleLogout}
-              className="bg-rose-600 mt-1 rounded"
-            >
-              <span onClick={handleLogout}>
-                {" "}
-                <GrLogout />
-                Logout
-              </span>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </motion.header>
+            </ul>
+          </div>
+        </nav>
+      </motion.header>
+    </section>
   );
 };
 
