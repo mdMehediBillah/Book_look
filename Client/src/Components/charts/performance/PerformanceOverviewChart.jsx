@@ -20,8 +20,6 @@ const PerformanceOverviewChart = () => {
 
   return (
     <section>
-      <h3>Performance Overview</h3>
-
       <PieChart width={730} height={250}>
         <Pie
           data={data01}
