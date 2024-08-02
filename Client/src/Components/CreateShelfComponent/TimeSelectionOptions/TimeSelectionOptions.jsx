@@ -1,6 +1,3 @@
-// src/Components/CreateShelfComponent/TimeSelectionOptions.jsx
-import React from "react";
-
 const TimeSelectionOptions = ({ is24Hours, handleRadioChange }) => {
   return (
     <div className="mb-4">

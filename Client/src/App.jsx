@@ -31,7 +31,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        
+
         <Route path=":bookshelfId">
           <Route index element={<BookshelfPage />} />
           <Route path="books">
@@ -46,8 +46,6 @@ function App() {
         <Route path="/create_shelf" element={<CreateShelf />} />
         <Route path="/profile" element={<UserProfilePage />} />
         <Route path="/profile_update" element={<UserUpdatePage />} />
-
-       
 
         <Route path="/create_book/:id" element={<CreateBookPage />}>
           <Route index element={<SearchBookComponent />} />

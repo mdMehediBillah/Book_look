@@ -125,7 +125,7 @@ const MapComponent = ({
         whenCreated={(mapInstance) => {
           mapRef.current = mapInstance;
         }}
-        className="min-h-[500px] max-h-[800px] w-full"
+        className="min-h-[400px] max-h-[800px] w-full"
       >
         {/* //==========================================================================
         Adds the OpenStreetMap tile layer to the map.

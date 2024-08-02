@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import imgUrl from "../../assets/images/bg-color_terms.png";
+import imgUrl from "../../assets/images/bg-color_terms.png";
 import { motion } from "framer-motion";
 
 import {
@@ -21,13 +21,13 @@ const HomePage = () => {
   }, []);
   return (
     <main
-      className="w-full min-h-max h-screen object-cover  bg-cover bg-center bg-no-repeat max-w-screen-lg mx-auto bg-gray-100 px-2"
-      // style={{
-      //   backgroundImage: `url(${imgUrl})`,
-      // }}
+      className="w-full object-cover  bg-cover bg-center bg-no-repeat  bg-rose-50 "
+      style={{
+        backgroundImage: `url(${imgUrl})`,
+      }}
     >
       <NavigationComponent />
-      <section>
+      <section className="max-w-screen-lg mx-auto">
         <motion.div
           animate={{
             rotate: [0],
@@ -43,20 +43,18 @@ const HomePage = () => {
             x: [0, 30, -30, 0],
           }}
           transition={{ delay: 0.6, duration: 8, repeat: Infinity }}
-          className=" py-1"
+          className=""
         >
           <HeroText />
         </motion.div>
+        <div className="mx-auto flex-grow">
+          <div className="">
+            <Location />
+          </div>
+        </div>
+        <ChatbotLayout />
       </section>
-      <div className="container mx-auto flex-grow p-4">
-        <div className="bg-white p-6 rounded-lg shadow-lg bg-red-400 ">
-          <Location />
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-lg bg-red-400 ">
-          <ChatbotLayout/>
-        </div>
-        <FooterComponent />
-      </div>
+      <FooterComponent />
     </main>
   );
 };

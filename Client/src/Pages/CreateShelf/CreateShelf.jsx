@@ -7,22 +7,26 @@ import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import "./CustomTimePicker.css";
+import imgPlaceholder from "../../assets/images/shelfDefault.png";
+
 import TimeSelectionOptions from "../../Components/CreateShelfComponent/TimeSelectionOptions/TimeSelectionOptions.jsx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faImage,
-  faBook,
-  faClock,
-  faMapMarkerAlt,
-  faRoad,
-  faMapPin,
-  faMap,
-  faCity,
-  faGlobe,
-} from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import {
+//   faImage,
+//   faBook,
+//   faClock,
+//   faMapMarkerAlt,
+//   faRoad,
+//   faMapPin,
+//   faMap,
+//   faCity,
+//   faGlobe,
+// } from "@fortawesome/free-solid-svg-icons";
 import BookshelfMap from "../../Components/CreateShelfComponent/BookshelfMap/BookshelfMap.jsx";
 import MapSearch from "../../Components/CreateShelfComponent/MapSearch/MapSearch.jsx";
 import AddressInput from "../../Components/CreateShelfComponent/AddressInput/AddressInput.jsx";
+import { GoBackComponent } from "../../Components/index.js";
+import { Link } from "react-router-dom";
 //==========================================================================
 // Function to upload image to Cloudinary
 //==========================================================================
@@ -39,13 +43,14 @@ const uploadImageToCloudinary = async (file) => {
 //==========================================================================
 // Function to create a new bookshelf
 //==========================================================================
+// const [imagePreview, setImagePreview] = useState(imgPlaceholder);
 
 const CreateShelfForm = () => {
   const [formData, setFormData] = useState({
     image: null,
     name: "",
-    openingTime: "",
-    closingTime: "",
+    openingTime: "7:00" || "",
+    closingTime: "18:00" || "",
     street: "",
     zipCode: "",
   });
@@ -53,7 +58,7 @@ const CreateShelfForm = () => {
   //==========================================================================
   //==========================================================================
 
-  const [is24Hours, setIs24Hours] = useState(false);
+  const [is24Hours, setIs24Hours] = useState(true);
   const [loading, setLoading] = useState(false);
   const [useMap, setUseMap] = useState(true);
   //==========================================================================
@@ -145,23 +150,45 @@ const CreateShelfForm = () => {
     }));
   };
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-5xl mx-auto p-6 mt-10 bg-white shadow-md rounded-md"
-    >
-      <h2 className="text-xl font-bold mb-4 text-center">
-        Create New Bookshelf
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Left Side */}
-        <div className="space-y-4 text-sm">
-          Bookshelf Name:
-          <div className="flex items-center mb-4 relative">
-            <FontAwesomeIcon
-              icon={faBook}
-              className="absolute left-3 top-3 text-gray-600"
-            />
-            <div className="flex-1">
+    <main>
+      <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900 max-w-screen-lg">
+        <div className="w-3/12">
+          <GoBackComponent />
+        </div>
+        <div className="flex items-center gap-4 w-6/12 justify-center">
+          <div>
+            <Link
+              to="/"
+              className="flex justify-center items-center gap-2 text-xl"
+            >
+              <h3>
+                <span className="text-rose-500 font-semibold ">Book</span>
+                <span className="text-cyan-600 font-semibold ">Look</span>
+              </h3>
+            </Link>
+          </div>
+        </div>
+        <div className="w-3/12 flex justify-end">
+          <div className="py-1 px-3 font-semibold text-white">
+            <h4>Create New Bookshelf</h4>
+          </div>
+        </div>
+      </section>
+
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-5xl mx-auto p-6 bg-gray-100 shadow-md "
+      >
+        <h1 className="text-4xl font-bold mt-6 mb-10 text-center">
+          Create New Bookshelf
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Left Side */}
+          <div className="space-y-4 text-sm">
+            <div className="flex-1 mb-4">
+              <label className="text-sm block font-medium text-gray-900">
+                Bookshelf Name
+              </label>
               <input
                 type="text"
                 id="name"
@@ -170,116 +197,124 @@ const CreateShelfForm = () => {
                 onChange={handleChange}
                 placeholder="Bookshelf Name"
                 required
-                className="pl-10 mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="border-2 border-gray-300 rounded-lg py-2 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-100 text-gray-900"
               />
             </div>
-          </div>
-          <div className="flex items-center mb-4">
-            {/* <FontAwesomeIcon icon={faImage} className="mr-2 text-gray-600" /> */}
-            <div className="flex-1">
-              <label
-                htmlFor="image"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Image:
-              </label>
-              <input
-                type="file"
-                id="image"
-                name="image"
-                onChange={handleFileChange}
-                accept="image/*"
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </div>
-          </div>
-          <div className="flex items-center mb-4">
-            {/* <FontAwesomeIcon icon={faClock} className="mr-2 text-gray-600" /> */}
-            <div className="flex-1">
-              <TimeSelectionOptions
-                is24Hours={is24Hours}
-                handleRadioChange={handleRadioChange}
-              />
-            </div>
-          </div>
-          {!is24Hours && (
-            <div className="flex space-x-4 mb-4">
+            <div className="flex items-center mb-4">
               <div className="flex-1">
                 <label
-                  htmlFor="openingTime"
-                  className="block text-sm font-medium text-gray-700"
+                  htmlFor="image"
+                  className="text-sm block font-medium text-gray-900"
                 >
-                  Opening Time:
+                  Upload Photo
                 </label>
-                <TimePicker
-                  id="openingTime"
-                  name="openingTime"
-                  value={formData.openingTime}
-                  onChange={(value) => handleTimeChange("openingTime", value)}
-                  required
-                  className="time-picker-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-              <div className="flex-1">
-                <label
-                  htmlFor="closingTime"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Closing Time:
-                </label>
-                <TimePicker
-                  id="closingTime"
-                  name="closingTime"
-                  value={formData.closingTime}
-                  onChange={(value) => handleTimeChange("closingTime", value)}
-                  required
-                  className="time-picker-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                <input
+                  type="file"
+                  id="image"
+                  name="image"
+                  onChange={handleFileChange}
+                  accept="image/*"
+                  className="border-2 border-gray-300 rounded-lg py-2 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-100 text-gray-900"
                 />
               </div>
             </div>
-          )}
-        </div>
-        {/* Right Side */}
-        <div className="space-y-4">
-          <div className="flex items-center mb-4">
-            <button
-              type="button"
-              onClick={() => setUseMap(true)}
-              className={`mr-2 py-2 px-4 ${
-                useMap ? "bg-cyan-700 text-white" : "bg-gray-200 text-gray-700"
-              } font-bold rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
-            >
-              Use Map
-            </button>
-            <button
-              type="button"
-              onClick={() => setUseMap(false)}
-              className={`py-2 px-4 ${
-                !useMap ? "bg-blue-700 text-white" : "bg-gray-200 text-gray-700"
-              } font-bold rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
-            >
-              Add Manually
-            </button>
-          </div>
-          {useMap ? (
-            <BookshelfMap onLocationSelect={handleLocationSelect} />
-          ) : (
-            <AddressInput
-              formData={formData}
-              handleChange={handleChange}
-              handleLocationChange={handleLocationManual}
+            <img
+              src={imgPlaceholder}
+              alt="Preview"
+              className="w-full h-36 object-cover rounded-md"
             />
-          )}
+
+            <div className="flex items-center mb-4">
+              <div className="text-sm block font-medium text-gray-900">
+                <TimeSelectionOptions
+                  is24Hours={is24Hours}
+                  handleRadioChange={handleRadioChange}
+                />
+              </div>
+            </div>
+            {!is24Hours && (
+              <div className="flex space-x-4 mb-4">
+                <div className="flex-1">
+                  <label
+                    htmlFor="openingTime"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Opening Time:
+                  </label>
+                  <TimePicker
+                    id="openingTime"
+                    name="openingTime"
+                    value={formData.openingTime}
+                    onChange={(value) => handleTimeChange("openingTime", value)}
+                    required
+                    className="time-picker-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label
+                    htmlFor="closingTime"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Closing Time:
+                  </label>
+                  <TimePicker
+                    id="closingTime"
+                    name="closingTime"
+                    value={formData.closingTime}
+                    onChange={(value) => handleTimeChange("closingTime", value)}
+                    required
+                    className="time-picker-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+          {/* Right Side */}
+          <div className="space-y-4">
+            <div className="flex items-center mb-4">
+              <button
+                type="button"
+                onClick={() => setUseMap(true)}
+                className={`mr-2 py-1 px-4 ${
+                  useMap
+                    ? "bg-rose-100 text-gray-800 shadow-md"
+                    : "bg-gray-100 text-gray-500 shadow-md"
+                } font-bold rounded-md hover:bg-rose-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 hover:text-white`}
+              >
+                Use Map
+              </button>
+              <button
+                type="button"
+                onClick={() => setUseMap(false)}
+                className={`py-1 px-4 ${
+                  !useMap
+                    ? "bg-rose-100 text-gray-800 shadow-md"
+                    : "bg-gray-100 text-gray-500 shadow-md"
+                } font-bold rounded-md hover:bg-rose-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
+              >
+                Add Manually
+              </button>
+            </div>
+            {useMap ? (
+              <BookshelfMap onLocationSelect={handleLocationSelect} />
+            ) : (
+              <AddressInput
+                formData={formData}
+                handleChange={handleChange}
+                handleLocationChange={handleLocationManual}
+              />
+            )}
+          </div>
         </div>
-      </div>
-     
-      <button
-        type="submit"
-        className="w-full py-2 mt-7 px-4 bg-cyan-700 text-white font-bold rounded-md hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-      >
-        Create Bookshelf
-      </button>
-    </form>
+
+        <button
+          type="submit"
+          className="w-full py-2 mt-7 px-4 bg-cyan-700 text-white font-bold rounded-md hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
+          Create Bookshelf
+        </button>
+      </form>
+    </main>
   );
 };
 export default CreateShelfForm;
