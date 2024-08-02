@@ -50,12 +50,16 @@ const FooterComponent = () => {
                   How it Works
                 </li>
               </Link>
-              <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
-                FAQ
-              </li>
-              <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
-                Terms & Conditions
-              </li>
+              <Link to="/faq">
+                <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
+                  FAQ
+                </li>
+              </Link>
+              <Link to="/terms_and_conditions">
+                <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
+                  Terms & Conditions
+                </li>
+              </Link>
             </ul>
           </div>
         </div>
