@@ -32,15 +32,13 @@ const MapComponent = ({
       // Clear previous layers
       mapRef.current.eachLayer((layer) => {
         if (layer instanceof L.TileLayer || layer instanceof L.Marker) {
-          layer.remove(); //Remove the previous layers (tiles or markers) from the map before adding new one.
+          layer.remove();
         }
       });
       //==========================================================================
       // Validate center coordinates
       //==========================================================================
 
-      //center: is a prop that is passed to the MapComponent,indicating where the map should be centered.
-      //center.length === 2 :ensures that the center array has exactly two elements, which should be latitude and longitude.
       if (center && Array.isArray(center) && center.length === 2) {
         mapRef.current.setView(center, 13);
       } else {
@@ -112,6 +110,9 @@ const MapComponent = ({
       } else {
         console.warn("Invalid destination location:", destination);
       }
+
+      // Adding zoom control to the bottom right corner
+      // L.control.zoom({ position: "bottomright" }).addTo(mapRef.current);
     }
   }, [bookshelves, center, userLocation, destination]);
 
@@ -124,7 +125,7 @@ const MapComponent = ({
         whenCreated={(mapInstance) => {
           mapRef.current = mapInstance;
         }}
-        className="min-h-[500px] max-h-[800px] w-full"
+        className="min-h-[400px] max-h-[800px] w-full"
       >
         {/* //==========================================================================
         Adds the OpenStreetMap tile layer to the map.

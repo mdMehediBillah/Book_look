@@ -1,6 +1,7 @@
 import "./getOpeningStatus.css";
 
 export const getOpeningStatus = (openingTime, closingTime) => {
+  // console.log(openingTime, closingTime);
   const now = new Date();
   const [openingHour, openingMinute] = openingTime.split(":").map(Number);
   const [closingHour, closingMinute] = closingTime.split(":").map(Number);

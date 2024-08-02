@@ -6,6 +6,11 @@ import { useState, useEffect } from "react";
 import MapComponent from "./MapComponent";
 import { getOpeningStatus } from "./getOpeningStatus/getOpeningStatus";
 import { Link } from "react-router-dom";
+import SearchComponent from "../SearchComponent/SearchComponent";
+import LikeComponent from "../LikeComponent/LikeComponent";
+import { LuBook } from "react-icons/lu";
+import LikeButton from "../LikeButtonComponent/LikeButtonComponent";
+
 const LayoutComponent = ({
   bookshelves,
   center,
@@ -16,11 +21,9 @@ const LayoutComponent = ({
   searchTerm,
   setSearchTerm,
 }) => {
-
   //==========================================================================
   // Filter bookshelves based on search term
   //==========================================================================
-  // Ensure searchTerm is a lowercase string
   const normalizedSearchTerm = (searchTerm || "").toLowerCase();
   // Safeguard against undefined properties
   const filteredBookshelves = bookshelves.filter((shelf) => {
@@ -53,108 +56,22 @@ const LayoutComponent = ({
       return updatedLiked;
     });
   };
-  //==========================================================================
-  // State for show more/less button
-  //==========================================================================
-  // const [showMore, setShowMore] = useState(false);
-  // const displayedBookshelves = showMore
-  //   ? filteredBookshelves
-  //   : filteredBookshelves.slice(0, 3); //display only 3 bookshelves ehwn show more is false
+
   //==========================================================================
   const displayedBookshelves = filteredBookshelves; // to always display all bookshelves
   return (
-    <div className="flex flex-col md:flex-row mt-10">
-      <div
-        className="flex flex-col md:w-1/3 h-full overflow-y-auto"
-        style={{ maxHeight: "calc(80vh - 80px)" }}
-      >
-        {displayedBookshelves.map((shelf, idx) => {
-          // Compute opening status
-          const { isOpen, message, detail } = getOpeningStatus(
-            shelf.openingTime,
-            shelf.closingTime
-          );
-          return (
-            <div
-              key={idx}
-              className="flex flex-row items-start mt-3 p-1 border border-gray-300 rounded bg-gray-50 relative"
-            >
-              {/* Heart Icon */}
-              <button
-                className="absolute bottom-2 right-2 text-red-500"
-                onClick={() => handleLikeToggle(shelf._id)}
-              >
-                {likedBookshelves.has(shelf._id) ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    className="w-5 h-5"
-                  >
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    className="w-5 h-5"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                    />
-                  </svg>
-                )}
-              </button>
-              {/* Image Container */}
-              {shelf.image && shelf.image.length > 0 && (
-                <div className="flex-shrink-0 mr-4">
-                  <Link to={`/${shelf._id}`}>
-                    <img
-                      src={shelf.image[0]}
-                      alt={shelf.name}
-                      className="w-24 h-24 object-cover rounded"
-                      style={{
-                        width: "85px",
-                        height: "96px",
-                        borderRadius: "5px",
-                      }}
-                    />
-                  </Link>
-                </div>
-              )}
-              {/* Text Content */}
-              <div>
-                <Link to={`/${shelf._id}`}>
-                  <h3 className="text-lg font-semibold">{shelf.name}</h3>
-                  <p className="text-gray-700">
-                    {shelf.street}, {shelf.city}
-                  </p>
-                  <p className={`text-${isOpen ? "green" : "red"}-500`}>
-                    {message} <span className="text-gray-500">{detail}</span>
-                  </p>
-                </Link>
-              </div>
+    <div className="flex flex-col mt-10">
+      {/* Map Container */}
+      <div className="relative h-1/2 md:h-full">
+        {/* Search Component inside the map */}
+        <div className="absolute w-[50%] left-[25%] z-[1000] p-2 rounded">
+          <SearchComponent
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            setCenter={setCenter}
+          />
+        </div>
 
-              {/* Text Content */}
-              <div>
-                <h2 className="text-lg font-semibold">{shelf.name}</h2>
-                <p className="text-gray-700">
-                  {shelf.street}, {shelf.city}
-                </p>
-                <Link to={`/create_book/${shelf._id}`}>
-                  <button>Add Book</button>
-                </Link>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <div className="flex-grow h-1/2 md:h-full">
         <MapComponent
           bookshelves={filteredBookshelves}
           center={center}
@@ -162,6 +79,61 @@ const LayoutComponent = ({
           destination={destination}
           setDestination={setDestination}
         />
+      </div>
+
+      {/* Bookshelves Container */}
+      <div className="grid md:grid-cols-3 gap-3 lg:grid-cols-4 py-3 px-2">
+        {displayedBookshelves.map((shelf, idx) => {
+          const { isOpen, message, detail } = getOpeningStatus(
+            shelf.openingTime,
+            shelf.closingTime
+          );
+          return (
+            <div
+              key={idx}
+              className="text-sm flex flex-col items-start  p-2 border border-gray-300 rounded bg-gray-50 mb-4 shadow-md hover:scale-105 transition-transform duration-500 cursor-direction justify-between hover:shadow-xl"
+            >
+              {/* Image Container */}
+              <Link to={`/${shelf._id}`}>
+                {shelf.image && shelf.image.length > 0 && (
+                  <img
+                    src={shelf.image[0]}
+                    alt={shelf.name}
+                    className="w-screen h-40 object-cover rounded-md"
+                  />
+                )}
+
+                {/* Text Content */}
+                <h2 className="text-[16px] font-semibold pt-1">{shelf.name}</h2>
+                <p className="text-gray-700">
+                  {shelf.street}, {shelf.city}
+                </p>
+                <p className={`text-${isOpen ? "green" : "red"}-500`}>
+                  {message} <span className="text-gray-500">{detail}</span>
+                </p>
+              </Link>
+
+              <div className="flex justify-between gap-2 mt-1  items-center w-full pt-4">
+                <div className="bg-cyan-600 w-7/12 rounded-md text-white">
+                  <Link
+                    to={`/create_book/${shelf._id}`}
+                    className="flex items-center justify-center gap-1"
+                  >
+                    <div>
+                      <LuBook />
+                    </div>
+                    <div>
+                      <p className="text-center py-1">Add Book</p>
+                    </div>
+                  </Link>
+                </div>
+                <div className="w-5/12">
+                  <LikeButton />
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

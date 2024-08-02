@@ -4,61 +4,68 @@ import {
   FaYoutube,
   FaLinkedin,
   FaInstagram,
+  FaApple,
+  FaGoogle,
+  FaAndroid,
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { GiBlackBook } from "react-icons/gi";
 import { Link } from "react-router-dom";
+import NewsletterSubscription from "../NewsletterSubscription/NewsletterSubscription";
 
 const FooterComponent = () => {
   return (
-    <div className="bg-cyan-900 min-h-48 text-white">
-      <div className="flex justify-evenly py-3">
-        <div className="py-3 grid grid-cols-1 gap-2">
-          <img
-            src="src/assets/images/app-gallery-badge-en.png"
-            alt="downloadButtonForAppGallery"
-            width="160"
-            height="80"
-            className="cursor-pointer"
-          />
-          <img
-            src="src/assets/images/app-store-badge-en.png"
-            alt="downloadButtonForAppleStore"
-            width="160"
-            height="80"
-            className="cursor-pointer"
-          />
-          <img
-            src="src/assets/images/google-play-badge-en.png"
-            alt="downloadButtonForPlayStore"
-            width="160"
-            height="80"
-            className="cursor-pointer"
-          />
-        </div>
-        <div className="py-3 ">
-          <ul className="grid grid-cols-1 gap-2 cursor-pointer ">
-            <Link to="/">
-              <li className="hover:text-cyan-200 text-sm">Home</li>
-            </Link>
-            <Link to="/about_us">
-              <li className="hover:text-cyan-200 text-sm">About Us</li>
-            </Link>
-            <Link to="/contact_us">
-              <li className="hover:text-cyan-200 text-sm">Contact Us</li>
-            </Link>
-            <Link to="/how_it_works">
-              <li className="hover:text-cyan-200 text-sm">How it Works</li>
-            </Link>
-            <li className="hover:text-cyan-200 text-sm">FAQ</li>
-            <li className="hover:text-cyan-200 text-sm">Terms & Conditions</li>
-          </ul>
+    <div className="bg-gray-900 min-h-48 text-white ">
+      <div className="grid lg:grid-cols-2 py-6 px-4 container max-w-screen-lg mx-auto">
+        <div className="grid md:grid-cols-2  mx-auto gap-8">
+          <div className="flex flex-col gap-2">
+            <div className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
+              <FaApple /> <span>Apple Store</span>
+            </div>
+            <div className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
+              <FaGoogle /> <span>Google Store</span>
+            </div>
+            <div className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
+              <FaAndroid /> <span>Android Store</span>
+            </div>
+          </div>
+          <div className="">
+            <ul className="flex flex-col gap-2">
+              <Link to="/">
+                <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
+                  Home
+                </li>
+              </Link>
+              <Link to="/about_us">
+                <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
+                  About Us
+                </li>
+              </Link>
+              <Link to="/contact_us">
+                <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
+                  Contact Us
+                </li>
+              </Link>
+              <Link to="/how_it_works">
+                <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
+                  How it Works
+                </li>
+              </Link>
+              <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
+                FAQ
+              </li>
+              <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
+                Terms & Conditions
+              </li>
+            </ul>
+          </div>
         </div>
         <div className="">
-          <h6 className="font-medium text-2xl  pb-4 py-3 cursor-default">
+          <h6 className="font-medium text-2xl  pb-4 cursor-default">
             Newsletter
           </h6>
-          <form action="" className="py-2">
+          <NewsletterSubscription />
+          {/* <form action="" className="py-2">
             <div className="flex  h-4 items-center  ">
               <input
                 type=""
@@ -74,33 +81,35 @@ const FooterComponent = () => {
                 Subscribe
               </button>
             </div>
-          </form>
-          <ul className="flex py-4 gap-1 cursor-pointer">
-            <li className="px-0.5 text-3xl hover:text-green-600 ">
-              <FaWhatsapp color="" />
+          </form> */}
+          <ul className="flex py-4 gap-3 cursor-pointer">
+            <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
+              <FaWhatsapp />
             </li>
-            <li className="px-0.5 text-3xl hover:text-blue-600">
+            <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
               <FaFacebook />
             </li>
-            <li className="px-0.5 text-3xl hover:text-red-600">
+            <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
               <FaYoutube />
             </li>
-            <li className="px-0.5 text-3xl hover:text-blue-800">
+            <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
               <FaLinkedin />
             </li>
-            <li className="px-0.5 text-3xl hover:text-pink-700">
+            <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
               <FaInstagram />
             </li>
-            <li className="px-0.5 text-3xl hover:text-black ">
+            <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
               <FaXTwitter />
             </li>
           </ul>
-          <p className="text-sm hover:text-cyan-200">
-            <a href="tel:+1629386868">Mobile: +49 162 9386868</a>
-          </p>
-          <p className="text-sm hover:text-cyan-200">
-            <a href="mailto:mailbillah@gmail.com">Email: team@booklook.com</a>
-          </p>
+          <div className="flex flex-col gap-1 mt-3">
+            <p className="text-sm hover:text-cyan-200">
+              <a href="tel:+1629386868">Mobile: +49 162 9386868</a>
+            </p>
+            <p className="text-sm hover:text-cyan-200">
+              <a href="mailto:mailbillah@gmail.com">Email: team@booklook.com</a>
+            </p>
+          </div>
         </div>
       </div>
 

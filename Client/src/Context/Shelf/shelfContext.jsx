@@ -6,7 +6,8 @@ const ShelfContext = createContext();
 
 // Create a provider component
 export const ShelfProvider = ({ children, shelfId }) => {
-  const [shelfData, setShelfData] = useState([]);
+  const localShelfData = localStorage.getItem("shelf");
+  const [shelfData, setShelfData] = useState(localShelfData || []);
   const URL = import.meta.env.VITE_REACT_APP_URL;
 
   useEffect(() => {
