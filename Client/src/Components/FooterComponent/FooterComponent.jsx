@@ -12,7 +12,6 @@ import { FaXTwitter } from "react-icons/fa6";
 import { GiBlackBook } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import NewsletterSubscription from "../NewsletterSubscription/NewsletterSubscription";
-
 const FooterComponent = () => {
   return (
     <div className="bg-gray-900 min-h-48 text-white ">
@@ -51,12 +50,16 @@ const FooterComponent = () => {
                   How it Works
                 </li>
               </Link>
-              <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
-                FAQ
-              </li>
-              <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
-                Terms & Conditions
-              </li>
+              <Link to="/faq">
+                <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
+                  FAQ
+                </li>
+              </Link>
+              <Link to="/terms_and_conditions">
+                <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
+                  Terms & Conditions
+                </li>
+              </Link>
             </ul>
           </div>
         </div>
@@ -66,22 +69,22 @@ const FooterComponent = () => {
           </h6>
           <NewsletterSubscription />
           {/* <form action="" className="py-2">
-            <div className="flex  h-4 items-center  ">
-              <input
-                type=""
-                name=""
-                id=""
-                placeholder="Email Address"
-                className="p-0,5 pl-3 rounded-l-full h-8"
-              />
-              <button
-                type="button"
-                className=" px-4 py-1 h-8 bg-cyan-100 rounded-r-full text-center cursor-pointer text-s hover:bg-cyan-200 text-black "
-              >
-                Subscribe
-              </button>
-            </div>
-          </form> */}
+              <div className="flex  h-4 items-center  ">
+                <input
+                  type=""
+                  name=""
+                  id=""
+                  placeholder="Email Address"
+                  className="p-0,5 pl-3 rounded-l-full h-8"
+                />
+                <button
+                  type="button"
+                  className=" px-4 py-1 h-8 bg-cyan-100 rounded-r-full text-center cursor-pointer text-s hover:bg-cyan-200 text-black "
+                >
+                  Subscribe
+                </button>
+              </div>
+            </form> */}
           <ul className="flex py-4 gap-3 cursor-pointer">
             <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
               <FaWhatsapp />
@@ -112,12 +115,10 @@ const FooterComponent = () => {
           </div>
         </div>
       </div>
-
       <div className="flex justify-evenly p-4 border-t border-white">
         <div className=" w-2/12 logo ">
           <Link to="/" className="flex justify-center items-center gap-2">
             <GiBlackBook className="min-w-11  min-h-11 text-cyan-200 " />
-
             <div>
               <span className="text-rose-400 font-semibold text-2xl">Book</span>
               <span className="text-cyan-400 font-semibold text-2xl">Look</span>
@@ -133,5 +134,4 @@ const FooterComponent = () => {
     </div>
   );
 };
-
 export default FooterComponent;

@@ -18,6 +18,8 @@ import CreateBookPage from "./CreateBookPage/CreateBookPage.jsx";
 import AboutUsPage from "./AboutUsPage/AboutUsPage.jsx";
 import ContactUsPage from "./ContactUsPage/ContactUsPage.jsx";
 import HowItWorksPage from "./HowItWorksPage/HowItWorksPage.jsx";
+import FaqPage from "./FaqPage/FaqPage.jsx";
+import TermsAndConditionsPage from "./TermsAndConditionsPage/TermsAndConditionsPage.jsx";
 
 // export all pages
 export {
@@ -41,4 +43,6 @@ export {
   AboutUsPage,
   ContactUsPage,
   HowItWorksPage,
+  FaqPage,
+  TermsAndConditionsPage,
 };
