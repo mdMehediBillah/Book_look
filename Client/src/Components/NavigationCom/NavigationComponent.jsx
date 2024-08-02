@@ -51,19 +51,19 @@ const NavigationComponent = () => {
       <nav className="flex items-center w-full justify-between  w-10/12">
         <div className="flex  mx-auto w-5/12">
           <ol className="flex gap-2 mx-auto">
-            <li className="py-1 px-4 bg-cyan-100 rounded-full text-center cursor-pointer text-xs hover:bg-cyan-200">
+            {/* <li className="py-1 px-4 bg-cyan-100 rounded-full text-center cursor-pointer text-xs hover:bg-cyan-200">
               <NavLink className={navLinkStyles} to="/donate_book">
                 Donate
               </NavLink>
-            </li>
-            <li className="py-1 px-4 bg-cyan-100 rounded-full text-center cursor-pointer text-xs hover:bg-cyan-200">
+            </li> */}
+            {/* <li className="py-1 px-4 bg-cyan-100 rounded-full text-center cursor-pointer text-xs hover:bg-cyan-200">
               <NavLink className={navLinkStyles} to="/borrow_book">
                 Borrow
               </NavLink>
-            </li>
-            <li className="py-1 px-4 bg-cyan-100 rounded-full text-center cursor-pointer text-xs hover:bg-cyan-200">
+            </li> */}
+            <li className="py-1 px-6 bg-cyan-400 rounded-full text-center cursor-pointer text-sm hover:bg-cyan-200">
               <NavLink className={navLinkStyles} to="/create_shelf">
-                Create
+                <span className="text-gray-900">Create Shelf</span>
               </NavLink>
             </li>
           </ol>

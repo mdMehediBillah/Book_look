@@ -5,7 +5,7 @@ import CountryStateCitySelector from "../CountryStateCitySelector/CountryStateCi
 
 const AddressInput = ({ formData, handleChange, handleLocationChange }) => {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 ">
       <div className="flex items-center mb-4">
         {/* Uncomment and use the icon if needed */}
         {/* <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2 text-gray-600" /> */}
@@ -13,7 +13,7 @@ const AddressInput = ({ formData, handleChange, handleLocationChange }) => {
           <CountryStateCitySelector onLocationChange={handleLocationChange} />
         </div>
       </div>
-      <div className="flex items-center mb-4 relative">
+      <div className="flex items-center mb-4 relative ">
         <FontAwesomeIcon
           icon={faRoad}
           className="absolute left-3 top-3 text-gray-600"

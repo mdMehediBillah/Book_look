@@ -15,6 +15,7 @@ import ratingRouter from "./routes/ratingRouter.js";
 import borrowedBookRouter from "./routes/borrowedBookRouter.js";
 import donatedBookRouter from "./routes/donatedBookRouter.js";
 import globalErrorHandler from "./middlewares/globalError/index.js";
+import subscribeRouter from "./routes/subscribeRouter.js";
 
 // Import routes
 
@@ -45,6 +46,7 @@ app.use("/api/v1/genres", genreRouter);
 app.use("/api/v1/ratings", ratingRouter);
 app.use("/api/v1/borrowedBooks", borrowedBookRouter);
 app.use("/api/v1/donatedBooks", donatedBookRouter);
+app.use("/api/v1/subscribe", subscribeRouter);
 
 // Static assets
 app.use(express.static("assets"));
