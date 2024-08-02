@@ -17,6 +17,8 @@ import {
   AboutUsPage,
   ContactUsPage,
   HowItWorksPage,
+  FaqPage,
+  TermsAndConditionsPage,
 } from "./Pages";
 import {
   BookDetailsCom,
@@ -56,6 +58,11 @@ function App() {
         <Route path="/about_us" element={<AboutUsPage />} />
         <Route path="/contact_us" element={<ContactUsPage />} />
         <Route path="/how_it_works" element={<HowItWorksPage />} />
+        <Route path="/faq" element={<FaqPage />} />
+        <Route
+          path="/terms_and_conditions"
+          element={<TermsAndConditionsPage />}
+        />
 
         <Route path="/terms_condition" element={<TermsConditionPage />} />
         {/* <Route path="/admin/dashboard" element={<AdminDashboardPage />} /> */}

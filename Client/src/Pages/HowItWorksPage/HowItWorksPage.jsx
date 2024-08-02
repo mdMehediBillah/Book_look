@@ -4,7 +4,7 @@ const HowItWorks = () => {
   return (
     <div>
       <NavigationComponent />
-      <div className="bg-stone-100 cursor-default">
+      <div className=" cursor-default max-w-screen-lg mx-auto">
         <div className="flex justify-center py-9 ">
           <h4 className="text-4xl font-medium  ">How it Works</h4>
         </div>
