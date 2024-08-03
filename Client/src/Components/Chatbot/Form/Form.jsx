@@ -25,12 +25,12 @@ export const Form = ({ setMessages, messages }) => {
     setMessages((prev) => [...prev, newMessage]);
 
     const response = await fetch(
-      "http://localhost:5050/api/v1/chat/completions",
+      "http://localhost:8000/api/v1/chat/completions",
       {
         method: "POST",
         headers: {
           provider: "open-ai",
-          mode: "production",
+          mode: "development",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -103,7 +103,7 @@ export const Form = ({ setMessages, messages }) => {
         onChange={handleChange}
         value={message}
         className="flex-grow p-2 ml-2 border-none rounded-full focus:ring-0 focus:outline-none placeholder-gray-500"
-        style={{ resize: "none", maxHeight: "50px" }} //height of the textarea
+        style={{ resize: "none", maxHeight: "50px" }}
       ></textarea>
       <button
         type="submit"
