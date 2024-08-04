@@ -2,7 +2,7 @@
 //this code integrates a searchInput, a list of bookshelves, and a mapComponent.
 //==========================================================================
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import MapComponent from "./MapComponent";
 import { getOpeningStatus } from "./getOpeningStatus/getOpeningStatus";
 import { Link } from "react-router-dom";
@@ -10,6 +10,8 @@ import SearchComponent from "../SearchComponent/SearchComponent";
 import LikeComponent from "../LikeComponent/LikeComponent";
 import { LuBook } from "react-icons/lu";
 import LikeButton from "../LikeButtonComponent/LikeButtonComponent";
+import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext"; // Import ThemeContext
+
 
 const LayoutComponent = ({
   bookshelves,
@@ -21,6 +23,9 @@ const LayoutComponent = ({
   searchTerm,
   setSearchTerm,
 }) => {
+
+  const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
+
   //==========================================================================
   // Filter bookshelves based on search term
   //==========================================================================
@@ -91,7 +96,11 @@ const LayoutComponent = ({
           return (
             <div
               key={idx}
-              className="text-sm flex flex-col items-start  p-2 border border-gray-300 rounded bg-gray-50 mb-4 shadow-md hover:scale-105 transition-transform duration-500 cursor-direction justify-between hover:shadow-xl"
+              className={`text-sm flex flex-col items-start p-2 border rounded mb-4 shadow-md hover:scale-105 transition-transform duration-500 cursor-direction justify-between hover:shadow-xl ${
+                theme === "light"
+                  ? "border-gray-300 bg-white text-black"
+                  : "border-gray-700 bg-gray-400 text-white"
+              }`}
             >
               {/* Image Container */}
               <Link to={`/${shelf._id}`}>
