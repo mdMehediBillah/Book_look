@@ -32,7 +32,73 @@ const NavigationComponent = () => {
   };
   // max-w-screen-lg mx-auto container
   return (
-    <section className=" justify-between items-center gap-2 p-3 mb-4">
+    <>
+      <div className="navbar bg-base-100 justify-between items-center gap-2 pt-3 container mx-auto">
+        <div className="flex-1">
+          <div className=" w-2/12 logo">
+            <Link to="/" className="flex justify-center items-center gap-2">
+              <GiBlackBook className="min-w-7 min-h-7 text-gray-900" />
+
+              <div>
+                <span className="text-rose-500 font-semibold text-2xl">
+                  Book
+                </span>
+                <span className="text-cyan-600 font-semibold text-2xl">
+                  Look
+                </span>
+              </div>
+            </Link>
+          </div>
+          {/* <a className="btn btn-ghost text-xl">daisyUI</a> */}
+        </div>
+        <div className="flex-none gap-2 ">
+          {/* <div className="form-control">
+            <input
+              type="text"
+              placeholder="Search"
+              className="input input-bordered w-24 md:w-auto"
+            />
+          </div> */}
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar "
+            >
+              <div className="w-10 rounded-full">
+                <img alt="Tailwind CSS Navbar component" src={user?.image} />
+              </div>
+              {/* <span className="">Hello! {user ? firstName : "User"}</span> */}
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            >
+              <Link to="/profile">
+                <li>
+                  <span className="justify-between">
+                    Profile
+                    {/* <span className="badge">New</span> */}
+                  </span>
+                </li>
+              </Link>
+              <li onClick={handleLogout}>
+                <span className="justify-between">
+                  Logout
+                  {/* <span className="badge">New</span> */}
+                </span>
+              </li>
+              {/* <li>
+                <a>Settings</a>
+              </li> */}
+              {/* <li>
+                <a>Logout</a>
+              </li> */}
+            </ul>
+          </div>
+        </div>
+      </div>
+      {/* <section className=" justify-between items-center gap-2 pt-3">
       <motion.header
         initial={{ x: 5, opacity: 0.9, scale: 0.99 }}
         animate={{ x: 0, opacity: 1, scale: 1 }}
@@ -51,15 +117,7 @@ const NavigationComponent = () => {
         </div>
 
         <nav className="flex items-center w-full justify-between  w-10/12">
-          <div className="flex  mx-auto w-5/12">
-            <ol className="flex gap-2 mx-auto">
-              <li className="py-2 px-12 bg-rose-100 rounded-lg text-center cursor-pointer text-sm hover:bg-cyan-200 shadow-md hover:scale-110 transition-transform duration-300 hover:shadow-lg">
-                <NavLink className={navLinkStyles} to="/create_shelf">
-                  <span className="text-gray-800">Create Shelf</span>
-                </NavLink>
-              </li>
-            </ol>
-          </div>
+          <div className="flex  mx-auto w-5/12"></div>
           <div className="dropdown">
             <div
               tabIndex={0}
@@ -96,7 +154,8 @@ const NavigationComponent = () => {
           </div>
         </nav>
       </motion.header>
-    </section>
+    </section> */}
+    </>
   );
 };
 

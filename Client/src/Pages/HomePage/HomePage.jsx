@@ -2,11 +2,9 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import imgUrl from "../../assets/images/bg-color_terms.png";
 import { motion } from "framer-motion";
-
 import {
   HeroText,
   NavigationComponent,
-  SearchComponent,
   FooterComponent,
 } from "../../Components";
 import Location from "../../Components/Location/Location";
@@ -19,6 +17,7 @@ const HomePage = () => {
   useEffect(() => {
     if (!localStorage.getItem("token")) navigate("/registrationPage");
   }, []);
+
   return (
     <main
       className="w-full object-cover  bg-cover bg-center bg-no-repeat  bg-gray-50 "
@@ -27,6 +26,7 @@ const HomePage = () => {
       // }}
     >
       <NavigationComponent />
+
       <section className="max-w-screen-lg mx-auto">
         <motion.div
           animate={{

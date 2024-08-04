@@ -14,8 +14,8 @@ const NewsletterSubscription = () => {
     email: "",
     id: userId || "",
   });
-  console.log(userId);
-  console.log(form);
+  // console.log(userId);
+  // console.log(form);
 
   // Handle input change
   const handleChange = (e) => {

@@ -8,16 +8,8 @@ import Book from "../../models/book/index.js";
 // Create New Borrowed book
 //==========================================================================
 export const createBorrowedBook = async (req, res, next) => {
-  const {
-    ISBN,
-    title,
-    author,
-    dueDate,
-    book: bookId,
-    borrowedFrom: bookshelfId,
-  } = req.body;
-
-  const userId = req.params.id;
+  const { book: bookId, user: userId, borrowedFrom: bookshelfId } = req.body;
+  console.log("Received request payload:", req.body);
 
   try {
     const user = await User.findById(userId);
@@ -34,23 +26,26 @@ export const createBorrowedBook = async (req, res, next) => {
       return res.status(404).json({ message: "Bookshelf not found" });
     }
 
+    // Create new BorrowedBook entry
     const borrowedBook = new BorrowedBook({
-      ISBN: ISBN,
-      title: title,
-      author: author,
-      dueDate: dueDate,
       book: bookId,
       borrowedFrom: bookshelfId,
     });
 
     await borrowedBook.save();
 
+    // Update User
     user.borrowedBooks.push(borrowedBook._id);
     await user.save();
 
-    bookshelf.borrowedBooks.push(borrowedBook._id);
+    // Remove the book from the bookshelf's books array
+    bookshelf.books = bookshelf.books.filter(
+      (id) => id.toString() !== bookId.toString()
+    );
+    // Save the updated bookshelf
     await bookshelf.save();
 
+    // Update Book
     book.status = "borrowed";
     book.borrowedTimes.push(borrowedBook._id);
     await book.save();
@@ -62,6 +57,9 @@ export const createBorrowedBook = async (req, res, next) => {
     });
   } catch (error) {
     console.error("Error creating borrowed book:", error);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
     next(error);
   }
 };

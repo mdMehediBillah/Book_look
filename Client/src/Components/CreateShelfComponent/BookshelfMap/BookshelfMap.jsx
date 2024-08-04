@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+} from "react-leaflet";
 import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
 import L from "leaflet";
 import "leaflet-geosearch/dist/geosearch.css";
 import "leaflet/dist/leaflet.css";
 
 // API key for the OpenCage Data API
-const GEOCODING_API_KEY = "438a1cd3fba247eca976b3f52574eb4e";
+const GEOCODING_API_KEY = "30f399b8abb3424aa79287e7458363e2";
 
 // Custom icon for the marker
 const icon = new L.Icon({
@@ -41,7 +47,7 @@ const LocationPicker = ({ onLocationSelect }) => {
             road,
             postcode,
           };
-          console.log("Retrieved Address:", formattedAddress); 
+          console.log("Retrieved Address:", formattedAddress);
           setAddress(formattedAddress);
           onLocationSelect(formattedAddress);
         } else {

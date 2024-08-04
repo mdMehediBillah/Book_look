@@ -10,26 +10,13 @@ import "./CustomTimePicker.css";
 import imgPlaceholder from "../../assets/images/shelfDefault.png";
 
 import TimeSelectionOptions from "../../Components/CreateShelfComponent/TimeSelectionOptions/TimeSelectionOptions.jsx";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import {
-//   faImage,
-//   faBook,
-//   faClock,
-//   faMapMarkerAlt,
-//   faRoad,
-//   faMapPin,
-//   faMap,
-//   faCity,
-//   faGlobe,
-// } from "@fortawesome/free-solid-svg-icons";
 import BookshelfMap from "../../Components/CreateShelfComponent/BookshelfMap/BookshelfMap.jsx";
 import MapSearch from "../../Components/CreateShelfComponent/MapSearch/MapSearch.jsx";
 import AddressInput from "../../Components/CreateShelfComponent/AddressInput/AddressInput.jsx";
 import { GoBackComponent } from "../../Components/index.js";
 import { Link } from "react-router-dom";
-//==========================================================================
+
 // Function to upload image to Cloudinary
-//==========================================================================
 const uploadImageToCloudinary = async (file) => {
   const cloud_name = import.meta.env.VITE_CLOUD_NAME;
   const upload_preset = import.meta.env.VITE_UPLOAD_PRESET;
@@ -40,10 +27,6 @@ const uploadImageToCloudinary = async (file) => {
   const response = await axios.post(cloud_URL, data);
   return response.data.url;
 };
-//==========================================================================
-// Function to create a new bookshelf
-//==========================================================================
-// const [imagePreview, setImagePreview] = useState(imgPlaceholder);
 
 const CreateShelfForm = () => {
   const [formData, setFormData] = useState({
@@ -54,60 +37,46 @@ const CreateShelfForm = () => {
     street: "",
     zipCode: "",
   });
-
-  //==========================================================================
-  //==========================================================================
+  const [imagePreview, setImagePreview] = useState(imgPlaceholder);
 
   const [is24Hours, setIs24Hours] = useState(true);
   const [loading, setLoading] = useState(false);
   const [useMap, setUseMap] = useState(true);
-  //==========================================================================
-  //functions
-  //==========================================================================
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  // for file upload
+
   const handleFileChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.files[0] });
+    const file = e.target.files[0];
+    setFormData({ ...formData, image: file });
+    setImagePreview(URL.createObjectURL(file));
   };
-  // for time selection
+
   const handleTimeChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // for selecting 24 hours or custom time
   const handleRadioChange = (e) => {
     setIs24Hours(e.target.value === "24hours");
   };
-  // Function to handle form submission
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Start loading
+    setLoading(true);
 
-    //==========================================================================
-    // Upload images if they are selected
-    //==========================================================================
     try {
       let imageUrl = formData.image
         ? await uploadImageToCloudinary(formData.image)
         : null;
-      //==========================================================================
-      // Create updated form data with URLs
-      //==========================================================================
-      console.log(" formData", formData);
+
       const updatedFormData = {
         ...formData,
         image: imageUrl,
         openingTime: is24Hours ? "00:00" : formData.openingTime,
         closingTime: is24Hours ? "23:59" : formData.closingTime,
       };
-      //==========================================================================
-      //==========================================================================
-      console.log(" updatedFormData", updatedFormData);
-      console.log(Country.getAllCountries());
 
       const x = Country.getAllCountries().filter(
         (country) => country.isoCode === updatedFormData.country
@@ -119,18 +88,16 @@ const CreateShelfForm = () => {
         "http://localhost:8000/api/v1/bookshelves/new",
         formReq
       );
-      // const response = await axios.post(
-      //   "http://localhost:8000/api/v1/bookshelves/new",
-      //   updatedFormData
-      // );
+
       toast.success(response.data.message);
     } catch (error) {
       console.error("Error creating bookshelf:", error);
       toast.error(error.response?.data?.message || "Error creating bookshelf");
     } finally {
-      setLoading(false); // Set loading to false after the request completes
+      setLoading(false);
     }
   };
+
   const handleLocationSelect = (addressData) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -139,16 +106,12 @@ const CreateShelfForm = () => {
   };
 
   const handleLocationManual = (addressData) => {
-    // setFormData((prevState) => ({
-    //   ...prevState,
-    //   addressData,
-    // }));
-    console.log(addressData);
     setFormData((prevState) => ({
       ...prevState,
       ...addressData,
     }));
   };
+
   return (
     <main>
       <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900 max-w-screen-lg">
@@ -219,7 +182,7 @@ const CreateShelfForm = () => {
               </div>
             </div>
             <img
-              src={imgPlaceholder}
+              src={imagePreview}
               alt="Preview"
               className="w-full h-36 object-cover rounded-md"
             />
@@ -310,11 +273,13 @@ const CreateShelfForm = () => {
         <button
           type="submit"
           className="w-full py-2 mt-7 px-4 bg-cyan-700 text-white font-bold rounded-md hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          disabled={loading}
         >
-          Create Bookshelf
+          {loading ? "Creating..." : "Create Bookshelf"}
         </button>
       </form>
     </main>
   );
 };
+
 export default CreateShelfForm;

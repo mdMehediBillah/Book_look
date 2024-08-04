@@ -16,27 +16,30 @@ npm install lodash.debounce
 */
 
 const BookCardForShelf = ({ book }) => {
+  const [books, setBooks] = useState([]);
+
   const { bookshelfId } = useParams();
   const [averageRating, setAverageRating] = useState(0);
 
   const fetchRating = async () => {
     try {
-      const response = await axios.get(`${API}/api/v1/books/${book._id}/rating`);
+      const response = await axios.get(
+        `${API}/api/v1/books/${book._id}/rating`
+      );
       setAverageRating(response.data.averageRating);
     } catch (error) {
       console.error("Error fetching rating:", error);
     }
   };
 
-  useEffect(() => {
-    fetchRating();
-  }, [book._id]);
-
   const updateRating = async (newRating) => {
     try {
-      const response = await axios.put(`${API}/api/v1/books/${book._id}/rating`, {
-        rating: newRating,
-      });
+      const response = await axios.put(
+        `${API}/api/v1/books/${book._id}/rating`,
+        {
+          rating: newRating,
+        }
+      );
       setAverageRating(response.data.averageRating);
     } catch (error) {
       console.error("Error updating rating:", error);
@@ -49,36 +52,59 @@ const BookCardForShelf = ({ book }) => {
     debouncedUpdateRating(newRating);
   };
 
-  return (
-    <section className="book-card-wrapper">
-      <figure className="book-cover-page-wrapper">
-        <Link to={`/bookshelves/${bookshelfId}/books/${book._id}`}>
-          <img className="image" src={book?.coverImageUrl} alt={book?.title} />
-        </Link>
-      </figure>
-      <article className="book-details-wrapper">
-        <Link to={`/bookshelves/${bookshelfId}/books/${book._id}`}>
-          <h3 className="book-title"> {book?.title} </h3>
-        </Link>
-        <small className="book-author">
-          by Justin G. Longenecker (Author), J. William Petty (Author), Leslie
-          E. Palich (Author), Frank Hoy (Author)
-        </small>
-        <p className="book-rating">
-          Average Rating: {averageRating?.toFixed(1)}
-          <Rating
-            initialRating={averageRating} // Pass the averageRating to Rating component
-            onRatingChange={handleRatingChange}
-          />
-        </p>
+  // console.log(bookshelf);
+  const fetchBooks = async () => {
+    try {
+      const { data } = await axios.get(
+        `${API}/api/v1/bookshelves/${bookshelfId}/books`
+      );
+      setBooks(data.books);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-        <p className="book-summary">
+  useEffect(() => {
+    fetchBooks();
+    fetchRating();
+  }, [book._id]);
+
+  return (
+    <section className="flex flex-col bg-gray-100 p-2 rounded shadow-md justify-between">
+      <Link to={`/${bookshelfId}/books/${book._id}`} className="">
+        <figure className="">
+          {/* <Link to={`/bookshelves/${bookshelfId}/books/${book._id}`}> */}
+          <img
+            className="w-full h-52 object-cover rounded-md mx-auto"
+            src={book?.coverImageUrl}
+            alt={book?.title}
+          />
+          {/* </Link> */}
+        </figure>
+        <article className="">
+          {/* <Link to={`/bookshelves/${bookshelfId}/books/${book._id}`}> */}
+          <h4 className="text-lg font-semibold pt-2 line-clamp-1">
+            {" "}
+            {book?.title}{" "}
+          </h4>
+          {/* </Link> */}
+          <small className="font-semibold text-[14px]">{book?.author}</small>
+          <div className="flex gap-4 items-center">
+            <p className="text-sm">Rating: {averageRating?.toFixed(1)}</p>
+            <Rating
+              initialRating={averageRating}
+              onRatingChange={handleRatingChange}
+            />
+          </div>
+        </article>
+      </Link>
+      <Link to={`/${bookshelfId}/books/${book._id}`} className="">
+        <p className="bg-gray-200 text-center rounded-lg py-1">
           {book?.summary?.slice(0, 300).concat("...")}{" "}
-          <Link to={`/${bookshelfId}/books/${book._id}`}>
-            <span className="read-more">read more</span>{" "}
-          </Link>
+          <span className=" ">read more</span>{" "}
         </p>
-      </article>
+      </Link>
     </section>
   );
 };

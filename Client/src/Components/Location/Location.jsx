@@ -21,29 +21,6 @@ const Location = () => {
   const [searchTerm, setSearchTerm] = useState(""); // Initialize searchTerm state variable
 
   //==========================================================================
-  // Get all bookshelves /using GeoCoding api (openCage)
-  //==========================================================================
-  useEffect(() => {
-    const fetchBookshelves = async () => {
-      try {
-        // const response = await axios.get(`${API}/bookshelves`);
-        const response = await axios.get(
-          `http://localhost:8000/api/v1/bookshelves/`
-        );
-        // setBookshelves(response.data.result);
-
-        const updatedShelves = await updateBookshelvesWithCoordinates(
-          response.data.result
-        );
-        setBookshelves(updatedShelves);
-      } catch (error) {
-        toast.error("Error fetching Bookshelfs");
-      }
-    };
-    fetchBookshelves();
-  }, []);
-
-  //==========================================================================
   //Fetching User Location:
   //==========================================================================
 
@@ -101,7 +78,7 @@ const Location = () => {
         setCenter={setCenter}
       /> */}
       <LayoutComponent
-        bookshelves={bookshelves}
+        // bookshelves={bookshelves}
         center={center}
         setCenter={setCenter}
         userLocation={userLocation}

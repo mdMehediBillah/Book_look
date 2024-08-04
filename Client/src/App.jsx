@@ -19,6 +19,7 @@ import {
   HowItWorksPage,
   FaqPage,
   TermsAndConditionsPage,
+  AllShalvesPage,
 } from "./Pages";
 import {
   BookDetailsCom,
@@ -56,6 +57,7 @@ function App() {
         </Route>
         <Route path="/createBookSearch/:id" element={<BookDetailsCom />} />
         <Route path="/about_us" element={<AboutUsPage />} />
+        <Route path="/allShalves" element={<AllShalvesPage />} />
         <Route path="/contact_us" element={<ContactUsPage />} />
         <Route path="/how_it_works" element={<HowItWorksPage />} />
         <Route path="/faq" element={<FaqPage />} />
@@ -65,7 +67,7 @@ function App() {
         />
 
         <Route path="/terms_condition" element={<TermsConditionPage />} />
-      <Route path="/admin/dashboard" element={<AdminDashboardPage />} /> 
+        <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <ToastContainer
