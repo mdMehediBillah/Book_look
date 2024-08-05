@@ -32,7 +32,7 @@ function Chatbot() {
 
       {/* Chat container */}
       {isChatOpen && (
-        <div className="fixed bottom-16 right-4 w-80 bg-white border border-gray-300 z-[1000] rounded-lg shadow-lg flex flex-col h-96">
+        <div className="fixed bottom-16 right-4 w-80 bg-gradient-to-b from-cyan-200 to-rose-200 border border-gray-300 rounded-xl shadow-lg z-[1000] flex flex-col h-[500px] pb-6 mb-3">
           <div className="flex flex-col h-full">
             <div className="flex-grow overflow-y-auto p-2">
               <Chat messages={messages} />

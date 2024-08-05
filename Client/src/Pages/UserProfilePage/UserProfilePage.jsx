@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GoBackComponent, UserProfileComponent } from "../../Components";
+import ChatbotLayout from "../../Components/Chatbot/ChatbotLayout/ChatbotLayout";
+
 
 const UserProfilePage = () => {
   const navigate = useNavigate();
@@ -37,6 +39,7 @@ const UserProfilePage = () => {
       <div>
         <UserProfileComponent />
       </div>
+      <ChatbotLayout />
     </main>
   );
 };

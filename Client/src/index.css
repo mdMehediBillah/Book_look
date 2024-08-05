@@ -21,3 +21,14 @@ h3 {
 .leaflet-routing-container {
   display: none !important;
 }
+
+/* for darkmood and lightmood */
+body.light {
+  background-color: white;
+  color: black;
+}
+
+body.dark {
+  background-color: #164f63;
+  color: black;
+}

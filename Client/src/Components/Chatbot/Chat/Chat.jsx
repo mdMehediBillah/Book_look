@@ -10,7 +10,7 @@ export const Chat = ({ messages }) => {
   }, [messages]);
 
   return (
-    <div className="flex flex-col space-y-3 p-3 bg-gradient-to-b from-cyan-200 to-rose-200 border border-gray-300 rounded-xl shadow-lg max-w-md mx-auto ">
+    <div className="flex flex-col space-y-3 p-3  max-w-md mx-auto pb-6">
       {messages
         ?.filter((message) => message.role !== "system")
         .map((message) => {

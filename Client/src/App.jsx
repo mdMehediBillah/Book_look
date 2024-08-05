@@ -27,11 +27,27 @@ import {
 } from "./Components";
 import AdminDashboardPage from "./Pages/dashboardPages/adminDashboardPage/AdminDashboardPage";
 import BookshelfPage from "./Pages/bookshelfPage/BookshelfPage";
+import ThemeToggle from "./Components/lightDarkMood/ThemeToggle";
+import {
+  ThemeProvider,
+  ThemeContext,
+} from "./Components/lightDarkMood/ThemeContext";
+import { useContext, useEffect } from "react";
 
-function App() {
+//for dark and light mode 
+const AppContent = () => {
+  const { theme } = useContext(ThemeContext);
+
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
+
+// function App() {
   return (
     <>
+        <ThemeToggle />
       <Routes>
+
         <Route path="/" element={<HomePage />} />
 
         <Route path=":bookshelfId">
@@ -65,7 +81,7 @@ function App() {
         />
 
         <Route path="/terms_condition" element={<TermsConditionPage />} />
-      <Route path="/admin/dashboard" element={<AdminDashboardPage />} /> 
+        <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <ToastContainer
@@ -83,6 +99,14 @@ function App() {
       />
     </>
   );
+};
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
+  );
 }
+
 
 export default App;
