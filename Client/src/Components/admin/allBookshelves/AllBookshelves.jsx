@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./AllBookshelves.scss";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import axios from "axios";
@@ -8,13 +8,11 @@ import { FaTrashAlt } from "react-icons/fa";
 import { MdEditSquare } from "react-icons/md";
 
 const AllBookshelves = () => {
-  // Local state variable
   const [bookshelves, setBookshelves] = useState([]);
   const [bookshelfId, setBookshelfId] = useState("");
   const [openBookshelf, setOpenBookshelf] = useState(false);
   const [confirmDeletion, setConfirmDeletion] = useState(false);
-
-  console.log("shelves =", bookshelves);
+  const downloadRef = useRef(); // Create a reference to the component to download
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -50,7 +48,6 @@ const AllBookshelves = () => {
     { field: "country", headerName: "Country", width: 100 },
     { field: "openingTime", headerName: "Opening Time", width: 150 },
     { field: "closingTime", headerName: "Closing Time", width: 150 },
-
     {
       field: "action",
       headerName: "Action",
@@ -61,7 +58,6 @@ const AllBookshelves = () => {
             className="edit"
             onClick={() => setOpenBookshelf(true)}
           />
-
           <FaTrashAlt
             onClick={() => {
               setBookshelfId(params.id);
@@ -95,14 +91,13 @@ const AllBookshelves = () => {
     } catch (error) {
       toast.error(error.response.data.message);
     }
-
-    // allUsers();
   };
 
   return (
     <section
+      ref={downloadRef}
       className="bookshelves-table-container"
-      style={{ height: "400px", width: "100%" }}
+      style={{ height: "auto", width: "100%", backgroundColor: "#fff" }}
     >
       <h3 className="bookshelves-table-title"> List of Bookshelves </h3>
 
@@ -138,6 +133,7 @@ const AllBookshelves = () => {
         pageSizeOptions={[5, 10]}
         checkboxSelection
         disableRowSelectionOnClick
+        autoHeight // Adjust the height automatically
       />
 
       {confirmDeletion && (
@@ -171,12 +167,6 @@ const AllBookshelves = () => {
           </aside>
         </article>
       )}
-
-      {/* {openBookshelf && (
-        <ClickOnMapBookshelf
-          setOpenClickMapBookshelf={setOpenClickMapBookshelf}
-        />
-      )} */}
     </section>
   );
 };

@@ -13,6 +13,8 @@ const NavigationComponent = () => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
+  console.log("user =", user);
+
   const { firstName } = user;
 
   useEffect(() => {
@@ -90,6 +92,18 @@ const NavigationComponent = () => {
                 </span>
               </li>
             </Link>
+
+            {user && user?.role === "admin" && (
+              <Link to="/admin/dashboard">
+                <li className="bg-cyan-800  rounded">
+                  <span>
+                    {" "}
+                    <MdOutlineLeaderboard />
+                    Admin Dashboard
+                  </span>
+                </li>
+              </Link>
+            )}
             <li
               // onClick={handleLogout}
               className="bg-rose-600 mt-1 rounded"
