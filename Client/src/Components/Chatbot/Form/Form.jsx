@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { FaPaperPlane } from "react-icons/fa";
+
 
 export const Form = ({ setMessages, messages }) => {
   const [{ stream, message }, setState] = useState({
@@ -107,9 +109,9 @@ export const Form = ({ setMessages, messages }) => {
       ></textarea>
       <button
         type="submit"
-        className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-cyan-400 to-rose-300 text-white rounded-full hover:from-cyan-600 hover:to-rose-500 focus:outline-none transition-colors duration-200 ease-in-out mr-2"
+        className="flex items-center justify-center w-11 h-11 bg-rose-500 text-white rounded-md hover:bg-cyan-600 focus:outline-none transition-colors duration-200 ease-in-out mr-2"
       >
-        <i className="material-icons">send</i>
+        <FaPaperPlane className="w-5 h-5" />
       </button>
     </form>
   );
