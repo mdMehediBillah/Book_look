@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { FaPaperPlane } from "react-icons/fa";
+
 
 export const Form = ({ setMessages, messages }) => {
   const [{ stream, message }, setState] = useState({
@@ -25,12 +27,12 @@ export const Form = ({ setMessages, messages }) => {
     setMessages((prev) => [...prev, newMessage]);
 
     const response = await fetch(
-      "http://localhost:5050/api/v1/chat/completions",
+      "http://localhost:8000/api/v1/chat/completions",
       {
         method: "POST",
         headers: {
           provider: "open-ai",
-          mode: "production",
+          mode: "development",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -103,13 +105,13 @@ export const Form = ({ setMessages, messages }) => {
         onChange={handleChange}
         value={message}
         className="flex-grow p-2 ml-2 border-none rounded-full focus:ring-0 focus:outline-none placeholder-gray-500"
-        style={{ resize: "none", maxHeight: "50px" }} //height of the textarea
+        style={{ resize: "none", maxHeight: "50px" }}
       ></textarea>
       <button
         type="submit"
-        className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-cyan-400 to-rose-300 text-white rounded-full hover:from-cyan-600 hover:to-rose-500 focus:outline-none transition-colors duration-200 ease-in-out mr-2"
+        className="flex items-center justify-center w-11 h-11 bg-rose-500 text-white rounded-md hover:bg-cyan-600 focus:outline-none transition-colors duration-200 ease-in-out mr-2"
       >
-        <i className="material-icons">send</i>
+        <FaPaperPlane className="w-5 h-5" />
       </button>
     </form>
   );

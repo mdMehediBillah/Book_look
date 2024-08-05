@@ -1,4 +1,8 @@
-import { useState } from "react";
+//==========================================================================
+//this code integrates a searchInput, a list of bookshelves, and a mapComponent.
+//==========================================================================
+
+import React, { useState, useEffect, useContext } from "react";
 import MapComponent from "./MapComponent";
 import { getOpeningStatus } from "./getOpeningStatus/getOpeningStatus";
 import { Link } from "react-router-dom";
@@ -6,12 +10,7 @@ import SearchComponent from "../SearchComponent/SearchComponent";
 // import LikeComponent from "../LikeComponent/LikeComponent";
 import { LuBook } from "react-icons/lu";
 import LikeButton from "../LikeButtonComponent/LikeButtonComponent";
-import ButtonCreateShelf from "../ButtonCreateShelf/ButtonCreateShelf";
-import { IoClose } from "react-icons/io5";
-
-// UseCOntext is used to get the data from the context
-import { useBookshelvesContext } from "../../Context/Shelf/BookshelvesContext.jsx";
-import { useAuthContext } from "../../Context/User/AuthContext.jsx";
+import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext"; // Import ThemeContext
 
 const LayoutComponent = ({
   // bookshelves,
@@ -23,18 +22,8 @@ const LayoutComponent = ({
   searchTerm,
   setSearchTerm,
 }) => {
-  const { user } = useAuthContext();
-  // console.log(user._id);
-  // fetch bookshelves
-  const { bookshelves, loading, error } = useBookshelvesContext();
-  // console.log(bookshelves);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
 
-  const displayBookshelves = bookshelves.slice(0, 8);
-
-  // userId is the current user's ID
-  const userId = user?._id;
   //==========================================================================
   // Filter bookshelves based on search term
   //==========================================================================
@@ -127,7 +116,11 @@ const LayoutComponent = ({
           return (
             <div
               key={idx}
-              className="text-sm flex flex-col items-start  p-2 border border-gray-300 rounded bg-gray-50 mb-4 shadow-md hover:scale-105 transition-transform duration-500 cursor-direction justify-between hover:shadow-xl"
+              className={`text-sm flex flex-col items-start p-2 border rounded mb-4 shadow-md hover:scale-105 transition-transform duration-500 cursor-direction justify-between hover:shadow-xl ${
+                theme === "light"
+                  ? "border-gray-300 bg-white text-black"
+                  : "border-gray-700 bg-gray-400 text-white"
+              }`}
             >
               {/* Image Container */}
               <Link to={`/${shelf._id}`}>

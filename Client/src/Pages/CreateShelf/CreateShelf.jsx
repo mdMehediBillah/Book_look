@@ -1,5 +1,5 @@
 import { Country } from "country-state-city";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,6 +8,8 @@ import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import "./CustomTimePicker.css";
 import imgPlaceholder from "../../assets/images/shelfDefault.png";
+import ChatbotLayout from "../../Components/Chatbot/ChatbotLayout/ChatbotLayout";
+import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext.jsx"; // for dark and light mode
 
 import TimeSelectionOptions from "../../Components/CreateShelfComponent/TimeSelectionOptions/TimeSelectionOptions.jsx";
 import BookshelfMap from "../../Components/CreateShelfComponent/BookshelfMap/BookshelfMap.jsx";
@@ -29,6 +31,15 @@ const uploadImageToCloudinary = async (file) => {
 };
 
 const CreateShelfForm = () => {
+  const { theme } = useContext(ThemeContext); // for dark and light mode
+
+  // Determine the styles based on the theme
+  // const inputStyle =
+  //   theme === "dark"
+  //     ? "bg-gray-800 text-white border-gray-700 placeholder-gray-500"
+  //     : "bg-gray-100 text-gray-900 border-gray-300 placeholder-gray-700";
+
+  //==========================================================================
   const [formData, setFormData] = useState({
     image: null,
     name: "",
@@ -70,25 +81,40 @@ const CreateShelfForm = () => {
       let imageUrl = formData.image
         ? await uploadImageToCloudinary(formData.image)
         : null;
-
+      //==========================================================================
+      // Create updated form data with URLs
+      //==========================================================================
+      // console.log(" formData", formData);
       const updatedFormData = {
         ...formData,
         image: imageUrl,
         openingTime: is24Hours ? "00:00" : formData.openingTime,
         closingTime: is24Hours ? "23:59" : formData.closingTime,
       };
+      //==========================================================================
+      //==========================================================================
+      console.log(" updatedFormData", updatedFormData);
+      // console.log(Country.getAllCountries());
 
-      const x = Country.getAllCountries().filter(
-        (country) => country.isoCode === updatedFormData.country
-      );
+      // const x = Country.getAllCountries().filter(
+      //   (country) => country.isoCode === updatedFormData.country
+      // );
+      // console.log(" x", x);
 
-      const formReq = { ...updatedFormData, country: x[0].name };
+      // const formReq = { ...updatedFormData, country: x[0].name };
 
       const response = await axios.post(
         "http://localhost:8000/api/v1/bookshelves/new",
-        formReq
+        updatedFormData
       );
-
+      // const response = await axios.post(
+      //   "http://localhost:8000/api/v1/bookshelves/new",
+      //   formReq
+      // );
+      // const response = await axios.post(
+      //   "http://localhost:8000/api/v1/bookshelves/new",
+      //   updatedFormData
+      // );
       toast.success(response.data.message);
     } catch (error) {
       console.error("Error creating bookshelf:", error);
@@ -113,8 +139,12 @@ const CreateShelfForm = () => {
   };
 
   return (
-    <main>
-      <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900 max-w-screen-lg">
+    <main className={`${theme === "dark" ? "bg-cyan-900" : "bg-white"}`}>
+      <section
+        className={`flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg max-w-screen-lg ${
+          theme === "dark" ? "bg-cyan-700 text-white" : "bg-cyan-900 text-black"
+        }`}
+      >
         <div className="w-3/12">
           <GoBackComponent />
         </div>
@@ -140,7 +170,9 @@ const CreateShelfForm = () => {
 
       <form
         onSubmit={handleSubmit}
-        className="max-w-5xl mx-auto p-6 bg-gray-100 shadow-md "
+        className={`max-w-5xl mx-auto p-6 shadow-md ${
+          theme === "dark" ? "bg-gray-800 text-white" : "bg-gray-100 text-black"
+        }`}
       >
         <h1 className="text-4xl font-bold mt-6 mb-10 text-center">
           Create New Bookshelf
@@ -160,7 +192,11 @@ const CreateShelfForm = () => {
                 onChange={handleChange}
                 placeholder="Bookshelf Name"
                 required
-                className="border-2 border-gray-300 rounded-lg py-2 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-100 text-gray-900"
+                className={`border-2 rounded-lg py-2 px-2 w-full focus:outline-none ${
+                  theme === "dark"
+                    ? "border-gray-600 bg-gray-700 text-white"
+                    : "border-gray-300 bg-gray-100 text-gray-900"
+                }`}
               />
             </div>
             <div className="flex items-center mb-4">
@@ -177,7 +213,11 @@ const CreateShelfForm = () => {
                   name="image"
                   onChange={handleFileChange}
                   accept="image/*"
-                  className="border-2 border-gray-300 rounded-lg py-2 px-2 text-gray-700 w-full focus:outline-none focus:border-cyan-500 bg-gray-100 text-gray-900"
+                  className={`border-2 rounded-lg py-2 px-2 w-full focus:outline-none ${
+                    theme === "dark"
+                      ? "border-gray-600 bg-gray-700 text-white"
+                      : "border-gray-300 bg-gray-100 text-gray-900"
+                  }`}
                 />
               </div>
             </div>
@@ -272,12 +312,16 @@ const CreateShelfForm = () => {
 
         <button
           type="submit"
-          className="w-full py-2 mt-7 px-4 bg-cyan-700 text-white font-bold rounded-md hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          disabled={loading}
+          className={`w-full py-2 mt-7 px-4 ${
+            theme === "dark"
+              ? "bg-cyan-700 text-white"
+              : "bg-cyan-900 text-black"
+          } font-bold rounded-md hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
         >
           {loading ? "Creating..." : "Create Bookshelf"}
         </button>
       </form>
+      <ChatbotLayout />
     </main>
   );
 };

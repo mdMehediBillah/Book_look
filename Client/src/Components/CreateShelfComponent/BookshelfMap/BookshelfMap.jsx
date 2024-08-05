@@ -11,10 +11,9 @@ import L from "leaflet";
 import "leaflet-geosearch/dist/geosearch.css";
 import "leaflet/dist/leaflet.css";
 
-// API key for the OpenCage Data API
-const GEOCODING_API_KEY = "30f399b8abb3424aa79287e7458363e2";
+// OpenCage API
+const GEOCODING_API_KEY = "c31e5a04c18e40a795b69e17a6504245";
 
-// Custom icon for the marker
 const icon = new L.Icon({
   iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
   iconSize: [25, 41],
@@ -32,7 +31,6 @@ const LocationPicker = ({ onLocationSelect }) => {
       setPosition(e.latlng);
       map.flyTo(e.latlng, map.getZoom());
 
-      // Reverse Geocoding API call
       try {
         const response = await fetch(
           `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${GEOCODING_API_KEY}`
@@ -44,8 +42,8 @@ const LocationPicker = ({ onLocationSelect }) => {
           const formattedAddress = {
             country,
             city,
-            road,
-            postcode,
+            street: road,
+            zipCode: postcode,
           };
           console.log("Retrieved Address:", formattedAddress);
           setAddress(formattedAddress);
@@ -90,10 +88,12 @@ const LocationPicker = ({ onLocationSelect }) => {
                   <strong>City:</strong> {address.city}
                 </p>
                 <p>
-                  <strong>Street:</strong> {address.road}
+                  <strong>Street:</strong> {address.street}
+                  {/* <strong>Street:</strong> {address.road} */}
                 </p>
                 <p>
-                  <strong>Postcode:</strong> {address.postcode}
+                  <strong>Postcode:</strong> {address.zipCode}
+                  {/* <strong>Postcode:</strong> {address.postcode} */}
                 </p>
               </div>
             </Popup>
@@ -104,7 +104,6 @@ const LocationPicker = ({ onLocationSelect }) => {
   );
 };
 
-// Main component to render the map and handle location selection
 const BookshelfMap = ({ onLocationSelect }) => {
   return (
     <MapContainer
