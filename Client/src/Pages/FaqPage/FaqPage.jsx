@@ -1,15 +1,33 @@
+import { useContext } from "react";
 import { NavigationComponent, FooterComponent } from "../../Components";
+import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext.jsx";
 
 const FaqPage = () => {
+  const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
+
   return (
-    <div>
+    <div
+      className={`w-full object-cover bg-cover bg-center bg-no-repeat ${
+        theme === "light" ? "bg-gray-50" : "bg-gray-800"
+      }`}
+    >
       <NavigationComponent />
       <div className=" cursor-default max-w-screen-lg mx-auto ">
         <div className="flex justify-center py-9 items-center flex-col">
-          <h4 className="text-4xl font-medium">FAQ</h4>
+          <h4
+            className={`text-4xl font-medium ${
+              theme === "light" ? "text-gray-800" : "text-gray-50"
+            }`}
+          >
+            FAQ
+          </h4>
         </div>
         <div className="flex flex-col items-center pb-9">
-          <p className="font-medium text-center">
+          <p
+            className={` font-medium text-center ${
+              theme === "light" ? "text-gray-800" : "text-gray-50"
+            }`}
+          >
             You’ve got a question? We’ve got the answer! Check our most
             frequently asked questions about BookLook.com below.
           </p>
