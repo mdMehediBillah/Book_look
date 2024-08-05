@@ -8,11 +8,12 @@ import { Link } from "react-router-dom";
 const NotFoundPage = () => {
   return (
     <section
-      className=" flex flex-col justify-center homeBg min-h-screen bg-cover bg-center bg-no-repeat w-[100%] pt-6"
+      className=" flex flex-col  min-h-screen bg-cover bg-center bg-no-repeat w-[100%] "
       style={{
         backgroundImage: `url(${imgUrl})`,
       }}
     >
+      {/* <GoBackComponent /> */}
       <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900 max-w-screen-lg">
         <div className="w-3/12">
           <GoBackComponent />
@@ -24,21 +25,20 @@ const NotFoundPage = () => {
               className="flex justify-center items-center gap-2 text-xl"
             >
               <h3>
-                <span className="text-rose-500 font-semibold ">Book</span>
-                <span className="text-cyan-600 font-semibold ">Look</span>
+                {/* <span className="text-rose-500 font-semibold ">Book</span>
+                <span className="text-cyan-600 font-semibold ">Look</span> */}
               </h3>
             </Link>
           </div>
         </div>
         <div className="w-3/12 flex justify-end">
           <div className="py-1 px-3 font-semibold text-white">
-            <h4>Update Profile</h4>
+            <h4>Page not found</h4>
           </div>
         </div>
       </section>
-      <div className="container mx-auto">
-        <GoBackComponent />
-        <div className="container mx-auto  bg-gray-100 p-4">
+      <div className="container mx-auto mt-12 bg-gray-100 rounded-xl shadow-lg">
+        <div className="container mx-auto   p-4">
           <motion.div
             initial={{ x: -20, opacity: 0, scale: 0.9 }}
             animate={{ x: 0, opacity: 1, scale: 1 }}
@@ -57,10 +57,18 @@ const NotFoundPage = () => {
             <span className="text-cyan-600 font-semibold ">Look</span>
           </motion.h1>
           <motion.p
+            initial={{ x: 20, opacity: 0, scale: 0.9 }}
+            animate={{ x: 0, opacity: 1, scale: 1 }}
+            transition={{ type: "tween", duration: 0.3 }}
+            className="text-center"
+          >
+            Invalid URL
+          </motion.p>
+          <motion.p
             initial={{ x: -20, opacity: 0, scale: 0.9 }}
             animate={{ x: 0, opacity: 1, scale: 1 }}
             transition={{ type: "tween", duration: 0.3 }}
-            className="text-5xl container mx-auto text-center text-gray-800 font-semibold drop-shadow-md text-cyan-400"
+            className="text-5xl container mx-auto text-center text-gray-600 font-semibold drop-shadow-md text-cyan-400 pb-20"
           >
             {" "}
             Page Not Found

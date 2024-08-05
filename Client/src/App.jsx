@@ -19,6 +19,7 @@ import {
   HowItWorksPage,
   FaqPage,
   TermsAndConditionsPage,
+  AllShalvesPage,
 } from "./Pages";
 import {
   BookDetailsCom,
@@ -27,10 +28,25 @@ import {
 } from "./Components";
 import AdminDashboardPage from "./Pages/dashboardPages/adminDashboardPage/AdminDashboardPage";
 import BookshelfPage from "./Pages/bookshelfPage/BookshelfPage";
+import ThemeToggle from "./Components/lightDarkMood/ThemeToggle";
+import {
+  ThemeProvider,
+  ThemeContext,
+} from "./Components/lightDarkMood/ThemeContext";
+import { useContext, useEffect } from "react";
 
-function App() {
+//for dark and light mode
+const AppContent = () => {
+  const { theme } = useContext(ThemeContext);
+
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
+
+  // function App() {
   return (
     <>
+      {/* <ThemeToggle /> */}
       <Routes>
         <Route path="/" element={<HomePage />} />
 
@@ -56,6 +72,7 @@ function App() {
         </Route>
         <Route path="/createBookSearch/:id" element={<BookDetailsCom />} />
         <Route path="/about_us" element={<AboutUsPage />} />
+        <Route path="/allShalves" element={<AllShalvesPage />} />
         <Route path="/contact_us" element={<ContactUsPage />} />
         <Route path="/how_it_works" element={<HowItWorksPage />} />
         <Route path="/faq" element={<FaqPage />} />
@@ -65,7 +82,7 @@ function App() {
         />
 
         <Route path="/terms_condition" element={<TermsConditionPage />} />
-      <Route path="/admin/dashboard" element={<AdminDashboardPage />} /> 
+        <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <ToastContainer
@@ -82,6 +99,13 @@ function App() {
         theme="light"
       />
     </>
+  );
+};
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 

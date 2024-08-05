@@ -16,6 +16,14 @@ import borrowedBookRouter from "./routes/borrowedBookRouter.js";
 import donatedBookRouter from "./routes/donatedBookRouter.js";
 import globalErrorHandler from "./middlewares/globalError/index.js";
 import subscribeRouter from "./routes/subscribeRouter.js";
+import likeShelfRouter from "./routes/likeShefeRouter.js";
+
+//chatbot
+import chatRouter from "./routes/chatbotRoutes/chatRouter.js";
+import imageRouter from "./routes/chatbotRoutes/imageRouter.js";
+import errorHandler from "./middlewares/chatbot/errorHandler.js";
+import validateProvider from "./middlewares/chatbot/validateProvider.js";
+import validateMode from "./middlewares/chatbot/validateMode.js";
 
 // Import routes
 
@@ -29,11 +37,14 @@ app.use(
     origin: "*",
     credentials: true,
   })
-  // cors({
-  //   origin: "http://localhost:5174",
-  //   credentials: true,
-  // })
+
+//   // cors({
+//   //   origin: "http://localhost:5174",
+//   //   credentials: true,
+//   // })
 );
+// app.use(cors({ origin: "*" , credentials: true,}), express.json(), validateProvider, validateMode);
+
 app.use(express.json());
 
 // Routes
@@ -47,12 +58,21 @@ app.use("/api/v1/ratings", ratingRouter);
 app.use("/api/v1/borrowedBooks", borrowedBookRouter);
 app.use("/api/v1/donatedBooks", donatedBookRouter);
 app.use("/api/v1/subscribe", subscribeRouter);
+app.use("/api/v1/likeShelf", likeShelfRouter);
+
+//chatbotRoutes
+app.use("/api/v1/chat/completions", chatRouter);
+app.use("/api/v1/images/generations", imageRouter);
 
 // Static assets
 app.use(express.static("assets"));
 
 // Global error handler
 app.use(globalErrorHandler);
+
+
+app.use(errorHandler);
+
 
 // Server Listener
 const port = process.env.PORT || 8000;
@@ -61,6 +81,7 @@ const port = process.env.PORT || 8000;
 app.get("/*", (req, res) => {
   res.send("invalid endpoint!");
 });
+
 
 app.listen(port, () => {
   console.log("Server is running on port http://localhost:8000/");

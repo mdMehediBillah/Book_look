@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useGlobalContext } from "../../Context/Book/context.jsx"; // Import the context
 import { Link } from "react-router-dom";
-import coverImg from "../../assets/images/banner_default.png"; // Placeholder image
+import coverImg from "../../assets/images/bookCover.png"; // Placeholder image
 import "./SearchBookComponent.css";
 
 const SearchBookComponent = ({ shelf }) => {

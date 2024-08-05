@@ -15,7 +15,7 @@ import NewsletterSubscription from "../NewsletterSubscription/NewsletterSubscrip
 const FooterComponent = () => {
   return (
     <div className="bg-gray-900 min-h-48 text-white ">
-      <div className="grid lg:grid-cols-2 py-6 px-4 container max-w-screen-lg mx-auto">
+      <div className="grid lg:grid-cols-2 py-20 px-4 container max-w-screen-lg mx-auto">
         <div className="grid md:grid-cols-2  mx-auto gap-8">
           <div className="flex flex-col gap-2">
             <div className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">

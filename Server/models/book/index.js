@@ -8,7 +8,8 @@ const bookSchema = new Schema(
     coverImageUrl: {
       type: String,
       required: false,
-      default: "defaultCoverImageUrl",
+      default:
+        "https://res.cloudinary.com/dgmthsu2w/image/upload/v1722802058/bookCover_giftfu.png",
     },
     language: { type: String, required: false, default: "eng" },
     summary: { type: String, required: false },
@@ -27,7 +28,7 @@ const bookSchema = new Schema(
       default: "available",
       enum: ["available", "borrowed"],
     },
-    
+
     ratings: [{ type: Number }],
   },
   {

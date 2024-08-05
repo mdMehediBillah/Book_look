@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
               },
             }
           );
-
           setUser(data.result);
         }
       } catch (error) {

@@ -10,8 +10,8 @@ const Rating = ({ initialRating, onRatingChange }) => {
       count={5}
       value={initialRating}
       onChange={handleRatingChange}
-      size={24}
-      activeColor="#ffd700"
+      size={20}
+      activeColor="#d4085d"
     />
   );
 };
