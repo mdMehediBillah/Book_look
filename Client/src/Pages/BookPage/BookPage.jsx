@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { API } from "../../Utils/security/secreteKey";
 import "./BookPage.scss";
 import BorrowedBookForm from "../../Components/forms/borrow/BorrowedBookForm";
@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 
 const BookPage = () => {
+  const navigate = useNavigate();
   const { shelfData } = useShelfContext();
   // console.log(shelfData);
   const { bookshelfId, bookId } = useParams();
@@ -94,7 +95,8 @@ const BookPage = () => {
       );
 
       toast.success(data.message);
-      setOpenBorrowedBook(false); // Close the form after successful submission
+      setOpenBorrowedBook(false);
+      navigate(-2);
     } catch (error) {
       console.error("Error creating BorrowedBook:", error);
       toast.error("Error creating BorrowedBook:", error);

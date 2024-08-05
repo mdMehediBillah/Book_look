@@ -3,16 +3,16 @@
 //obtains the user's current location, and passes this data to a layout component.
 //==========================================================================
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import LayoutComponent from "./LayoutComponent";
-import axios from "axios";
+// import axios from "axios";
 // import { API } from "../../utils/security/secreteKey";
-import { toast } from "react-toastify";
-import SearchComponent from "../SearchComponent/SearchComponent";
-import { updateBookshelvesWithCoordinates } from "./geocoding/geocoding";
+// import { toast } from "react-toastify";
+// import SearchComponent from "../SearchComponent/SearchComponent";
+// import { updateBookshelvesWithCoordinates } from "./geocoding/geocoding";
 
 const Location = () => {
-  const [bookshelves, setBookshelves] = useState([]);
+  // const [bookshelves, setBookshelves] = useState([]);
   const [center, setCenter] = useState([51.541574, 9.951122]); // Default center
   const [userLocation, setUserLocation] = useState(null);
   const [destination, setDestination] = useState(null);
@@ -72,11 +72,6 @@ const Location = () => {
 
   return (
     <div>
-      {/* <SearchComponent
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        setCenter={setCenter}
-      /> */}
       <LayoutComponent
         // bookshelves={bookshelves}
         center={center}

@@ -88,6 +88,10 @@ const BookshelfPage = () => {
     // Optionally, update local state or perform other actions when a bookshelf is liked
     console.log(`Bookshelf ${bookshelfId} liked`);
   };
+  const getAvailableBooksCount = (books = [], borrowedBooks = []) => {
+    return Math.max(0, books?.length - borrowedBooks?.length);
+  };
+  console.log(getAvailableBooksCount);
 
   return (
     <main className="bookshelf-page">
@@ -156,7 +160,13 @@ const BookshelfPage = () => {
                     >
                       <div className="bg-cyan-100 w-full">
                         <div className="flex gap-1 py-1 rounded w-full justify-center">
-                          <span>{books?.length - borrowedBooks?.length}</span>
+                          {/* <span>{books?.length - borrowedBooks?.length}</span> */}
+                          <span>
+                            {getAvailableBooksCount(
+                              bookshelf?.books,
+                              bookshelf?.borrowedBooks
+                            )}
+                          </span>
                           <span>available books</span>
                         </div>
                       </div>
