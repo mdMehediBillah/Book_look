@@ -7,12 +7,7 @@ import { API } from "../../../Utils/security/secreteKey";
 import Rating from "../ratings/Rating";
 
 /*
-
-Add a Debounce Mechanism to Prevent Too Many Requests
-Debouncing helps limit the number of API requests when a user interacts with the rating component. You can use the lodash.debounce library for this.
-
 npm install lodash.debounce
-
 */
 
 const BookCardForShelf = ({ book }) => {

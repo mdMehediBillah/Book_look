@@ -24,7 +24,8 @@ const AllShalvesPage = () => {
   // =================================================================
   // fetch bookshelves
   useEffect(() => {
-    setShalvesData(bookshelves.slice(0, 12));
+    setShalvesData(bookshelves);
+    // setShalvesData(bookshelves.slice(0, 12));
   }, [bookshelves]);
 
   if (loading) return <p>Loading...</p>;
@@ -38,9 +39,9 @@ const AllShalvesPage = () => {
   return (
     <main
       className="w-full object-cover  bg-cover bg-center bg-no-repeat  bg-gray-50 "
-      style={{
-        backgroundImage: `url(${imgUrl})`,
-      }}
+      // style={{
+      //   backgroundImage: `url(${imgUrl})`,
+      // }}
     >
       <NavigationComponent />
       <div className="max-w-screen-lg mx-auto">
@@ -109,7 +110,11 @@ const AllShalvesPage = () => {
             );
           })}
         </div>
-        <Pagination loadMore={loadMoreBookshelves} hasMore={hasMore} />
+        <Pagination
+          loadMoreBookshelves={loadMoreBookshelves}
+          hasMore={hasMore}
+          loadLessBookshelves={loadMoreBookshelves}
+        />
       </section>
       <FooterComponent />
     </main>

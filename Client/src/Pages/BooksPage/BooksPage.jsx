@@ -42,7 +42,7 @@ const BooksPage = () => {
           Books of {bookshelf?.name}{" "}
         </h2>
 
-        <div className="grid lg:grid-cols-4 gap-2">
+        <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-2">
           {books &&
             books.length > 0 &&
             books.map((book) => {
