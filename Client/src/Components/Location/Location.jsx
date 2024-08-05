@@ -72,11 +72,6 @@ const Location = () => {
 
   return (
     <div>
-      {/* <SearchComponent
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        setCenter={setCenter}
-      /> */}
       <LayoutComponent
         // bookshelves={bookshelves}
         center={center}

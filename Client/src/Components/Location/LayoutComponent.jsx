@@ -11,6 +11,9 @@ import SearchComponent from "../SearchComponent/SearchComponent";
 import { LuBook } from "react-icons/lu";
 import LikeButton from "../LikeButtonComponent/LikeButtonComponent";
 import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext"; // Import ThemeContext
+import { useBookshelvesContext } from "../../Context/Shelf/BookshelvesContext.jsx";
+import ButtonCreateShelf from "../ButtonCreateShelf/ButtonCreateShelf.jsx";
+import { IoClose } from "react-icons/io5";
 
 const LayoutComponent = ({
   // bookshelves,
@@ -23,6 +26,10 @@ const LayoutComponent = ({
   setSearchTerm,
 }) => {
   const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
+  const { bookshelves, loading, error } = useBookshelvesContext();
+  console.log(bookshelves);
+
+  const displayBookshelves = bookshelves.slice(0, 8);
 
   //==========================================================================
   // Filter bookshelves based on search term

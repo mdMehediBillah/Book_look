@@ -27,6 +27,7 @@ const BookshelvesProvider = ({ children }) => {
           ...prevBookshelves,
           ...response.data.result,
         ]);
+        console.log(response.data.result);
         setHasMore(response.data.result.length > 0);
       } catch (error) {
         setError("Failed to fetch bookshelves");
