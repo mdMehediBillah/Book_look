@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import "./BookshelfPage.scss";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { API } from "../../Utils/security/secreteKey";
 import { toast } from "react-toastify";
@@ -9,8 +9,11 @@ import { getOpeningStatus } from "../../Components/Location/getOpeningStatus/get
 import LikeButton from "../../Components/LikeButtonComponent/LikeButtonComponent.jsx";
 import { LuBook } from "react-icons/lu";
 import { useAuthContext } from "../../Context/User/AuthContext.jsx";
+import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext.jsx";
 
 const BookshelfPage = () => {
+  const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
+
   const { bookshelfId } = useParams();
   const [bookshelf, setBookshelf] = useState(null);
   const [books, setBooks] = useState([]);
@@ -94,8 +97,16 @@ const BookshelfPage = () => {
   console.log(getAvailableBooksCount);
 
   return (
-    <main className="bookshelf-page">
-      <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900 max-w-screen-lg">
+    <main
+      className={`w-full object-cover bg-cover bg-center bg-no-repeat bookshelf-page h-[100vh] ${
+        theme === "light" ? "bg-gray-50" : "bg-gray-800"
+      }`}
+    >
+      <section
+        className={`flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg max-w-screen-lg${
+          theme === "light" ? "bg-gray-50" : "bg-gray-800"
+        }`}
+      >
         <div className="w-3/12">
           <GoBackComponent />
         </div>
@@ -118,8 +129,12 @@ const BookshelfPage = () => {
           </div>
         </div>
       </section>
-      <section className="flex flex-col py-4 container mx-auto screen-max-lg max-w-screen-lg ">
-        <article className="flex flex-col gap-4  mx-auto p-3 rounded-md bg-gray-200">
+      <section className="flex flex-col py-4 container mx-auto screen-max-lg max-w-screen-lg mt-6 ">
+        <article
+          className={`flex flex-col gap-4  mx-auto p-3 rounded-md ${
+            theme === "light" ? "bg-gray-50" : "bg-gray-300"
+          }`}
+        >
           <div>
             <div className="flex gap-2">
               <figure>

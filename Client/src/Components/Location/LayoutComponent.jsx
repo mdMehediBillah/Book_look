@@ -1,7 +1,3 @@
-//==========================================================================
-//this code integrates a searchInput, a list of bookshelves, and a mapComponent.
-//==========================================================================
-
 import React, { useState, useEffect, useContext } from "react";
 import MapComponent from "./MapComponent";
 import { getOpeningStatus } from "./getOpeningStatus/getOpeningStatus";
@@ -27,13 +23,13 @@ const LayoutComponent = ({
   setSearchTerm,
 }) => {
   const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
+
   const { bookshelves, loading, error } = useBookshelvesContext();
   console.log(bookshelves);
   const { user } = useAuthContext();
 
   const displayBookshelves = bookshelves.slice(0, 8);
 
-  // userId is the current user's ID
   const userId = user?._id;
 
   //==========================================================================
@@ -54,21 +50,6 @@ const LayoutComponent = ({
       city.includes(normalizedSearchTerm)
     );
   });
-  //==========================================================================
-  // State for display liked bookshelves
-  //==========================================================================
-  // const [likedBookshelves, setLikedBookshelves] = useState(new Set());
-  // const handleLikeToggle = (shelfId) => {
-  //   setLikedBookshelves((prevLiked) => {
-  //     const updatedLiked = new Set(prevLiked);
-  //     if (updatedLiked.has(shelfId)) {
-  //       updatedLiked.delete(shelfId);
-  //     } else {
-  //       updatedLiked.add(shelfId);
-  //     }
-  //     return updatedLiked;
-  //   });
-  // };
 
   //==========================================================================
   const displayedBookshelves = filteredBookshelves; // to always display all bookshelves
@@ -84,7 +65,13 @@ const LayoutComponent = ({
     <div className="flex flex-col">
       {/* Map Container */}
       <div className="flex justify-between py-4 px-2 items-center">
-        <h2 className="text-xl font-bold">Grow your Bookshelf</h2>
+        <h2
+          className={`text-xl font-bold ${
+            theme === "light" ? "text-gray-800" : "text-gray-300"
+          }`}
+        >
+          Grow your Bookshelf
+        </h2>
         <ButtonCreateShelf />
       </div>
       <div className="relative h-1/2 md:h-full">
@@ -130,8 +117,8 @@ const LayoutComponent = ({
               key={idx}
               className={`text-sm flex flex-col items-start p-2 border rounded mb-4 shadow-md hover:scale-105 transition-transform duration-500 cursor-direction justify-between hover:shadow-xl ${
                 theme === "light"
-                  ? "border-gray-300 bg-white text-black"
-                  : "border-gray-700 bg-gray-400 text-white"
+                  ? "border-gray-200 bg-gray-50 text-gray-800"
+                  : "border-gray-600 bg-gray-700 text-gray-300"
               }`}
             >
               {/* Image Container */}
@@ -146,7 +133,12 @@ const LayoutComponent = ({
 
                 {/* Text Content */}
                 <h2 className="text-[16px] font-semibold pt-1">{shelf.name}</h2>
-                <p className="text-gray-700">
+
+                <p
+                  className={`${
+                    theme === "light" ? "text-gray-800" : "text-gray-300"
+                  }`}
+                >
                   {shelf.street}, {shelf.city}
                 </p>
                 <p className={`text-${isOpen ? "green" : "red"}-500`}>
