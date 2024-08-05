@@ -1,9 +1,7 @@
 const TimeSelectionOptions = ({ is24Hours, handleRadioChange }) => {
   return (
     <div className="mb-4">
-      <label className="block text-sm font-medium text-gray-700">
-        Opening Time:
-      </label>
+      <label className="block text-sm font-medium">Opening Time:</label>
       <div className="flex items-center">
         <input
           type="radio"

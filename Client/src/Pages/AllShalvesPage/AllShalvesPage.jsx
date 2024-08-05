@@ -9,11 +9,14 @@ import LikeButton from "../../Components/LikeButtonComponent/LikeButtonComponent
 import { useBookshelvesContext } from "../../Context/Shelf/BookshelvesContext.jsx";
 import { Link } from "react-router-dom";
 import { getOpeningStatus } from "../../Components/Location/getOpeningStatus/getOpeningStatus";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Pagination from "../../Components/Pagination/Pagination";
 import { useAuthContext } from "../../Context/User/AuthContext.jsx";
+import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext.jsx";
 
 const AllShalvesPage = () => {
+  const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
+
   const { bookshelves, loading, error, loadMoreBookshelves, hasMore } =
     useBookshelvesContext();
   const [shalvesData, setShalvesData] = useState([]);
@@ -38,7 +41,9 @@ const AllShalvesPage = () => {
 
   return (
     <main
-      className="w-full object-cover  bg-cover bg-center bg-no-repeat  bg-gray-50 "
+      className={`w-full object-cover bg-cover bg-center bg-no-repeat ${
+        theme === "light" ? "bg-gray-50" : "bg-gray-800"
+      }`}
       // style={{
       //   backgroundImage: `url(${imgUrl})`,
       // }}
@@ -57,7 +62,11 @@ const AllShalvesPage = () => {
             return (
               <div
                 key={idx}
-                className="text-sm flex flex-col items-start  p-2 border border-gray-300 rounded bg-gray-50 mb-4 shadow-md hover:scale-105 transition-transform duration-500 cursor-direction justify-between hover:shadow-xl"
+                className={`text-sm flex flex-col items-start p-2 border rounded mb-4 shadow-md hover:scale-105 transition-transform duration-500 cursor-direction justify-between hover:shadow-xl ${
+                  theme === "light"
+                    ? "border-gray-200 bg-gray-50 text-gray-800"
+                    : "border-gray-600 bg-gray-700 text-gray-300"
+                }`}
               >
                 {/* Image Container */}
                 <Link to={`/${shelf._id}`}>
@@ -73,7 +82,11 @@ const AllShalvesPage = () => {
                   <h2 className="text-[16px] font-semibold pt-1">
                     {shelf.name}
                   </h2>
-                  <p className="text-gray-700">
+                  <p
+                    className={`${
+                      theme === "light" ? "text-gray-800" : "text-gray-300"
+                    }`}
+                  >
                     {shelf.street}, {shelf.city}
                   </p>
                   <p className={`text-${isOpen ? "green" : "red"}-500`}>
