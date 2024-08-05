@@ -9,7 +9,7 @@ const FaqPage = () => {
           <h4 className="text-4xl font-medium">FAQ</h4>
         </div>
         <div className="flex flex-col items-center pb-9">
-          <p className="font-medium">
+          <p className="font-medium text-center">
             You’ve got a question? We’ve got the answer! Check our most
             frequently asked questions about BookLook.com below.
           </p>

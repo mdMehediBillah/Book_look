@@ -8,12 +8,11 @@ const AboutUsPage = () => {
         <div className="flex justify-center py-9 ">
           <h4 className="text-4xl font-medium  ">About Us</h4>
         </div>
-        <div className="flex justify-center pb-9">
-          <div className=" flex flex-col justify-center size-9/12  ">
-            <div className="YOHANNES bg-cyan-100 flex justify-center gap-11 py-3 px-3 items-center border-2 border-gray-300 rounded-xl my-2 ">
+        {/* <div className="flex justify-center pb-9">
+          <div className=" grid grid-cols-1 mx-auto size-9/12  ">
+            <div className="YOHANNES bg-cyan-100 grid grid-cols-2 mx-auto gap-11 py-3 px-3 items-center border-2 border-gray-300 rounded-xl my-2 ">
               <p>
                 <p className="font-semibold text-xl">Yohannes Habtemariam</p>
-                <br />
                 please introduce yourself by your own, i really dont know how to
                 do this im really sorry
               </p>
@@ -73,6 +72,59 @@ const AboutUsPage = () => {
               </p>
             </div>
           </div>
+        </div> */}
+
+        <div className="card card-side shadow-xl bg-cyan-100 mb-5 size-4/5 mx-auto  ">
+          <figure>
+            <img src="src/assets/images/yohannes.png" alt="Image of Yohannes" />
+          </figure>
+          <div className="card-body">
+            <h2 className="card-title">Yohannes Habtemariam</h2>
+            <p>
+              {" "}
+              please introduce yourself by your own, i really dont know how to
+              do this im really sorry
+            </p>
+          </div>
+        </div>
+        <div className="card card-side shadow-xl bg-cyan-100 mb-5 size-4/5 mx-auto">
+          <div className="card-body">
+            <h2 className="card-title">Anna Najafi</h2>
+            <p>
+              {" "}
+              please introduce yourself by your own, i really dont know how to
+              do this im really sorry
+            </p>
+          </div>
+          <figure>
+            <img src="src/assets/images/anna.png" alt="Image of Anna" />
+          </figure>
+        </div>
+        <div className="card card-side shadow-xl bg-cyan-100 mb-5 size-4/5 mx-auto">
+          <figure>
+            <img src="src/assets/images/mehedi.png" alt="Image of Mehedi" />
+          </figure>
+          <div className="card-body">
+            <h2 className="card-title">MD Mehedi Billah</h2>
+            <p>
+              {" "}
+              please introduce yourself by your own, i really dont know how to
+              do this im really sorry
+            </p>
+          </div>
+        </div>
+        <div className="card card-side shadow-xl bg-cyan-100 mb-5 size-4/5 mx-auto">
+          <div className="card-body">
+            <h2 className="card-title">Erdinc Yasar</h2>
+            <p>
+              {" "}
+              please introduce yourself by your own, i really dont know how to
+              do this im really sorry
+            </p>
+          </div>
+          <figure>
+            <img src="src/assets/images/erdinc.png" alt="Image of Erdinc" />
+          </figure>
         </div>
       </div>
       <FooterComponent />

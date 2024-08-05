@@ -15,7 +15,7 @@ const HowItWorks = () => {
             width="600"
             height="auto"
           />
-          <p className="">
+          <p className="text-center">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi
             laboriosam cupiditate expedita laudantium, ipsa dolorum asperiores
             corporis obcaecati enim voluptate eius, consectetur ad officia?
