@@ -2,8 +2,12 @@ import { Link, useLocation } from "react-router-dom";
 import "./BooksPage.scss";
 import BookCardForShelf from "../../Components/bookshelf/bookCard/BookCardForShelf";
 import { GoBackComponent } from "../../Components";
+import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext.jsx";
+import { useContext } from "react";
 
 const BooksPage = () => {
+  const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
+
   const location = useLocation();
   const { books, bookshelf, borrowedBooks } = location.state || {
     books: [],
@@ -12,8 +16,16 @@ const BooksPage = () => {
   console.log(books.length);
   console.log(borrowedBooks?.length);
   return (
-    <main className="books-page ">
-      <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900 max-w-screen-lg">
+    <main
+      className={`w-full object-cover bg-cover bg-center bg-no-repeat bookshelf-page h-[100vh] ${
+        theme === "light" ? "bg-gray-50" : "bg-gray-800"
+      }`}
+    >
+      <section
+        className={`flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg max-w-screen-lg${
+          theme === "light" ? "bg-gray-50" : "bg-gray-800"
+        }`}
+      >
         <div className="w-3/12">
           <GoBackComponent />
         </div>
@@ -37,8 +49,12 @@ const BooksPage = () => {
         </div>
       </section>
 
-      <section className="max-w-screen-lg mx-auto">
-        <h2 className="text-2xl font-bold text-center pt-4 pb-8">
+      <section className="max-w-screen-lg mx-auto mt-4">
+        <h2
+          className={`text-2xl font-bold text-center pt-4 pb-8 ${
+            theme === "light" ? "text-gray-800" : "text-gray-300"
+          }`}
+        >
           Books of {bookshelf?.name}{" "}
         </h2>
 
