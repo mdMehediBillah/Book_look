@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { FaPaperPlane } from "react-icons/fa";
 
-
 export const Form = ({ setMessages, messages }) => {
   const [{ stream, message }, setState] = useState({
     stream: true,
@@ -22,6 +21,7 @@ export const Form = ({ setMessages, messages }) => {
       id: crypto.randomUUID(),
       role: "user",
       content: message,
+      timestamp: new Date().toISOString(), // Add timestamp here
     };
 
     setMessages((prev) => [...prev, newMessage]);
@@ -75,7 +75,12 @@ export const Form = ({ setMessages, messages }) => {
 
                   return [
                     ...prev,
-                    { role: "assistant", content, id: messageId },
+                    {
+                      role: "assistant",
+                      content,
+                      id: messageId,
+                      timestamp: new Date().toISOString(),
+                    },
                   ];
                 });
               }
@@ -89,7 +94,11 @@ export const Form = ({ setMessages, messages }) => {
       const { message: newMessage } = await response.json();
       setMessages((prev) => [
         ...prev,
-        { ...newMessage, id: crypto.randomUUID() },
+        {
+          ...newMessage,
+          id: crypto.randomUUID(),
+          timestamp: new Date().toISOString(),
+        },
       ]);
     }
   };

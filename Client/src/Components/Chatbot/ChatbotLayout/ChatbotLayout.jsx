@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Chat } from "../Chat/Chat";
-import { Form } from "../Form/Form"
-import { FaRobot } from "react-icons/fa"; 
+import { Form } from "../Form/Form";
+import { FaRobot } from "react-icons/fa";
 
 function Chatbot() {
   const [messages, setMessages] = useState([
@@ -9,6 +9,7 @@ function Chatbot() {
       id: crypto.randomUUID(),
       role: "assistant",
       content: "How can I help you?",
+      timestamp: new Date().toISOString(), // Initial message with timestamp
     },
   ]);
 

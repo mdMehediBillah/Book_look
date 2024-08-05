@@ -1,7 +1,14 @@
 import React from "react";
+import { format } from "date-fns"; // Import date-fns for formatting dates
 
 export const Message = ({ message }) => {
   const isUser = message.role === "user";
+
+  // Format the timestamp using date-fns or your preferred date library
+  const formattedTimestamp = message.timestamp
+    ? format(new Date(message.timestamp), "HH:mm")
+    : "";
+
   return (
     <div
       className={`flex ${
@@ -19,15 +26,16 @@ export const Message = ({ message }) => {
           className="w-8 h-8 rounded-full"
         />
       </div>
-      <div
-        className={`${
-          isUser ? "bg-cyan-600 text-white" : "bg-rose-400 text-white"
-        } p-2 rounded-lg max-w-xs break-words`}
-      >
-        {message.content}
+      <div>
+        <div
+          className={`${
+            isUser ? "bg-cyan-600 text-white" : "bg-rose-400 text-white"
+          } p-2 rounded-lg max-w-xs break-words`}
+        >
+          {message.content}
+        </div>
+        <div className="text-xs text-gray-500 mt-1">{formattedTimestamp}</div>
       </div>
     </div>
   );
 };
-
-
