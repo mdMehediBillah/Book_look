@@ -11,7 +11,6 @@ import imgPlaceholder from "../../assets/images/shelfDefault.png";
 import ChatbotLayout from "../../Components/Chatbot/ChatbotLayout/ChatbotLayout";
 import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext.jsx"; // for dark and light mode
 
-
 import TimeSelectionOptions from "../../Components/CreateShelfComponent/TimeSelectionOptions/TimeSelectionOptions.jsx";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import {
@@ -109,7 +108,7 @@ const CreateShelfForm = () => {
       //==========================================================================
       // Create updated form data with URLs
       //==========================================================================
-      console.log(" formData", formData);
+      // console.log(" formData", formData);
       const updatedFormData = {
         ...formData,
         image: imageUrl,
@@ -119,18 +118,23 @@ const CreateShelfForm = () => {
       //==========================================================================
       //==========================================================================
       console.log(" updatedFormData", updatedFormData);
-      console.log(Country.getAllCountries());
+      // console.log(Country.getAllCountries());
 
-      const x = Country.getAllCountries().filter(
-        (country) => country.isoCode === updatedFormData.country
-      );
+      // const x = Country.getAllCountries().filter(
+      //   (country) => country.isoCode === updatedFormData.country
+      // );
+      // console.log(" x", x);
 
-      const formReq = { ...updatedFormData, country: x[0].name };
+      // const formReq = { ...updatedFormData, country: x[0].name };
 
       const response = await axios.post(
         "http://localhost:8000/api/v1/bookshelves/new",
-        formReq
+        updatedFormData
       );
+      // const response = await axios.post(
+      //   "http://localhost:8000/api/v1/bookshelves/new",
+      //   formReq
+      // );
       // const response = await axios.post(
       //   "http://localhost:8000/api/v1/bookshelves/new",
       //   updatedFormData

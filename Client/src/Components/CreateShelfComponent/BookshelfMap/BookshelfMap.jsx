@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+} from "react-leaflet";
 import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
 import L from "leaflet";
 import "leaflet-geosearch/dist/geosearch.css";
 import "leaflet/dist/leaflet.css";
 
 // OpenCage API
-const GEOCODING_API_KEY = "30f399b8abb3424aa79287e7458363e2";
+const GEOCODING_API_KEY = "c31e5a04c18e40a795b69e17a6504245";
 
 const icon = new L.Icon({
   iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
@@ -36,10 +42,10 @@ const LocationPicker = ({ onLocationSelect }) => {
           const formattedAddress = {
             country,
             city,
-            road,
-            postcode,
+            street: road,
+            zipCode: postcode,
           };
-          console.log("Retrieved Address:", formattedAddress); 
+          console.log("Retrieved Address:", formattedAddress);
           setAddress(formattedAddress);
           onLocationSelect(formattedAddress);
         } else {
@@ -82,10 +88,12 @@ const LocationPicker = ({ onLocationSelect }) => {
                   <strong>City:</strong> {address.city}
                 </p>
                 <p>
-                  <strong>Street:</strong> {address.road}
+                  <strong>Street:</strong> {address.street}
+                  {/* <strong>Street:</strong> {address.road} */}
                 </p>
                 <p>
-                  <strong>Postcode:</strong> {address.postcode}
+                  <strong>Postcode:</strong> {address.zipCode}
+                  {/* <strong>Postcode:</strong> {address.postcode} */}
                 </p>
               </div>
             </Popup>

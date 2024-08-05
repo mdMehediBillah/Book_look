@@ -1,7 +1,6 @@
-
 import axios from "axios";
 
-const GEOCODING_API_KEY = "a2ca70d34d8c4c5c89a343e10a6cf4cd"; 
+const GEOCODING_API_KEY = "c31e5a04c18e40a795b69e17a6504245";
 // const GEOCODING_API_KEY = process.env.REACT_APP_GEOCODING_API_KEY;
 
 export const getCoordinates = async (address) => {
