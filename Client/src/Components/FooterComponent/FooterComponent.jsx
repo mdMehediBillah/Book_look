@@ -86,24 +86,36 @@ const FooterComponent = () => {
               </div>
             </form> */}
           <ul className="flex py-4 gap-3 cursor-pointer">
-            <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
-              <FaWhatsapp />
-            </li>
-            <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
-              <FaFacebook />
-            </li>
-            <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
-              <FaYoutube />
-            </li>
-            <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
-              <FaLinkedin />
-            </li>
-            <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
-              <FaInstagram />
-            </li>
-            <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
-              <FaXTwitter />
-            </li>
+            <a href="https://www.whatsapp.com/?lang=de_DE" target="_blank">
+              <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
+                <FaWhatsapp />
+              </li>
+            </a>
+            <a href="https://www.facebook.com/?locale=de_DE" target="_blank">
+              <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
+                <FaFacebook />
+              </li>
+            </a>
+            <a href="https://www.youtube.com/" target="_blank">
+              <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
+                <FaYoutube />
+              </li>
+            </a>
+            <a href="https://www.linkedin.com/" target="_blank">
+              <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
+                <FaLinkedin />
+              </li>
+            </a>
+            <a href="https://www.instagram.com/" target="_blank">
+              <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
+                <FaInstagram />
+              </li> 
+            </a>
+            <a href="https://x.com/?lang=de" target="_blank">
+              <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
+                <FaXTwitter />
+              </li>
+            </a>
           </ul>
           <div className="flex flex-col gap-1 mt-3">
             <p className="text-sm hover:text-cyan-200">
