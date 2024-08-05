@@ -7,6 +7,8 @@ import LocationMarker from "./LocationMarker";
 import MinimapControl from "./MinimapControl";
 import "./MapComponent.css";
 import { getOpeningStatus } from "./getOpeningStatus/getOpeningStatus";
+// import MarkerClusterGroup from "react-leaflet-markercluster";
+// import "react-leaflet-markercluster/dist/styles.min.css";
 
 const customIcon = new L.Icon({
   iconUrl: "https://img.icons8.com/?size=100&id=13800&format=png&color=000000",
@@ -134,59 +136,60 @@ const MapComponent = ({
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        {/* <MarkerClusterGroup> */}
+          {bookshelves.map((shelf, idx) => {
+            if (shelf.latitude && shelf.longitude) {
+              const location = [shelf.latitude, shelf.longitude];
+              // Use getOpeningStatus to determine the opening status
+              const { isOpen, message, detail } = getOpeningStatus(
+                shelf.openingTime,
+                shelf.closingTime
+              );
 
-        {bookshelves.map((shelf, idx) => {
-          if (shelf.latitude && shelf.longitude) {
-            const location = [shelf.latitude, shelf.longitude];
-            // Use getOpeningStatus to determine the opening status
-            const { isOpen, message, detail } = getOpeningStatus(
-              shelf.openingTime,
-              shelf.closingTime
-            );
-
-            return (
-              <Marker key={idx} position={location} icon={customIcon}>
-                <Popup>
-                  <div className="popup-container">
-                    {/* Image */}
-                    {shelf.image && shelf.image.length > 0 && (
-                      <img
-                        src={shelf.image[0]}
-                        alt={shelf.name}
-                        className="popup-image"
-                        style={{
-                          width: "100%",
-                          height: "auto",
-                          borderRadius: "5px",
-                        }}
-                      />
-                    )}
-                    {/* Title and Address */}
-                    <div className="popup-text">
-                      <h3 className="popup-title">{shelf.name}</h3>
-                      <p className="popup-address">
-                        {shelf.street}, {shelf.city}
-                      </p>
-                      <p className="text-gray-500">
-                        {shelf.openingTime === "00:00" &&
-                        shelf.closingTime === "23:59"
-                          ? "Open 24 hours"
-                          : `Opening Hours: ${shelf.openingTime} - ${shelf.closingTime}`}
-                      </p>
+              return (
+                <Marker key={idx} position={location} icon={customIcon}>
+                  <Popup>
+                    <div className="popup-container">
+                      {/* Image */}
+                      {shelf.image && shelf.image.length > 0 && (
+                        <img
+                          src={shelf.image[0]}
+                          alt={shelf.name}
+                          className="popup-image"
+                          style={{
+                            width: "100%",
+                            height: "auto",
+                            borderRadius: "5px",
+                          }}
+                        />
+                      )}
+                      {/* Title and Address */}
+                      <div className="popup-text">
+                        <h3 className="popup-title">{shelf.name}</h3>
+                        <p className="popup-address">
+                          {shelf.street}, {shelf.city}
+                        </p>
+                        <p className="text-gray-500">
+                          {shelf.openingTime === "00:00" &&
+                          shelf.closingTime === "23:59"
+                            ? "Open 24 hours"
+                            : `Opening Hours: ${shelf.openingTime} - ${shelf.closingTime}`}
+                        </p>
+                      </div>
+                      <button
+                        className="popup-button"
+                        onClick={() => setDestination(location)}
+                      >
+                        Go Here
+                      </button>
                     </div>
-                    <button
-                      className="popup-button"
-                      onClick={() => setDestination(location)}
-                    >
-                      Go Here
-                    </button>
-                  </div>
-                </Popup>
-              </Marker>
-            );
-          }
-          return null;
-        })}
+                  </Popup>
+                </Marker>
+              );
+            }
+            return null;
+          })}
+        {/* </MarkerClusterGroup> */}
 
         <LocationMarker />
         {userLocation && destination && (
