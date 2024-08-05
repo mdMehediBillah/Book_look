@@ -24,7 +24,7 @@ const HomePage = () => {
   return (
     <main
       className={`w-full object-cover bg-cover bg-center bg-no-repeat ${
-        theme === "light" ? "bg-white" : "bg-cyan-900"
+        theme === "light" ? "bg-gray-50" : "bg-gray-800"
       }`}
       // Optional inline style for a specific background image
       // style={{

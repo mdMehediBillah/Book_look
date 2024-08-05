@@ -14,6 +14,7 @@ import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext"; // I
 import { useBookshelvesContext } from "../../Context/Shelf/BookshelvesContext.jsx";
 import ButtonCreateShelf from "../ButtonCreateShelf/ButtonCreateShelf.jsx";
 import { IoClose } from "react-icons/io5";
+import { useAuthContext } from "../../Context/User/AuthContext.jsx";
 
 const LayoutComponent = ({
   // bookshelves,
@@ -28,8 +29,12 @@ const LayoutComponent = ({
   const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
   const { bookshelves, loading, error } = useBookshelvesContext();
   console.log(bookshelves);
+  const { user } = useAuthContext();
 
   const displayBookshelves = bookshelves.slice(0, 8);
+
+  // userId is the current user's ID
+  const userId = user?._id;
 
   //==========================================================================
   // Filter bookshelves based on search term

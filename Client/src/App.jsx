@@ -35,7 +35,7 @@ import {
 } from "./Components/lightDarkMood/ThemeContext";
 import { useContext, useEffect } from "react";
 
-//for dark and light mode 
+//for dark and light mode
 const AppContent = () => {
   const { theme } = useContext(ThemeContext);
 
@@ -43,12 +43,11 @@ const AppContent = () => {
     document.body.className = theme;
   }, [theme]);
 
-// function App() {
+  // function App() {
   return (
     <>
-        <ThemeToggle />
+      {/* <ThemeToggle /> */}
       <Routes>
-
         <Route path="/" element={<HomePage />} />
 
         <Route path=":bookshelfId">
@@ -109,6 +108,5 @@ function App() {
     </ThemeProvider>
   );
 }
-
 
 export default App;
