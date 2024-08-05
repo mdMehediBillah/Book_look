@@ -7,62 +7,40 @@ import Book from "../../models/book/index.js";
 //==========================================================================
 // Create New Borrowed book
 //==========================================================================
-export const createBorrowedBook = async (req, res, next) => {
-  const {
-    ISBN,
-    title,
-    author,
-    dueDate,
-    book: bookId,
-    borrowedFrom: bookshelfId,
-  } = req.body;
 
-  const userId = req.params.id;
+export const createBorrowedBook = async (req, res) => {
+  const { book, user, borrowedFrom } = req.body;
 
   try {
-    const user = await User.findById(userId);
-    const book = await Book.findById(bookId);
-    const bookshelf = await Bookshelf.findById(bookshelfId);
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    if (!book) {
-      return res.status(404).json({ message: "Book not found" });
-    }
+    // Find the bookshelf by the borrowedFrom ID
+    const bookshelf = await Bookshelf.findById(borrowedFrom);
     if (!bookshelf) {
       return res.status(404).json({ message: "Bookshelf not found" });
     }
 
-    const borrowedBook = new BorrowedBook({
-      ISBN: ISBN,
-      title: title,
-      author: author,
-      dueDate: dueDate,
-      book: bookId,
-      borrowedFrom: bookshelfId,
-    });
+    // Check if the book ID exists in the books array
+    const bookIndex = bookshelf.books.indexOf(book);
+    if (bookIndex === -1) {
+      return res
+        .status(404)
+        .json({ message: "Book not found in the bookshelf" });
+    }
 
-    await borrowedBook.save();
+    // Remove the book from the books array
+    bookshelf.books.splice(bookIndex, 1);
 
-    user.borrowedBooks.push(borrowedBook._id);
-    await user.save();
+    // Add the book to the borrowedBooks array with user information
+    bookshelf.borrowedBooks.push({ _id: book, user });
 
-    bookshelf.borrowedBooks.push(borrowedBook._id);
+    // Save the updated bookshelf document
     await bookshelf.save();
-
-    book.status = "borrowed";
-    book.borrowedTimes.push(borrowedBook._id);
-    await book.save();
-
-    res.status(201).json({
-      success: true,
-      message: "Book borrowed successfully",
-      borrowedBook,
-    });
+    console.log(bookshelf);
+    return res
+      .status(200)
+      .json({ message: "Book successfully borrowed", bookshelf });
   } catch (error) {
-    console.error("Error creating borrowed book:", error);
-    next(error);
+    console.error("Error borrowing book: ", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 

@@ -20,6 +20,7 @@ import ContactUsPage from "./ContactUsPage/ContactUsPage.jsx";
 import HowItWorksPage from "./HowItWorksPage/HowItWorksPage.jsx";
 import FaqPage from "./FaqPage/FaqPage.jsx";
 import TermsAndConditionsPage from "./TermsAndConditionsPage/TermsAndConditionsPage.jsx";
+import AllShalvesPage from "./AllShalvesPage/AllShalvesPage.jsx";
 
 // export all pages
 export {
@@ -45,4 +46,5 @@ export {
   HowItWorksPage,
   FaqPage,
   TermsAndConditionsPage,
+  AllShalvesPage,
 };

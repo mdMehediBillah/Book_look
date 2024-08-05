@@ -13,6 +13,7 @@ import CreateBook from "./CreateBook/CreateBook.jsx";
 import BookDetailsCom from "./BookDetailsCom/BookDetailsCom.jsx";
 import FooterComponent from "./FooterComponent/FooterComponent.jsx";
 import HeroText from "./HeroText/HeroText.jsx";
+import ButtonCreateShelf from "./ButtonCreateShelf/ButtonCreateShelf.jsx";
 
 // export all components
 export {
@@ -31,4 +32,5 @@ export {
   BookDetailsCom,
   FooterComponent,
   HeroText,
+  ButtonCreateShelf,
 };

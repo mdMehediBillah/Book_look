@@ -2,11 +2,9 @@ import React, { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import imgUrl from "../../assets/images/bg-color_terms.png";
 import { motion } from "framer-motion";
-
 import {
   HeroText,
   NavigationComponent,
-  SearchComponent,
   FooterComponent,
 } from "../../Components";
 import Location from "../../Components/Location/Location";
@@ -22,10 +20,11 @@ const HomePage = () => {
   useEffect(() => {
     if (!localStorage.getItem("token")) navigate("/registrationPage");
   }, []);
+
   return (
     <main
       className={`w-full object-cover bg-cover bg-center bg-no-repeat ${
-        theme === "light" ? "bg-white" : "bg-cyan-900"
+        theme === "light" ? "bg-gray-50" : "bg-gray-800"
       }`}
       // Optional inline style for a specific background image
       // style={{
@@ -33,6 +32,7 @@ const HomePage = () => {
       // }}
     >
       <NavigationComponent />
+
       <section className="max-w-screen-lg mx-auto">
         <motion.div
           animate={{

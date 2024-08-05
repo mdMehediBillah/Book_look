@@ -10,7 +10,7 @@ const UserProfileComponent = () => {
   const navigate = useNavigate();
 
   const { setUser, user } = useAuthContext();
-  console.log(JSON.stringify(user));
+  // console.log(JSON.stringify(user));
 
   // fetching data from local storage
   // const userLocal = localStorage.getItem("user");
