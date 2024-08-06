@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { API } from "../../../Utils/security/secreteKey";
 import AdminInbox from "../adminInbox/AdminInbox";
 import AllBooks from "../allBooks/AllBooks";
@@ -14,8 +14,11 @@ import axios from "axios";
 import BookshelvesChart from "../../charts/bookshelves/BookshelvesChart";
 import AreaChartBookshelves from "../../charts/books/AreaChartBookshelves";
 import PieChartBookshelves from "../../charts/performance/PieChartBookshelves";
+import { ThemeContext } from "../../../Components/lightDarkMood/ThemeContext.jsx";
 
 const DashboardSummary = ({ isActive }) => {
+  const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
+
   const [bookshelves, setBookshelves] = useState([]);
   const [bookshelvesCount, setBookshelvesCount] = useState([]);
 
@@ -195,24 +198,43 @@ const DashboardSummary = ({ isActive }) => {
   };
 
   return (
-    <article>
+    <article className="w-full">
       {isActive === 1 && (
-        <section className="summary-dashboard-container" id="printable">
-          <h3 className="summary-dashboard-title">Summary Overview</h3>
-          <button onClick={handlePrint} className="print-button">
+        <section
+          className={`flex flex-col p-4 rounded-lg w-full ${
+            theme === "light"
+              ? "bg-gray-100 text-gray-900"
+              : "bg-gray-700 text-gray-100"
+          }`}
+          id="printable"
+        >
+          <h4 className="text-2xl font-semibold mb-4">Summary Overview</h4>
+          <button
+            onClick={handlePrint}
+            className={`mb-4 px-4 py-2  text-red-gray-100 rounded hover:bg-rose-400 transition ${
+              theme === "light"
+                ? "bg-rose-100 text-gray-900"
+                : "bg-cyan-600 text-gray-100"
+            }`}
+          >
             Print
           </button>
 
-          <section className="bookshelves-bar-chart-wrapper">
+          <div
+            className={`rounded-lg p-2 ${
+              theme === "light"
+                ? "bg-gray-200 text-gray-900"
+                : "bg-gray-200 text-gray-800"
+            }`}
+          >
             <BookshelvesChart
               bookshelves={bookshelves}
               books={books}
               donatedBooks={donatedBooks}
               borrowedBooks={borrowedBooks}
             />
-          </section>
-
-          <div className="line-pie-charts-wrapper">
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <AreaChartBookshelves
               bookshelves={bookshelves}
               books={books}
@@ -231,21 +253,13 @@ const DashboardSummary = ({ isActive }) => {
       )}
 
       {isActive === 2 && <AllUsers />}
-
       {isActive === 3 && <AllBookshelves />}
-
       {isActive === 4 && <AllBooks />}
-
       {isActive === 5 && <AllDonatedBooks />}
-
       {isActive === 6 && <AllBorrowedBooks />}
-
       {isActive === 7 && <Comments />}
-
       {isActive === 8 && <Ratings />}
-
       {isActive === 9 && <Genres />}
-
       {isActive === 10 && <AdminInbox />}
     </article>
   );

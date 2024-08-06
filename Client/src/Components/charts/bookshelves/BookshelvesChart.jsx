@@ -76,7 +76,7 @@ const BookshelvesChart = ({
 
   return (
     <section className="users-chart-container">
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={200}>
         <BarChart data={chartData} barSize={15}>
           <XAxis
             dataKey="month"
@@ -86,20 +86,20 @@ const BookshelvesChart = ({
           <YAxis />
           <Tooltip
             contentStyle={{
-              backgroundColor: "#ffefd5",
+              backgroundColor: " #fff5f5",
               borderRadius: "5px",
               color: "dark",
             }}
             labelStyle={{ display: "none" }}
             cursor={{ fill: "none" }}
           />
-          <Bar dataKey="bookshelf" fill="#00a6fb" />
-          <Bar dataKey="books" fill="#c77dff" />
+          <Bar dataKey="bookshelf" fill="#73ced0" />
+          <Bar dataKey="books" fill="#d41212" />
           <Bar dataKey="Donated Books" fill="#ff9f1c" />
           <Bar dataKey="Borrowed Books" fill="#52b788" />
         </BarChart>
       </ResponsiveContainer>
-      <h4 className="chart-title">
+      <h4 className="text-center py-1">
         Fig.1: Bookshelves, Books, Donated Books, & Borrowed Books
       </h4>
     </section>

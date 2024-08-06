@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { FaPaperPlane } from "react-icons/fa";
 
-
 export const Form = ({ setMessages, messages }) => {
   const [{ stream, message }, setState] = useState({
     stream: true,
@@ -32,7 +31,7 @@ export const Form = ({ setMessages, messages }) => {
         method: "POST",
         headers: {
           provider: "open-ai",
-          mode: "development",
+          mode: "production",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({

@@ -1,4 +1,4 @@
-import "./AreaChartBookshelves.scss"
+import "./AreaChartBookshelves.scss";
 import {
   AreaChart,
   Area,
@@ -91,12 +91,11 @@ const AreaChartBookshelves = ({ bookshelves, books }) => {
           />
         </AreaChart>
       </ResponsiveContainer>
-      <h4 className="chart-title py-4">
+      <h4 className="chart-title py-4 text-center">
         Fig.2: Annual Size of Bookshelves and Books
       </h4>
     </section>
   );
 };
 
-
-export default AreaChartBookshelves
+export default AreaChartBookshelves;

@@ -94,11 +94,8 @@ const AllUsers = () => {
   };
 
   return (
-    <section
-      className="user-sidebar-container"
-      style={{ height: "400px", width: "100%" }}
-    >
-      <h3 className="user-sidebar-title"> List of Users </h3>
+    <section className="">
+      <h3 className=""> List of Users </h3>
       <DataGrid
         // Rows
         rows={rows}
