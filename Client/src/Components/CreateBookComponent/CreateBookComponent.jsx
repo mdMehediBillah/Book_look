@@ -93,15 +93,11 @@ const CreateBookComponent = () => {
   return (
     <main className="container screen-max-lg rounded-lg">
       <div className="container mx-auto p-4">
-        <div>
-          <h2 className="text-lg py-1 text-center bg-gray-200 w-64 mx-auto mb-2 rounded-lg">
-            Type book's information
-          </h2>
-        </div>
+        <h2 className="text-lg py-4 text-center">Type book's information</h2>
         {error && <p className="text-red-500 text-center">{error}</p>}
         <form
           onSubmit={handleSubmit}
-          className="max-w-[600px] min-w-[380px] mx-auto p-4 bg-gray-800 rounded-lg text-white"
+          className="max-w-[600px] min-w-[380px] mx-auto p-4 bg-cyan-800 rounded-lg text-white"
         >
           <div className="flex flex-col mb-4">
             <label className="text-sm text-white mb-1">Title</label>
