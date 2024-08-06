@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { CreateBook, GoBackComponent } from "../../Components";
+import { CreateBook, GoBackComponent, FooterComponent } from "../../Components";
 import axios from "axios";
 import { useShelfContext } from "../../Context/Shelf/shelfContext.jsx"; // Adjust the path as necessary
 
@@ -80,6 +80,7 @@ const CreateBookPage = () => {
         </div>
       </div>
       <CreateBook />
+      <FooterComponent />
     </main>
   );
 };

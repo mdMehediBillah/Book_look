@@ -1,8 +1,11 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { GoBackComponent, UserProfileComponent } from "../../Components";
+import {
+  GoBackComponent,
+  UserProfileComponent,
+  FooterComponent,
+} from "../../Components";
 import ChatbotLayout from "../../Components/Chatbot/ChatbotLayout/ChatbotLayout";
-
 
 const UserProfilePage = () => {
   const navigate = useNavigate();
@@ -12,8 +15,8 @@ const UserProfilePage = () => {
   }, []);
 
   return (
-    <main>
-      <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900 max-w-screen-lg">
+    <main className="bg-gray-800">
+      <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg  max-w-screen-lg">
         <div className="w-3/12">
           <GoBackComponent />
         </div>
@@ -39,6 +42,7 @@ const UserProfilePage = () => {
       <div>
         <UserProfileComponent />
       </div>
+      <FooterComponent />
       <ChatbotLayout />
     </main>
   );

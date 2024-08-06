@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { GoBackComponent } from "../../Components";
+import { GoBackComponent, FooterComponent } from "../../Components";
 import bannerImgUrl from "../../assets/images/banner_default.png";
 import profileImgUrl from "../../assets/images/avatar.png";
 import { useContext, useEffect, useState } from "react";
@@ -140,8 +140,8 @@ const UserUpdatePage = () => {
   };
 
   return (
-    <main className="pb-16">
-      <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900 max-w-screen-lg">
+    <main className=" bg-gray-800">
+      <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg  max-w-screen-lg">
         <div className="w-3/12">
           <GoBackComponent />
         </div>
@@ -397,6 +397,7 @@ const UserUpdatePage = () => {
           </div>
         </form>
       </div>
+      <FooterComponent />
     </main>
   );
 };

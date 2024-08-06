@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import "./BooksPage.scss";
 import BookCardForShelf from "../../Components/bookshelf/bookCard/BookCardForShelf";
-import { GoBackComponent } from "../../Components";
+import { GoBackComponent, FooterComponent } from "../../Components";
 import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext.jsx";
 import { useContext } from "react";
 
@@ -49,7 +49,7 @@ const BooksPage = () => {
         </div>
       </section>
 
-      <section className="max-w-screen-lg mx-auto mt-4">
+      <section className="max-w-screen-lg mx-auto mt-4 mb-9">
         <h2
           className={`text-2xl font-bold text-center pt-4 pb-8 ${
             theme === "light" ? "text-gray-800" : "text-gray-300"
@@ -66,6 +66,7 @@ const BooksPage = () => {
             })}
         </div>
       </section>
+      <FooterComponent />
     </main>
   );
 };

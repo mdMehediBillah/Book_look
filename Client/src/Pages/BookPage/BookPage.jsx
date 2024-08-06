@@ -6,7 +6,7 @@ import "./BookPage.scss";
 import BorrowedBookForm from "../../Components/forms/borrow/BorrowedBookForm";
 import debounce from "lodash.debounce";
 import Rating from "../../Components/bookshelf/ratings/Rating";
-import { GoBackComponent } from "../../Components";
+import { GoBackComponent, FooterComponent } from "../../Components";
 import { useAuthContext } from "../../Context/User/AuthContext.jsx";
 import { useShelfContext } from "../../Context/Shelf/shelfContext.jsx"; // Adjust the path as necessary
 import { toast } from "react-toastify";
@@ -106,8 +106,8 @@ const BookPage = () => {
 
   return (
     <>
-      <main className="py-2 px-4 container mx-auto screen-max-lg max-w-screen-lg">
-        <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900">
+      <main className="py-2 px-4 container mx-auto screen-max-lg max-w-screen-lg ">
+        <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg ">
           <div className="w-3/12">
             <GoBackComponent />
           </div>
@@ -216,6 +216,7 @@ const BookPage = () => {
           </motion.div>
         </div>
       )}
+      <FooterComponent />
     </>
   );
 };
