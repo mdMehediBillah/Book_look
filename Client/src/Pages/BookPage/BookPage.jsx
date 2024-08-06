@@ -1,18 +1,21 @@
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { API } from "../../Utils/security/secreteKey";
 import "./BookPage.scss";
 import BorrowedBookForm from "../../Components/forms/borrow/BorrowedBookForm";
 import debounce from "lodash.debounce";
 import Rating from "../../Components/bookshelf/ratings/Rating";
-import { GoBackComponent } from "../../Components";
+import { GoBackComponent, NavigationComponent } from "../../Components";
 import { useAuthContext } from "../../Context/User/AuthContext.jsx";
 import { useShelfContext } from "../../Context/Shelf/shelfContext.jsx"; // Adjust the path as necessary
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
+import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext.jsx";
 
 const BookPage = () => {
+  const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
+
   const navigate = useNavigate();
   const { shelfData } = useShelfContext();
   // console.log(shelfData);
@@ -106,32 +109,25 @@ const BookPage = () => {
 
   return (
     <>
-      <main className="py-2 px-4 container mx-auto screen-max-lg max-w-screen-lg">
-        <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900">
-          <div className="w-3/12">
-            <GoBackComponent />
+      <main
+        className={`w-full object-cover bg-cover bg-center bg-no-repeat bookshelf-page h-[100vh] ${
+          theme === "light" ? "bg-gray-50" : "bg-gray-800"
+        }`}
+      >
+        <NavigationComponent />
+        <div className="max-w-screen-lg mx-auto flex justify-between">
+          <GoBackComponent />
+          <div className="py-1 px-3 font-semibold">
+            <h4
+              className={`text-lg font-bold line-clamp-1 ${
+                theme === "light" ? "text-gray-800" : "text-gray-300"
+              }`}
+            >
+              {book?.title}
+            </h4>
           </div>
-          <div className="flex items-center gap-4 w-6/12 justify-center">
-            <div>
-              <Link
-                to="/"
-                className="flex justify-center items-center gap-2 text-xl"
-              >
-                <h3>
-                  <span className="text-rose-500 font-semibold ">Book</span>
-                  <span className="text-cyan-600 font-semibold ">Look</span>
-                </h3>
-              </Link>
-            </div>
-          </div>
-          <div className="w-3/12 flex justify-end">
-            <div className="py-1 px-3 font-semibold text-white">
-              <h4 className="text-lg font-semibold pt-2 line-clamp-1">
-                {book?.title}
-              </h4>
-            </div>
-          </div>
-        </section>
+        </div>
+
         <section className="flex gap-4 mt-12 justify-center">
           {/* <h1 className="book-page-title">{book?.title}</h1> */}
 

@@ -15,7 +15,10 @@ import TimeSelectionOptions from "../../Components/CreateShelfComponent/TimeSele
 import BookshelfMap from "../../Components/CreateShelfComponent/BookshelfMap/BookshelfMap.jsx";
 import MapSearch from "../../Components/CreateShelfComponent/MapSearch/MapSearch.jsx";
 import AddressInput from "../../Components/CreateShelfComponent/AddressInput/AddressInput.jsx";
-import { GoBackComponent } from "../../Components/index.js";
+import {
+  GoBackComponent,
+  NavigationComponent,
+} from "../../Components/index.js";
 import { Link } from "react-router-dom";
 
 // Function to upload image to Cloudinary
@@ -144,27 +147,15 @@ const CreateShelfForm = () => {
         theme === "light" ? "bg-gray-50" : "bg-gray-800"
       }`}
     >
+      <NavigationComponent />
+      <div className="max-w-screen-lg mx-auto">
+        <GoBackComponent />
+      </div>
       <section
-        className={`flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg max-w-screen-lg${
+        className={`flex items-center py-1 px-4 container mx-auto justify-between screen-max-lg max-w-screen-lg${
           theme === "light" ? "bg-gray-50" : "bg-gray-800"
         }`}
       >
-        <div className="w-3/12">
-          <GoBackComponent />
-        </div>
-        <div className="flex items-center gap-4 w-6/12 justify-center">
-          <div>
-            <Link
-              to="/"
-              className="flex justify-center items-center gap-2 text-xl"
-            >
-              <h3>
-                <span className="text-rose-500 font-semibold ">Book</span>
-                <span className="text-cyan-600 font-semibold ">Look</span>
-              </h3>
-            </Link>
-          </div>
-        </div>
         <div className="w-3/12 flex justify-end">
           <div className="py-1 px-3 font-semibold text-gray-100">
             <h4>Create New Bookshelf</h4>
@@ -174,7 +165,7 @@ const CreateShelfForm = () => {
 
       <form
         onSubmit={handleSubmit}
-        className={`max-w-5xl mx-auto p-6 shadow-md  mt-2 rounded-lg shadow-lg ${
+        className={`max-w-5xl mx-auto p-2 shadow-md  mt-1 rounded-lg shadow-lg ${
           theme === "dark"
             ? "bg-gray-600 text-gray-100"
             : "bg-gray-100 text-gray-800"
