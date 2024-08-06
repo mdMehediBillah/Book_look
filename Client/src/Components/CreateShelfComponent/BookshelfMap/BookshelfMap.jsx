@@ -12,7 +12,8 @@ import "leaflet-geosearch/dist/geosearch.css";
 import "leaflet/dist/leaflet.css";
 
 // OpenCage API
-const GEOCODING_API_KEY = "c31e5a04c18e40a795b69e17a6504245";
+// const GEOCODING_API_KEY = "c31e5a04c18e40a795b69e17a6504245";
+const GEOCODING_API_KEY = "77aae2d5299d4cbabd4862c860ae13bd";
 
 const icon = new L.Icon({
   iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",

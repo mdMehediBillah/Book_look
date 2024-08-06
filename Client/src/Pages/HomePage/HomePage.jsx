@@ -10,6 +10,7 @@ import {
   FooterComponent,
 } from "../../Components";
 import Location from "../../Components/Location/Location";
+import MapComponent from "../../Components/Location/MapComponent";
 import ChatbotLayout from "../../Components/Chatbot/ChatbotLayout/ChatbotLayout";
 import heroImg from "../../assets/images/heroSection.png";
 import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext";

@@ -14,8 +14,6 @@ const NewsletterSubscription = () => {
     email: "",
     id: userId || "",
   });
-  console.log(userId);
-  console.log(form);
 
   // Handle input change
   const handleChange = (e) => {
@@ -48,7 +46,6 @@ const NewsletterSubscription = () => {
     }
     setLoading(true);
     setError("");
-    console.log("clicked submit for subscription");
 
     try {
       const response = await axios.post(`${URL}/api/v1/subscribe/new`, form);

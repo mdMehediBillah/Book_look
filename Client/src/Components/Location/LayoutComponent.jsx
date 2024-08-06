@@ -12,7 +12,6 @@ import { LuBook } from "react-icons/lu";
 import LikeButton from "../LikeButtonComponent/LikeButtonComponent";
 import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext"; // Import ThemeContext
 
-
 const LayoutComponent = ({
   bookshelves,
   center,
@@ -23,18 +22,14 @@ const LayoutComponent = ({
   searchTerm,
   setSearchTerm,
 }) => {
-
   const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
+  const [likedBookshelves, setLikedBookshelves] = useState(new Set());
 
   //==========================================================================
   // Filter bookshelves based on search term
   //==========================================================================
   const normalizedSearchTerm = (searchTerm || "").toLowerCase();
-  // Safeguard against undefined properties
-  const filteredBookshelves = bookshelves.filter((shelf) => {
-    // console.log("Bookshelf:", shelf); // Log each bookshelf item ----> debugging
-    // console.log("Search Term:", normalizedSearchTerm); // Log the current search term ----> debugging
-    //search based on name, country, state, and city
+  const filteredBookshelves = bookshelves?.filter((shelf) => {
     const name = shelf.name?.toLowerCase() || "";
     const country = shelf.country?.toLowerCase() || "";
     const state = shelf.state?.toLowerCase() || "";
@@ -49,7 +44,6 @@ const LayoutComponent = ({
   //==========================================================================
   // State for display liked bookshelves
   //==========================================================================
-  const [likedBookshelves, setLikedBookshelves] = useState(new Set());
   const handleLikeToggle = (shelfId) => {
     setLikedBookshelves((prevLiked) => {
       const updatedLiked = new Set(prevLiked);
@@ -61,7 +55,6 @@ const LayoutComponent = ({
       return updatedLiked;
     });
   };
-
   //==========================================================================
   const displayedBookshelves = filteredBookshelves; // to always display all bookshelves
   return (
@@ -76,14 +69,15 @@ const LayoutComponent = ({
             setCenter={setCenter}
           />
         </div>
-
-        <MapComponent
-          bookshelves={filteredBookshelves}
-          center={center}
-          userLocation={userLocation}
-          destination={destination}
-          setDestination={setDestination}
-        />
+        {filteredBookshelves && (
+          <MapComponent
+            bookshelves={filteredBookshelves}
+            center={center}
+            userLocation={userLocation}
+            destination={destination}
+            setDestination={setDestination}
+          />
+        )}
       </div>
 
       {/* Bookshelves Container */}

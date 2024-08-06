@@ -9,10 +9,11 @@ import axios from "axios";
 // import { API } from "../../utils/security/secreteKey";
 import { toast } from "react-toastify";
 import SearchComponent from "../SearchComponent/SearchComponent";
+import MapComponent from "./MapComponent";
 import { updateBookshelvesWithCoordinates } from "./geocoding/geocoding";
 
 const Location = () => {
-  const [bookshelves, setBookshelves] = useState([]);
+  const [bookshelves, setBookshelves] = useState(null);
   const [center, setCenter] = useState([51.541574, 9.951122]); // Default center
   const [userLocation, setUserLocation] = useState(null);
   const [destination, setDestination] = useState(null);
@@ -23,64 +24,59 @@ const Location = () => {
   //==========================================================================
   // Get all bookshelves /using GeoCoding api (openCage)
   //==========================================================================
-  useEffect(() => {
-    const fetchBookshelves = async () => {
-      try {
-        // const response = await axios.get(`${API}/bookshelves`);
-        const response = await axios.get(
-          `http://localhost:8000/api/v1/bookshelves/`
-        );
-        // setBookshelves(response.data.result);
+  const getUserLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userCoords = [
+            position.coords.latitude,
+            position.coords.longitude,
+          ];
+          setCenter(userCoords);
+          setUserLocation(userCoords);
+          setLoadingLocation(false);
+        },
+        (error) => {
+          if (error.code === error.PERMISSION_DENIED) {
+            console.error("User denied Geolocation");
+            const defaultCoords = [51.541574, 9.951122]; //default coordinates
+            setCenter(defaultCoords);
+            setUserLocation(defaultCoords);
+            setLoadingLocation(false);
+          } else {
+            console.error("Error getting user location: ", error);
+            setLoadingLocation(false);
+          }
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+      setLoadingLocation(false);
+    }
+  };
 
-        const updatedShelves = await updateBookshelvesWithCoordinates(
-          response.data.result
-        );
-        setBookshelves(updatedShelves);
-      } catch (error) {
-        toast.error("Error fetching Bookshelfs");
-      }
-    };
+  const fetchBookshelves = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/v1/bookshelves/`
+      );
+      const updatedShelves = await updateBookshelvesWithCoordinates(
+        response.data.result?.slice(0, 1)
+        // TODO: Uncomment this line to use the full list of bookshelves
+        // response.data.result
+      );
+
+      setBookshelves(updatedShelves);
+    } catch (error) {
+      toast.error("Error fetching Bookshelfs");
+    }
+  };
+
+  useEffect(() => {
+    getUserLocation();
     fetchBookshelves();
   }, []);
 
-  //==========================================================================
-  //Fetching User Location:
-  //==========================================================================
-
-  useEffect(() => {
-    const getUserLocation = () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const userCoords = [
-              position.coords.latitude,
-              position.coords.longitude,
-            ];
-            setCenter(userCoords);
-            setUserLocation(userCoords);
-            setLoadingLocation(false);
-          },
-          (error) => {
-            if (error.code === error.PERMISSION_DENIED) {
-              console.error("User denied Geolocation");
-              const defaultCoords = [51.541574, 9.951122]; //default coordinates
-              setCenter(defaultCoords);
-              setUserLocation(defaultCoords);
-              setLoadingLocation(false);
-            } else {
-              console.error("Error getting user location: ", error);
-              setLoadingLocation(false);
-            }
-          }
-        );
-      } else {
-        console.error("Geolocation is not supported by this browser.");
-        setLoadingLocation(false);
-      }
-    };
-
-    getUserLocation();
-  }, []);
   //==========================================================================
   // Error handling
   //==========================================================================
@@ -92,27 +88,23 @@ const Location = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
   return (
     <div>
-      {/* <SearchComponent
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        setCenter={setCenter}
-      /> */}
-      <LayoutComponent
-        bookshelves={bookshelves}
-        center={center}
-        setCenter={setCenter}
-        userLocation={userLocation}
-        destination={destination}
-        setDestination={(loc) => {
-          setDestination(loc);
-          console.log("Destination set:", loc);
-        }}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-      />
+      {bookshelves && (
+        <LayoutComponent
+          bookshelves={bookshelves}
+          center={center}
+          setCenter={setCenter}
+          userLocation={userLocation}
+          destination={destination}
+          setDestination={(loc) => {
+            setDestination(loc);
+            console.log("Destination set:", loc);
+          }}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+        />
+      )}
     </div>
   );
 };
