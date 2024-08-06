@@ -4,7 +4,7 @@ import { useShelfContext } from "../../Context/Shelf/shelfContext.jsx";
 import coverImg from "../../assets/images/bookCover.png";
 import { toast } from "react-toastify";
 const URLLocal = import.meta.env.VITE_REACT_APP_URL;
-
+import { FooterComponent } from "../../Components";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import GoBackComponent from "../GoBackComponent/GoBackComponent";
@@ -210,6 +210,7 @@ const BookDetails = ({ shelf }) => {
           </div>
         </div>
       </section>
+      <FooterComponent />
     </>
   );
 };

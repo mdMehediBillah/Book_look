@@ -95,7 +95,7 @@ const LayoutComponent = ({
       </div>
       {searchTerm && (
         <div className="w-[400px] px-2 text-lg font-semibold pt-2 flex items-center ">
-          Show result for{" "}
+          Show result for <p className="pl-1"> </p>
           <span className="text-rose-500 text-xl ">{searchTerm}</span>{" "}
           <span
             onClick={() => setSearchTerm("")}

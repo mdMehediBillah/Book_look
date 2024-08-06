@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { API } from "../../Utils/security/secreteKey";
 import { toast } from "react-toastify";
-import { GoBackComponent, NavigationComponent } from "../../Components";
+import { GoBackComponent, NavigationComponent,FooterComponent } from "../../Components";
 import { getOpeningStatus } from "../../Components/Location/getOpeningStatus/getOpeningStatus.jsx";
 import LikeButton from "../../Components/LikeButtonComponent/LikeButtonComponent.jsx";
 import { LuBook } from "react-icons/lu";
@@ -215,6 +215,7 @@ const BookshelfPage = () => {
           </div>
         </article>
       </section>
+      <FooterComponent />
     </main>
   );
 };

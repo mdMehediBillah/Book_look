@@ -11,7 +11,7 @@ const HeroText = () => {
           theme === "light" ? "text-rose-800" : "text-gray-300"
         }`}
       >
-        Welcome to BookLook
+        Start your journey
       </h1>
 
       <p

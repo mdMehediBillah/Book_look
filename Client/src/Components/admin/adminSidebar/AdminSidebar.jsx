@@ -7,20 +7,28 @@ import { MdDashboard } from "react-icons/md";
 import { MdInsertComment } from "react-icons/md";
 import { MdCategory } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
+import { ThemeContext } from "../../../Components/lightDarkMood/ThemeContext.jsx";
+import { useContext } from "react";
+
 // import ButtonLoader from "../../../utils/loader/buttonLoader/ButtonLoader";
 
 const AdminSidebar = ({ isActive, setIsActive }) => {
   // Global state variables
+  const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
 
   const handleLogout = () => {};
 
   return (
-    <section className="user-profile-sidebar-wrapper">
+    <section
+      className={`user-profile-sidebar-wrapper ${
+        theme === "light" ? "bg-gray-50" : "bg-gray-400"
+      }`}
+    >
       <h2 className="user-profile-sidebar-title">Dashboard</h2>
 
       <aside
         onClick={() => setIsActive(1)}
-        className="user-profile-sidebar-item"
+        className="user-profile-sidebar-item  "
       >
         <MdDashboard
           title="User Profile"

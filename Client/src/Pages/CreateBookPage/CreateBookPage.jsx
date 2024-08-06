@@ -4,6 +4,7 @@ import {
   CreateBook,
   GoBackComponent,
   NavigationComponent,
+  FooterComponent
 } from "../../Components";
 import axios from "axios";
 import { useShelfContext } from "../../Context/Shelf/shelfContext.jsx";
@@ -91,6 +92,7 @@ const CreateBookPage = () => {
         </div>
       </div>
       <CreateBook />
+      <FooterComponent />
     </main>
   );
 };
