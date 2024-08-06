@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { GoBackComponent } from "../../Components";
+import { GoBackComponent, FooterComponent } from "../../Components";
 import bannerImgUrl from "../../assets/images/banner_default.png";
 import profileImgUrl from "../../assets/images/avatar.png";
 import { useContext, useEffect, useState } from "react";
@@ -413,6 +413,7 @@ const UserUpdatePage = () => {
           </div>
         </form>
       </div>
+      <FooterComponent />
     </main>
   );
 };

@@ -15,10 +15,7 @@ import TimeSelectionOptions from "../../Components/CreateShelfComponent/TimeSele
 import BookshelfMap from "../../Components/CreateShelfComponent/BookshelfMap/BookshelfMap.jsx";
 import MapSearch from "../../Components/CreateShelfComponent/MapSearch/MapSearch.jsx";
 import AddressInput from "../../Components/CreateShelfComponent/AddressInput/AddressInput.jsx";
-import {
-  GoBackComponent,
-  NavigationComponent,
-} from "../../Components/index.js";
+import { GoBackComponent, FooterComponent,  NavigationComponent } from "../../Components/index.js";
 import { Link } from "react-router-dom";
 
 // Function to upload image to Cloudinary
@@ -345,6 +342,7 @@ const CreateShelfForm = () => {
         </button>
       </form>
       <ChatbotLayout />
+      <FooterComponent />
     </main>
   );
 };

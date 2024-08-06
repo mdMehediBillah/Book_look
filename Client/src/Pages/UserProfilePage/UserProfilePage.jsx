@@ -4,6 +4,7 @@ import {
   GoBackComponent,
   NavigationComponent,
   UserProfileComponent,
+  FooterComponent
 } from "../../Components";
 import ChatbotLayout from "../../Components/Chatbot/ChatbotLayout/ChatbotLayout";
 import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext";
@@ -38,6 +39,7 @@ const UserProfilePage = () => {
       <div>
         <UserProfileComponent />
       </div>
+      <FooterComponent />
       <ChatbotLayout />
     </main>
   );

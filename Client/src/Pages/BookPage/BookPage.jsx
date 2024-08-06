@@ -6,7 +6,11 @@ import "./BookPage.scss";
 import BorrowedBookForm from "../../Components/forms/borrow/BorrowedBookForm";
 import debounce from "lodash.debounce";
 import Rating from "../../Components/bookshelf/ratings/Rating";
-import { GoBackComponent, NavigationComponent } from "../../Components";
+import {
+  GoBackComponent,
+  FooterComponent,
+  NavigationComponent,
+} from "../../Components";
 import { useAuthContext } from "../../Context/User/AuthContext.jsx";
 import { useShelfContext } from "../../Context/Shelf/shelfContext.jsx"; // Adjust the path as necessary
 import { toast } from "react-toastify";
@@ -212,6 +216,7 @@ const BookPage = () => {
           </motion.div>
         </div>
       )}
+      <FooterComponent />
     </>
   );
 };

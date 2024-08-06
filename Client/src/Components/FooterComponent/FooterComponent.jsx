@@ -15,7 +15,7 @@ import NewsletterSubscription from "../NewsletterSubscription/NewsletterSubscrip
 const FooterComponent = () => {
   return (
     <div className="bg-gray-900 min-h-48 text-white ">
-      <div className="grid lg:grid-cols-2 py-20 px-4 container max-w-screen-lg mx-auto">
+      <div className="grid lg:grid-cols-2 py-10 px-4 container max-w-screen-lg mx-auto">
         <div className="grid md:grid-cols-2  mx-auto gap-8">
           <div className="flex flex-col gap-2">
             <div className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
@@ -30,32 +30,35 @@ const FooterComponent = () => {
           </div>
           <div className="">
             <ul className="flex flex-col gap-2">
-              <Link to="/">
+              <Link to="/" onClick={() => window.scrollTo(0, 0)}>
                 <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
                   Home
                 </li>
               </Link>
-              <Link to="/about_us">
+              <Link to="/about_us" onClick={() => window.scrollTo(0, 0)}>
                 <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
                   About Us
                 </li>
               </Link>
-              <Link to="/contact_us">
+              <Link to="/contact_us" onClick={() => window.scrollTo(0, 0)}>
                 <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
                   Contact Us
                 </li>
               </Link>
-              <Link to="/how_it_works">
+              <Link to="/how_it_works" onClick={() => window.scrollTo(0, 0)}>
                 <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
                   How it Works
                 </li>
               </Link>
-              <Link to="/faq">
+              <Link to="/faq" onClick={() => window.scrollTo(0, 0)}>
                 <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
                   FAQ
                 </li>
               </Link>
-              <Link to="/terms_and_conditions">
+              <Link
+                to="/terms_and_conditions"
+                onClick={() => window.scrollTo(0, 0)}
+              >
                 <li className="flex gap-1 items-center cursor-pointer hover:scale-105 transition-transform duration-300 hover:text-cyan-100">
                   Terms & Conditions
                 </li>
@@ -68,23 +71,6 @@ const FooterComponent = () => {
             Newsletter
           </h6>
           <NewsletterSubscription />
-          {/* <form action="" className="py-2">
-              <div className="flex  h-4 items-center  ">
-                <input
-                  type=""
-                  name=""
-                  id=""
-                  placeholder="Email Address"
-                  className="p-0,5 pl-3 rounded-l-full h-8"
-                />
-                <button
-                  type="button"
-                  className=" px-4 py-1 h-8 bg-cyan-100 rounded-r-full text-center cursor-pointer text-s hover:bg-cyan-200 text-black "
-                >
-                  Subscribe
-                </button>
-              </div>
-            </form> */}
           <ul className="flex py-4 gap-3 cursor-pointer">
             <a href="https://www.whatsapp.com/?lang=de_DE" target="_blank">
               <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
@@ -109,7 +95,7 @@ const FooterComponent = () => {
             <a href="https://www.instagram.com/" target="_blank">
               <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
                 <FaInstagram />
-              </li> 
+              </li>
             </a>
             <a href="https://x.com/?lang=de" target="_blank">
               <li className="flex gap-1 items-center cursor-pointer hover:scale-150 transition-transform duration-300 hover:text-cyan-100 text-2xl">
