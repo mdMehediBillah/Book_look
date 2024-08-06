@@ -10,16 +10,20 @@ const AdminDashboardPage = () => {
   const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
 
   return (
-    <main className="admin-dashboard-page">
+    <main
+      className={`w-full object-cover bg-cover bg-center bg-no-repeat ${
+        theme === "light" ? "bg-gray-50" : "bg-gray-800"
+      }`}
+    >
       <NavigationComponent />
 
       <section
-        className={`admin-dashboard-page-container ${
-          theme === "light" ? "bg-gray-50" : "bg-gray-800"
+        className={` container mx-auto ${
+          theme === "light" ? "text-gray-800" : "text-gray-800"
         }`}
       >
         <h4
-          className={`text-4xl font-medium text-center ${
+          className={`text-3xl font-medium text-center pb-3 ${
             theme === "light" ? "text-gray-800" : "text-gray-50"
           }`}
         >
@@ -27,15 +31,15 @@ const AdminDashboardPage = () => {
         </h4>
 
         <div
-          className={`admin-content-wrapper ${
-            theme === "light" ? "bg-gray-50" : "bg-gray-800"
+          className={`flex gap-1 rounded-lg shadow-lg justify-between w-full ${
+            theme === "light" ? "bg-gray-100" : "bg-gray-700"
           }`}
         >
-          <div className="sidebar ">
+          <div className="p-2">
             <AdminSidebar isActive={isActive} setIsActive={setIsActive} />
           </div>
 
-          <div className="main ">
+          <div className="p-2">
             <DashboardSummary isActive={isActive} />
           </div>
         </div>

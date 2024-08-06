@@ -16,36 +16,32 @@ const AdminSidebar = ({ isActive, setIsActive }) => {
   // Global state variables
   const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
 
-  const handleLogout = () => {};
+  // const handleLogout = () => {};
 
   return (
     <section
-      className={`user-profile-sidebar-wrapper ${
-        theme === "light" ? "bg-gray-50" : "bg-gray-400"
+      className={`flex flex-col p-1 rounded-lg ${
+        theme === "light" ? "bg-cyan-100" : "bg-gray-400"
       }`}
     >
-      <h2 className="user-profile-sidebar-title">Dashboard</h2>
-
-      <aside
-        onClick={() => setIsActive(1)}
-        className="user-profile-sidebar-item  "
-      >
-        <MdDashboard
-          title="User Profile"
-          className={isActive === 1 ? "active-icon" : "passive-icon"}
-        />
-
-        <h4 className={isActive === 1 ? "active-text" : "passive-text"}>
-          Summary
-        </h4>
+      <aside onClick={() => setIsActive(1)} className="flex flex-col">
+        <div className="flex items-center gap-1 hover:bg-rose-500 cursor-pointer w-full px-4 py-2 rounded-lg">
+          <MdDashboard
+            title="User Profile"
+            className={isActive === 1 ? "active-icon" : "passive-icon"}
+          />
+          <h4 className={isActive === 1 ? "active-text" : "passive-text"}>
+            Summary
+          </h4>
+        </div>
       </aside>
 
       <aside
         onClick={() => setIsActive(2)}
-        className="user-profile-sidebar-item"
+        className="flex items-center gap-1 hover:bg-rose-500 cursor-pointer w-full px-4 py-2 rounded-lg"
       >
         <FaUser
-          title="User Profile"
+          title=""
           className={isActive === 2 ? "active-icon" : "passive-icon"}
         />
 
@@ -56,7 +52,7 @@ const AdminSidebar = ({ isActive, setIsActive }) => {
 
       <aside
         onClick={() => setIsActive(3)}
-        className="user-profile-sidebar-item"
+        className="flex items-center gap-1 hover:bg-rose-500 cursor-pointer w-full px-4 py-2 rounded-lg"
       >
         <GiBookshelf
           title="User Profile"
@@ -70,7 +66,7 @@ const AdminSidebar = ({ isActive, setIsActive }) => {
 
       <aside
         onClick={() => setIsActive(4)}
-        className="user-profile-sidebar-item"
+        className="flex items-center gap-1 hover:bg-rose-500 cursor-pointer w-full px-4 py-2 rounded-lg"
       >
         <FaBook
           title="User Address"
@@ -82,9 +78,9 @@ const AdminSidebar = ({ isActive, setIsActive }) => {
         </h4>
       </aside>
 
-      <aside
+      {/* <aside
         onClick={() => setIsActive(5)}
-        className="user-profile-sidebar-item"
+        className="flex items-center gap-1 hover:bg-rose-500 cursor-pointer w-full px-4 py-2 rounded-lg"
       >
         <FaBook
           title="Change Password"
@@ -94,11 +90,11 @@ const AdminSidebar = ({ isActive, setIsActive }) => {
         <h4 className={isActive === 5 ? "active-text" : "passive-text"}>
           Donated Books
         </h4>
-      </aside>
+      </aside> */}
 
       <aside
         onClick={() => setIsActive(6)}
-        className="user-profile-sidebar-item"
+        className="flex items-center gap-1 hover:bg-rose-500 cursor-pointer w-full px-4 py-2 rounded-lg"
       >
         <FaBook
           title="Change Password"
@@ -106,13 +102,13 @@ const AdminSidebar = ({ isActive, setIsActive }) => {
         />
 
         <h4 className={isActive === 6 ? "active-text" : "passive-text"}>
-          Borrowed Books
+          Borrowed
         </h4>
       </aside>
 
-      <aside
+      {/* <aside
         onClick={() => setIsActive(7)}
-        className="user-profile-sidebar-item"
+        className="flex items-center gap-1 hover:bg-rose-500 cursor-pointer w-full px-4 py-2 rounded-lg"
       >
         <MdInsertComment
           title="Change Password"
@@ -122,11 +118,11 @@ const AdminSidebar = ({ isActive, setIsActive }) => {
         <h4 className={isActive === 7 ? "active-text" : "passive-text"}>
           Comments
         </h4>
-      </aside>
-
+      </aside> */}
+      {/* 
       <aside
         onClick={() => setIsActive(8)}
-        className="user-profile-sidebar-item"
+        className="flex items-center gap-1 hover:bg-rose-500 cursor-pointer w-full px-4 py-2 rounded-lg"
       >
         <FaStar
           title="Change Password"
@@ -136,11 +132,11 @@ const AdminSidebar = ({ isActive, setIsActive }) => {
         <h4 className={isActive === 8 ? "active-text" : "passive-text"}>
           Ratings
         </h4>
-      </aside>
+      </aside> */}
 
-      <aside
+      {/* <aside
         onClick={() => setIsActive(9)}
-        className="user-profile-sidebar-item"
+        className="flex items-center gap-1 hover:bg-rose-500 cursor-pointer w-full px-4 py-2 rounded-lg"
       >
         <MdCategory
           title="Change Password"
@@ -150,11 +146,11 @@ const AdminSidebar = ({ isActive, setIsActive }) => {
         <h4 className={isActive === 9 ? "active-text" : "passive-text"}>
           Genres
         </h4>
-      </aside>
+      </aside> */}
 
-      <aside
+      {/* <aside
         onClick={() => setIsActive(10)}
-        className="user-profile-sidebar-item"
+        className="flex items-center gap-1 hover:bg-rose-500 cursor-pointer w-full px-4 py-2 rounded-lg"
       >
         <MdOutlineMessage
           title="User Inbox"
@@ -164,9 +160,12 @@ const AdminSidebar = ({ isActive, setIsActive }) => {
         <h4 className={isActive === 10 ? "active-text" : "passive-text"}>
           Admin Inbox
         </h4>
-      </aside>
+      </aside> */}
 
-      <aside onClick={handleLogout} className="user-profile-sidebar-item">
+      {/* <aside
+        onClick={handleLogout}
+        className="flex items-center gap-1 hover:bg-rose-500 cursor-pointer w-full px-4 py-2 rounded-lg"
+      >
         <IoMdLogOut
           title="Log Out"
           className={isActive === 11 ? "active-icon" : "passive-icon"}
@@ -175,7 +174,7 @@ const AdminSidebar = ({ isActive, setIsActive }) => {
         <h4 className={isActive === 11 ? "active-text" : "passive-text"}>
           Log Out
         </h4>
-      </aside>
+      </aside> */}
     </section>
   );
 };

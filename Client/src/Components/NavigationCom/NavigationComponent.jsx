@@ -1,10 +1,10 @@
 import { useContext, useEffect } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { MdOutlineLeaderboard } from "react-icons/md";
-import { GrLogout } from "react-icons/gr";
+// import { MdOutlineLeaderboard } from "react-icons/md";
+// import { GrLogout } from "react-icons/gr";
 import { GiBlackBook } from "react-icons/gi";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 import { useAuthContext } from "../../Context/User/AuthContext.jsx";
 import ThemeToggle from "../lightDarkMood/ThemeToggle.jsx";
 import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext.jsx";
@@ -84,7 +84,6 @@ const NavigationComponent = () => {
               <div className="w-10 rounded-full">
                 <img alt="Tailwind CSS Navbar component" src={user?.image} />
               </div>
-              {/* <span className="">Hello! {user ? firstName : "User"}</span> */}
             </div>
             <ul
               tabIndex={0}
@@ -92,19 +91,13 @@ const NavigationComponent = () => {
             >
               <Link to="/profile">
                 <li>
-                  <span className="justify-between">
-                    Profile
-                    {/* <span className="badge">New</span> */}
-                  </span>
+                  <span className="justify-between">Profile</span>
                 </li>
               </Link>
               {user && user.role === "admin" && (
                 <Link to="/admin/dashboard">
                   <li>
-                    <span className="justify-between">
-                      Dashboard
-                      {/* <span className="badge">New</span> */}
-                    </span>
+                    <span className="justify-between">Admin</span>
                   </li>
                 </Link>
               )}
@@ -115,12 +108,6 @@ const NavigationComponent = () => {
                   {/* <span className="badge">New</span> */}
                 </span>
               </li>
-              {/* <li>
-                <a>Settings</a>
-              </li> */}
-              {/* <li>
-                <a>Logout</a>
-              </li> */}
             </ul>
           </div>
         </div>

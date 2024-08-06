@@ -19,8 +19,8 @@ const PieChartBookshelves = ({
   ];
 
   const COLORS = [
-    "#00a6fb",
-    "#c77dff",
+    "#73ced0",
+    "#ff9e9e",
     "#ff9f1c",
     "#52b788",
     "#81a4cd",
@@ -49,7 +49,7 @@ const PieChartBookshelves = ({
           fill={labelColor}
           textAnchor={x > cx ? "start" : "end"}
           dominantBaseline="central"
-          style={{ fontSize: "16px", fontWeight: "bold" }}
+          style={{ fontSize: "12px", fontWeight: "regular" }}
         >
           {`${data[index].name} (${(percent * 100).toFixed(2)}%)`}
         </text>
@@ -80,7 +80,7 @@ const PieChartBookshelves = ({
   return (
     <section
       className="pie-chart-bookshelves pt-5 pb-10"
-      style={{ width: "35vw", height: "400px" }}
+      style={{ width: "24vw", height: "320px" }}
     >
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
@@ -90,7 +90,7 @@ const PieChartBookshelves = ({
             nameKey="name"
             cx="50%"
             cy="50%"
-            outerRadius={120}
+            outerRadius={90}
             labelLine={renderLabelLine}
             label={renderCustomizedLabel}
           >
@@ -104,12 +104,11 @@ const PieChartBookshelves = ({
           <Tooltip />
         </PieChart>
       </ResponsiveContainer>
-      <h4 className="box-title text-center py-4">
+      {/* <h4 className="box-title text-center py-4">
         Fig.3: Annual Performance Overview{" "}
-      </h4>
+      </h4> */}
     </section>
   );
 };
 
 export default PieChartBookshelves;
-
