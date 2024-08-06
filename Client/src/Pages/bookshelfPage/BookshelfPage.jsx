@@ -45,7 +45,7 @@ const BookshelfPage = () => {
           `${API}/api/v1/bookshelves/${bookshelfId}/books`
         );
         setBooks(data.books);
-        console.log(data);
+        console.log("shelf books=", data);
       } catch (error) {
         console.log(error);
       }
