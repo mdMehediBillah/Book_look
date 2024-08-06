@@ -6,10 +6,14 @@ import { useContext, useEffect, useState } from "react";
 import { useAuthContext } from "../../Context/User/AuthContext.jsx";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext";
+
 // import { format } from "date-fns";
 // import { useUserContext } from "../../Context/User/UserContext.jsx";
 
 const UserUpdatePage = () => {
+  const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
+
   const url = import.meta.env.VITE_REACT_APP_URL;
   // const { user, setUser } = useUserContext();
   const navigate = useNavigate();
@@ -140,8 +144,14 @@ const UserUpdatePage = () => {
   };
 
   return (
-    <main className="pb-16">
-      <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900 max-w-screen-lg">
+    <main
+      className={`pb-16 ${theme === "light" ? "bg-gray-50" : "bg-gray-400"}`}
+    >
+      <section
+        className={`flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg  max-w-screen-lg ${
+          theme === "light" ? "bg-gray-50" : "bg-gray-800"
+        }`}
+      >
         <div className="w-3/12">
           <GoBackComponent />
         </div>
@@ -160,7 +170,13 @@ const UserUpdatePage = () => {
         </div>
         <div className="w-3/12 flex justify-end">
           <div className="py-1 px-3 font-semibold text-white">
-            <h4>Update Profile</h4>
+            <h4
+              className={` ${
+                theme === "light" ? "text-rose-800" : "text-gray-300"
+              }`}
+            >
+              Update Profile
+            </h4>
           </div>
         </div>
       </section>

@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import "./BooksPage.scss";
 import BookCardForShelf from "../../Components/bookshelf/bookCard/BookCardForShelf";
-import { GoBackComponent } from "../../Components";
+import { GoBackComponent, NavigationComponent } from "../../Components";
 import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext.jsx";
 import { useContext } from "react";
 
@@ -21,37 +21,23 @@ const BooksPage = () => {
         theme === "light" ? "bg-gray-50" : "bg-gray-800"
       }`}
     >
-      <section
-        className={`flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg max-w-screen-lg${
-          theme === "light" ? "bg-gray-50" : "bg-gray-800"
-        }`}
-      >
-        <div className="w-3/12">
-          <GoBackComponent />
+      <NavigationComponent />
+      <div className="max-w-screen-lg mx-auto flex justify-between">
+        <GoBackComponent />
+        <div className="py-1 px-3 font-semibold">
+          <h4
+            className={`text-lg font-bold line-clamp-1 ${
+              theme === "light" ? "text-gray-800" : "text-gray-300"
+            }`}
+          >
+            {bookshelf?.name}
+          </h4>
         </div>
-        <div className="flex items-center gap-4 w-6/12 justify-center">
-          <div>
-            <Link
-              to="/"
-              className="flex justify-center items-center gap-2 text-xl"
-            >
-              <h3>
-                <span className="text-rose-500 font-semibold ">Book</span>
-                <span className="text-cyan-600 font-semibold ">Look</span>
-              </h3>
-            </Link>
-          </div>
-        </div>
-        <div className="w-3/12 flex justify-end">
-          <div className="py-1 px-3 font-semibold text-white">
-            <h4 className="line-clamp-1">{bookshelf?.name}</h4>
-          </div>
-        </div>
-      </section>
+      </div>
 
       <section className="max-w-screen-lg mx-auto mt-4">
         <h2
-          className={`text-2xl font-bold text-center pt-4 pb-8 ${
+          className={`text-2xl font-bold  pt-4 pb-8 ${
             theme === "light" ? "text-gray-800" : "text-gray-300"
           }`}
         >

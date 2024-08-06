@@ -93,7 +93,11 @@ const CreateBookComponent = () => {
   return (
     <main className="container screen-max-lg rounded-lg">
       <div className="container mx-auto p-4">
-        <h2 className="text-lg py-4 text-center">Type book's information</h2>
+        <div>
+          <h2 className="text-lg py-1 text-center bg-gray-200 w-64 mx-auto mb-2 rounded-lg">
+            Type book's information
+          </h2>
+        </div>
         {error && <p className="text-red-500 text-center">{error}</p>}
         <form
           onSubmit={handleSubmit}

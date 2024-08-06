@@ -1,16 +1,19 @@
 import { Link, useParams } from "react-router-dom";
 import "./BookCardForShelf.scss";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useContext } from "react";
 import axios from "axios";
 import debounce from "lodash.debounce";
 import { API } from "../../../Utils/security/secreteKey";
 import Rating from "../ratings/Rating";
+import { ThemeContext } from "../../../Components/lightDarkMood/ThemeContext.jsx";
 
 /*
 npm install lodash.debounce
 */
 
 const BookCardForShelf = ({ book }) => {
+  const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
+
   const [books, setBooks] = useState([]);
 
   const { bookshelfId } = useParams();
@@ -66,7 +69,11 @@ const BookCardForShelf = ({ book }) => {
   }, [book._id]);
 
   return (
-    <section className="flex flex-col bg-gray-100 p-2 rounded shadow-md justify-between">
+    <section
+      className={`flex flex-col bg-gray-100 p-2 rounded shadow-md justify-between ${
+        theme === "light" ? "bg-gray-50" : "bg-gray-300"
+      }`}
+    >
       <Link to={`/${bookshelfId}/books/${book._id}`} className="">
         <figure className="">
           {/* <Link to={`/bookshelves/${bookshelfId}/books/${book._id}`}> */}

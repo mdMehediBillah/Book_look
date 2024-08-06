@@ -1,12 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
-import { CreateBook, GoBackComponent } from "../../Components";
+import {
+  CreateBook,
+  GoBackComponent,
+  NavigationComponent,
+} from "../../Components";
 import axios from "axios";
-import { useShelfContext } from "../../Context/Shelf/shelfContext.jsx"; // Adjust the path as necessary
+import { useShelfContext } from "../../Context/Shelf/shelfContext.jsx";
+import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext";
 
 // import { Outlet } from "react-router-dom";
 
 const CreateBookPage = () => {
+  const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
+
   const URL = import.meta.env.VITE_REACT_APP_URL;
   const { id } = useParams();
   const { shelfData, setShelfData } = useShelfContext();
@@ -30,38 +37,37 @@ const CreateBookPage = () => {
   console.log(shelfData);
 
   return (
-    <main className="">
-      <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900 max-w-screen-lg">
-        <div className="w-3/12">
-          <GoBackComponent />
+    <main
+      className={`w-full object-cover bg-cover bg-center bg-no-repeat h-[100%] ${
+        theme === "light" ? "bg-gray-50" : "bg-gray-800"
+      }`}
+    >
+      <NavigationComponent />
+      <div className="max-w-screen-lg mx-auto flex justify-between">
+        <GoBackComponent />
+        <div className="py-1 px-3 font-semibold">
+          <h4
+            className={`text-lg font-bold ${
+              theme === "light" ? "text-gray-800" : "text-gray-300"
+            }`}
+          >
+            Donate your Book
+          </h4>
         </div>
-        <div className="flex items-center gap-4 w-6/12 justify-center">
-          <div>
-            <Link
-              to="/"
-              className="flex justify-center items-center gap-2 text-xl"
-            >
-              <h3>
-                <span className="text-rose-500 font-semibold ">Book</span>
-                <span className="text-cyan-600 font-semibold ">Look</span>
-              </h3>
-            </Link>
-          </div>
-        </div>
-        <div className="w-3/12 flex justify-end">
-          <div className="py-1 px-3 font-semibold text-white">
-            <h4>Create Book</h4>
-          </div>
-        </div>
-      </section>
+      </div>
+
       <div className="screen-max-lg mx-auto max-w-screen-lg">
         <div className="flex items-center container pt-4 mx-auto screen-max-lg">
-          <div className="flex flex-col gap-1 items-center  bg-gray-50 screen-max-lg p-1 rounded-md flex-wrap shadow-lg">
-            <div className="w-36 h-20 bg-gray-400 text-center">
+          <div
+            className={`flex flex-col gap-1 items-center screen-max-lg p-1 rounded-md flex-wrap shadow-lg ${
+              theme === "light" ? "bg-gray-100" : "bg-gray-300"
+            }`}
+          >
+            <div className="w-full h-20 bg-gray-400 text-center">
               <img
                 src={shelf?.image[0]}
                 alt={shelf?.name}
-                className="w-36 h-20 object-cover"
+                className="w-full h-20 object-cover"
               />
             </div>
             <div className="px-2">
@@ -73,10 +79,15 @@ const CreateBookPage = () => {
             </div>
           </div>
         </div>
+
         <div>
-          <h2 className="text-center text-3xl font-bold">
-            Add your book to the Bookshelf
-          </h2>
+          <h4
+            className={`text-center text-3xl font-bold ${
+              theme === "light" ? "text-gray-800" : "text-gray-300"
+            }`}
+          >
+            Give your Book information
+          </h4>
         </div>
       </div>
       <CreateBook />

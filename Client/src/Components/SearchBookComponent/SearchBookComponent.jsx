@@ -1,10 +1,13 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { useGlobalContext } from "../../Context/Book/context.jsx"; // Import the context
 import { Link } from "react-router-dom";
 import coverImg from "../../assets/images/bookCover.png"; // Placeholder image
 import "./SearchBookComponent.css";
+import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext.jsx";
 
 const SearchBookComponent = ({ shelf }) => {
+  const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
+
   console.log(shelf);
   const { books, loading, resultTitle, setSearchTerm, fetchBooks } =
     useGlobalContext();
@@ -34,7 +37,11 @@ const SearchBookComponent = ({ shelf }) => {
   });
 
   return (
-    <section className="container screen-max-lg">
+    <section
+      className={`w-full object-cover bg-cover bg-center bg-no-repeat bookshelf-page h-[100%] ${
+        theme === "light" ? "bg-gray-50" : "bg-gray-800"
+      }`}
+    >
       <form
         className="bg-gray-200 flex w-5/12 min-w-[400px] mx-auto rounded-full items-center justify-between border-2 border-cyan-600"
         onSubmit={handleSubmit}
@@ -57,7 +64,13 @@ const SearchBookComponent = ({ shelf }) => {
         ) : (
           <div className="container screen-max-lg p-4">
             <div className="">
-              <h2 className="text-2xl font-bold pt-8 pb-4">{resultTitle}</h2>
+              <h2
+                className={`text-2xl font-bold pt-8 pb-4 line-clamp-1 ${
+                  theme === "light" ? "text-gray-800" : "text-gray-300"
+                }`}
+              >
+                {resultTitle}
+              </h2>
               <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 gap-3 ">
                 {booksWithCovers.map((book) => (
                   <div

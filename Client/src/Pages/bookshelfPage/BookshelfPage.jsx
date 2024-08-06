@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { API } from "../../Utils/security/secreteKey";
 import { toast } from "react-toastify";
-import { GoBackComponent } from "../../Components";
+import { GoBackComponent, NavigationComponent } from "../../Components";
 import { getOpeningStatus } from "../../Components/Location/getOpeningStatus/getOpeningStatus.jsx";
 import LikeButton from "../../Components/LikeButtonComponent/LikeButtonComponent.jsx";
 import { LuBook } from "react-icons/lu";
@@ -102,33 +102,20 @@ const BookshelfPage = () => {
         theme === "light" ? "bg-gray-50" : "bg-gray-800"
       }`}
     >
-      <section
-        className={`flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg max-w-screen-lg${
-          theme === "light" ? "bg-gray-50" : "bg-gray-800"
-        }`}
-      >
-        <div className="w-3/12">
-          <GoBackComponent />
+      <NavigationComponent />
+      <div className="max-w-screen-lg mx-auto flex justify-between">
+        <GoBackComponent />
+        <div className="py-1 px-3 font-semibold">
+          <h4
+            className={`text-lg font-bold line-clamp-1 ${
+              theme === "light" ? "text-rose-800" : "text-gray-300"
+            }`}
+          >
+            {bookshelf?.name}
+          </h4>
         </div>
-        <div className="flex items-center gap-4 w-6/12 justify-center">
-          <div>
-            <Link
-              to="/"
-              className="flex justify-center items-center gap-2 text-xl"
-            >
-              <h3>
-                <span className="text-rose-500 font-semibold ">Book</span>
-                <span className="text-cyan-600 font-semibold ">Look</span>
-              </h3>
-            </Link>
-          </div>
-        </div>
-        <div className="w-3/12 flex justify-end">
-          <div className="py-1 px-3 font-semibold text-white">
-            <h4 className="line-clamp-1">{bookshelf?.name}</h4>
-          </div>
-        </div>
-      </section>
+      </div>
+
       <section className="flex flex-col py-4 container mx-auto screen-max-lg max-w-screen-lg mt-6 ">
         <article
           className={`flex flex-col gap-4  mx-auto p-3 rounded-md ${
