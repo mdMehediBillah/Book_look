@@ -19,6 +19,7 @@ import {
   HowItWorksPage,
   FaqPage,
   TermsAndConditionsPage,
+  AllShalvesPage,
 } from "./Pages";
 import {
   BookDetailsCom,
@@ -27,14 +28,14 @@ import {
 } from "./Components";
 import AdminDashboardPage from "./Pages/dashboardPages/adminDashboardPage/AdminDashboardPage";
 import BookshelfPage from "./Pages/bookshelfPage/BookshelfPage";
-import ThemeToggle from "./Components/lightDarkMood/ThemeToggle";
+// import ThemeToggle from "./Components/lightDarkMood/ThemeToggle";
 import {
   ThemeProvider,
   ThemeContext,
 } from "./Components/lightDarkMood/ThemeContext";
 import { useContext, useEffect } from "react";
 
-//for dark and light mode 
+//for dark and light mode
 const AppContent = () => {
   const { theme } = useContext(ThemeContext);
 
@@ -42,12 +43,11 @@ const AppContent = () => {
     document.body.className = theme;
   }, [theme]);
 
-// function App() {
+  // function App() {
   return (
     <>
-        <ThemeToggle />
+      {/* <ThemeToggle /> */}
       <Routes>
-
         <Route path="/" element={<HomePage />} />
 
         <Route path=":bookshelfId">
@@ -72,6 +72,7 @@ const AppContent = () => {
         </Route>
         <Route path="/createBookSearch/:id" element={<BookDetailsCom />} />
         <Route path="/about_us" element={<AboutUsPage />} />
+        <Route path="/allShalves" element={<AllShalvesPage />} />
         <Route path="/contact_us" element={<ContactUsPage />} />
         <Route path="/how_it_works" element={<HowItWorksPage />} />
         <Route path="/faq" element={<FaqPage />} />
@@ -107,6 +108,5 @@ function App() {
     </ThemeProvider>
   );
 }
-
 
 export default App;

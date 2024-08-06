@@ -3,45 +3,22 @@
 //obtains the user's current location, and passes this data to a layout component.
 //==========================================================================
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import LayoutComponent from "./LayoutComponent";
-import axios from "axios";
+// import axios from "axios";
 // import { API } from "../../utils/security/secreteKey";
-import { toast } from "react-toastify";
-import SearchComponent from "../SearchComponent/SearchComponent";
-import { updateBookshelvesWithCoordinates } from "./geocoding/geocoding";
+// import { toast } from "react-toastify";
+// import SearchComponent from "../SearchComponent/SearchComponent";
+// import { updateBookshelvesWithCoordinates } from "./geocoding/geocoding";
 
 const Location = () => {
-  const [bookshelves, setBookshelves] = useState([]);
+  // const [bookshelves, setBookshelves] = useState([]);
   const [center, setCenter] = useState([51.541574, 9.951122]); // Default center
   const [userLocation, setUserLocation] = useState(null);
   const [destination, setDestination] = useState(null);
   const [loadingLocation, setLoadingLocation] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState(""); // Initialize searchTerm state variable
-
-  //==========================================================================
-  // Get all bookshelves /using GeoCoding api (openCage)
-  //==========================================================================
-  useEffect(() => {
-    const fetchBookshelves = async () => {
-      try {
-        // const response = await axios.get(`${API}/bookshelves`);
-        const response = await axios.get(
-          `http://localhost:8000/api/v1/bookshelves/`
-        );
-        // setBookshelves(response.data.result);
-
-        const updatedShelves = await updateBookshelvesWithCoordinates(
-          response.data.result
-        );
-        setBookshelves(updatedShelves);
-      } catch (error) {
-        toast.error("Error fetching Bookshelfs");
-      }
-    };
-    fetchBookshelves();
-  }, []);
 
   //==========================================================================
   //Fetching User Location:
@@ -95,13 +72,8 @@ const Location = () => {
 
   return (
     <div>
-      {/* <SearchComponent
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        setCenter={setCenter}
-      /> */}
       <LayoutComponent
-        bookshelves={bookshelves}
+        // bookshelves={bookshelves}
         center={center}
         setCenter={setCenter}
         userLocation={userLocation}

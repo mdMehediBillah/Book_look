@@ -14,14 +14,14 @@
       column-gap: 1rem;
 
       .sidebar {
-        background-color: #eaf4f4;
-        @include shadow2;
+        // background-color: #eaf4f4;
+        // @include shadow2;
         margin-top: 1rem;
       }
 
       .main {
         background-color: #f8f9fa;
-        @include shadow2;
+        // @include shadow2;
         margin-top: 1rem;
       }
     }

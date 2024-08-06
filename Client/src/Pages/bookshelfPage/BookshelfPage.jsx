@@ -1,20 +1,26 @@
 import { Link, useParams } from "react-router-dom";
 import "./BookshelfPage.scss";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { API } from "../../Utils/security/secreteKey";
 import { toast } from "react-toastify";
-import { GoBackComponent } from "../../Components";
+import { GoBackComponent, FooterComponent } from "../../Components";
 import { getOpeningStatus } from "../../Components/Location/getOpeningStatus/getOpeningStatus.jsx";
 import LikeButton from "../../Components/LikeButtonComponent/LikeButtonComponent.jsx";
 import { LuBook } from "react-icons/lu";
+import { useAuthContext } from "../../Context/User/AuthContext.jsx";
+import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext.jsx";
 
 const BookshelfPage = () => {
+  const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
+
   const { bookshelfId } = useParams();
   const [bookshelf, setBookshelf] = useState(null);
   const [books, setBooks] = useState([]);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [donatedBooks, setDonatedBooks] = useState([]);
+  const { user } = useAuthContext();
+  const userId = user?._id;
 
   useEffect(() => {
     const fetchBookshelf = async () => {
@@ -32,7 +38,6 @@ const BookshelfPage = () => {
   }, []);
 
   // console.log(bookshelf);
-
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -40,6 +45,7 @@ const BookshelfPage = () => {
           `${API}/api/v1/bookshelves/${bookshelfId}/books`
         );
         setBooks(data.books);
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -81,9 +87,26 @@ const BookshelfPage = () => {
     bookshelf?.closingTime
   );
 
+  const handleLike = (bookshelfId) => {
+    // Optionally, update local state or perform other actions when a bookshelf is liked
+    console.log(`Bookshelf ${bookshelfId} liked`);
+  };
+  const getAvailableBooksCount = (books = [], borrowedBooks = []) => {
+    return Math.max(0, books?.length - borrowedBooks?.length);
+  };
+  console.log(getAvailableBooksCount);
+
   return (
-    <main className="bookshelf-page">
-      <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900 max-w-screen-lg">
+    <main
+      className={`w-full object-cover bg-cover bg-center bg-no-repeat bookshelf-page h-[100vh] ${
+        theme === "light" ? "bg-gray-50" : "bg-gray-800"
+      }`}
+    >
+      <section
+        className={`flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg max-w-screen-lg${
+          theme === "light" ? "bg-gray-50" : "bg-gray-800"
+        }`}
+      >
         <div className="w-3/12">
           <GoBackComponent />
         </div>
@@ -102,12 +125,16 @@ const BookshelfPage = () => {
         </div>
         <div className="w-3/12 flex justify-end">
           <div className="py-1 px-3 font-semibold text-white">
-            <h4>{bookshelf?.name}</h4>
+            <h4 className="line-clamp-1">{bookshelf?.name}</h4>
           </div>
         </div>
       </section>
-      <section className="flex flex-col py-4 container mx-auto screen-max-lg max-w-screen-lg ">
-        <article className="flex flex-col gap-4  mx-auto p-3 rounded-md bg-gray-200">
+      <section className="flex flex-col py-4 container mx-auto screen-max-lg max-w-screen-lg mt-6 ">
+        <article
+          className={`flex flex-col gap-4  mx-auto p-3 rounded-md ${
+            theme === "light" ? "bg-gray-50" : "bg-gray-300"
+          }`}
+        >
           <div>
             <div className="flex gap-2">
               <figure>
@@ -129,9 +156,9 @@ const BookshelfPage = () => {
                     <span>{bookshelf?.country}</span>
                   </div>
                 </div>
-                <aside className="p-2">
-                  <div className="flex  gap-1">
-                    <Link
+                <aside className="">
+                  <div className="">
+                    {/* <Link
                       to={`/${bookshelfId}/books`}
                       state={{ books, bookshelf }}
                     >
@@ -141,13 +168,30 @@ const BookshelfPage = () => {
                           <span>Books</span>
                         </div>
                       </div>
+                    </Link> */}
+                    <Link
+                      to={`/${bookshelfId}/books`}
+                      state={{ books, bookshelf, borrowedBooks }}
+                    >
+                      <div className="bg-cyan-100 w-full">
+                        <div className="flex gap-1 py-1 rounded w-full justify-center">
+                          {/* <span>{books?.length - borrowedBooks?.length}</span> */}
+                          <span>
+                            {getAvailableBooksCount(
+                              bookshelf?.books,
+                              bookshelf?.borrowedBooks
+                            )}
+                          </span>
+                          <span>available books</span>
+                        </div>
+                      </div>
                     </Link>
-                    <div className="bg-cyan-100 w-full">
+                    {/* <div className="bg-cyan-100 w-full">
                       <div className="flex gap-1 py-1 px-2 rounded w-full">
                         <span>{books?.length - borrowedBooks?.length}</span>
                         <span>Available</span>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </aside>
               </div>
@@ -172,12 +216,19 @@ const BookshelfPage = () => {
                 </Link>
               </div>
               <div className="w-4/12">
-                <LikeButton />
+                <div className="w-full bg-rose-200 rounded-lg text-gray-800">
+                  <LikeButton
+                    userId={userId}
+                    bookshelfId={bookshelf?._id}
+                    onLike={handleLike}
+                  />{" "}
+                </div>
               </div>
             </div>
           </div>
         </article>
       </section>
+      <FooterComponent />
     </main>
   );
 };

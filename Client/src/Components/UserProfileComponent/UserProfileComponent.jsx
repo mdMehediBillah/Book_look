@@ -1,16 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useAuthContext } from "../../Context/User/AuthContext.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import bannerImgUrl from "../../assets/images/banner_default.png";
 import profileImgUrl from "../../assets/images/avatar.png";
 // import { format } from "date-fns";
 import UserProfileActivitiesCompo from "../UserProfileActivitiesCompo/UserProfileActivitiesCompo.jsx";
+import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext";
 
 const UserProfileComponent = () => {
   const navigate = useNavigate();
+  const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
 
   const { setUser, user } = useAuthContext();
-  console.log(JSON.stringify(user));
+  // console.log(JSON.stringify(user));
 
   // fetching data from local storage
   // const userLocal = localStorage.getItem("user");
@@ -49,13 +51,26 @@ const UserProfileComponent = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-end items-end  pr-4 container max-w-screen-lg mx-auto bg-gray-50 ">
-        <div className="flex gap-2 text-right text-2xl font-bold pt-2 container text-gray-700 justify-end">
+
+      <div
+        className={`flex flex-col justify-end items-end  pr-4 container max-w-screen-lg mx-auto ${
+          theme === "light" ? "bg-gray-100" : "bg-gray-600"
+        }`}
+      >
+        <div
+          className={`flex gap-2 text-right text-2xl font-bold pt-2 container text-gray-700 justify-end ${
+            theme === "light" ? "text-rose-500" : "text-rose-100"
+          }`}
+        >
           <span>{firstName}</span>
           <span>{lastName}</span>
         </div>
         <div>
-          <p className="text-right text-sm  container mx-auto text-gray-500 pt-1">
+          <p
+            className={`text-right text-sm  container mx-auto text-gray-500 pt-1 ${
+              theme === "light" ? "text-gray-500" : "text-gray-200"
+            }`}
+          >
             {email}
           </p>
         </div>
@@ -65,20 +80,36 @@ const UserProfileComponent = () => {
           </p>
         </div>
       </div>
-      <div className="flex justify-between gap-4 container max-w-screen-lg mx-auto pb-4 bg-gray-50">
+
+      <div
+        className={`flex justify-between gap-4 container max-w-screen-lg mx-auto pb-4 ${
+          theme === "light" ? "bg-gray-100" : "bg-gray-600"
+        }`}
+      >
         <div className="pl-12 w-8/12">
-          <p>{aboutMe}</p>
+          <p
+            className={` pt-1 ${
+              theme === "light" ? "text-gray-500" : "text-gray-200"
+            }`}
+          >
+            {aboutMe}
+          </p>
         </div>
         <div className=" w-4/12 text-right">
           <Link to="/profile_update">
-            <button className="mt-3 bg-cyan-100 py-2 px-4 text-center rounded-xl font-medium text-sm">
+            <button className="mt-3 mr-2 bg-cyan-100 py-2 px-4 text-center rounded-xl font-medium text-sm">
               Update Profile
             </button>
           </Link>
         </div>
       </div>
       <UserProfileActivitiesCompo />
-      <div className="flex flex-col container max-w-screen-lg mx-auto bg-gray-50 px-4 pb-10 ">
+
+      <div
+        className={`flex flex-col container max-w-screen-lg mx-auto px-4 pb-10 ${
+          theme === "light" ? "bg-gray-200" : "bg-gray-500"
+        }`}
+      >
         <div>
           <button
             className="mt-3 bg-cyan-200 py-2 px-6 text-center rounded-xl font-semibold mb-10"
@@ -88,7 +119,7 @@ const UserProfileComponent = () => {
           </button>
         </div>
         <div>
-          <button className="mt-3 bg-rose-100 py-2 px-6 text-center rounded-xl font-semibold">
+          <button className="mt-3 bg-rose-200 py-2 px-6 text-center rounded-xl font-semibold">
             Delete Account
             <span className="text-sm font-semibold ml-2">
               (Warning: This action cannot be undone)

@@ -1,14 +1,32 @@
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { API } from "../../Utils/security/secreteKey";
 import "./BookPage.scss";
 import BorrowedBookForm from "../../Components/forms/borrow/BorrowedBookForm";
 import debounce from "lodash.debounce";
 import Rating from "../../Components/bookshelf/ratings/Rating";
+import {
+  GoBackComponent,
+  FooterComponent,
+  NavigationComponent,
+} from "../../Components";
+import { useAuthContext } from "../../Context/User/AuthContext.jsx";
+import { useShelfContext } from "../../Context/Shelf/shelfContext.jsx"; // Adjust the path as necessary
+import { toast } from "react-toastify";
+import { motion } from "framer-motion";
+import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext.jsx";
 
 const BookPage = () => {
-  const { bookId } = useParams();
+  const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
+
+  const navigate = useNavigate();
+  const { shelfData } = useShelfContext();
+  // console.log(shelfData);
+  const { bookshelfId, bookId } = useParams();
+  console.log(bookshelfId, bookId);
+
+  const { user } = useAuthContext();
   const [book, setBook] = useState({});
   const [openBorrowedBook, setOpenBorrowedBook] = useState(false);
   const [averageRating, setAverageRating] = useState(0);
@@ -59,54 +77,147 @@ const BookPage = () => {
     debouncedUpdateRating(newRating);
   };
 
-  return (
-    <main className="book-page">
-      <section className="book-page-container">
-        <h1 className="book-page-title">{book?.title}</h1>
+  // =================================================================
+  // Borrow book
+  const userId = user?._id || "";
+  const borrowedFrom = shelfData?._id || "";
+  // console.log(user);
 
-        <div className="book-wrapper">
-          <figure className="book-image">
+  const [formData, setFormData] = useState({
+    book: bookId,
+    user: userId,
+    borrowedFrom: bookshelfId,
+  });
+  console.log(formData);
+  // console.log(book);
+
+  // handle BorrowedBookForm
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData);
+    try {
+      const { data } = await axios.post(
+        `${API}/api/v1/borrowedBooks/new`,
+        formData
+      );
+
+      toast.success(data.message);
+      setOpenBorrowedBook(false);
+      navigate(-2);
+    } catch (error) {
+      console.error("Error creating BorrowedBook:", error);
+      toast.error("Error creating BorrowedBook:", error);
+    }
+  };
+  // =================================================================
+
+  return (
+    <>
+      <main
+        className={`w-full object-cover bg-cover bg-center bg-no-repeat bookshelf-page h-[100vh] ${
+          theme === "light" ? "bg-gray-50" : "bg-gray-800"
+        }`}
+      >
+        <NavigationComponent />
+        <div className="max-w-screen-lg mx-auto flex justify-between">
+          <GoBackComponent />
+          <div className="py-1 px-3 font-semibold">
+            <h4
+              className={`text-lg font-bold line-clamp-1 ${
+                theme === "light" ? "text-gray-800" : "text-gray-300"
+              }`}
+            >
+              {book?.title}
+            </h4>
+          </div>
+        </div>
+
+        <section className="flex gap-4 mt-12 justify-center">
+          {/* <h1 className="book-page-title">{book?.title}</h1> */}
+
+          <div className="flex gap-4 bg-gray-100 p-2">
+            <figure className="book-image">
+              <img
+                className="w-full h-[300px] object-cover rounded-md mx-auto"
+                src={book?.coverImageUrl}
+                alt={book?.title}
+              />
+            </figure>
+
+            <article className="flex flex-col justify-between">
+              <div>
+                <h2 className="text-xl font-bold line-clamp-1">
+                  {" "}
+                  {book?.title}{" "}
+                </h2>
+                <small className="book-author">Written by {book?.author}</small>
+                <hr />
+              </div>
+
+              <div>
+                <div className="flex gap-2 items-center mt-6">
+                  <p className="book-rating">
+                    Rating: {averageRating?.toFixed(1)}
+                  </p>
+                  <Rating
+                    initialRating={averageRating} // Pass the averageRating to Rating component
+                    onRatingChange={handleRatingChange}
+                  />
+                </div>
+                <p className="book-summary">{book.summary}</p>
+                <button
+                  onClick={() => setOpenBorrowedBook(true)}
+                  className="bg-cyan-500 text-white px-4 py-1 rounded-md mt-4 hover:bg-rose-500 hover:scale-105 transition-transform duration-500"
+                >
+                  Borrow Book
+                </button>
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+      {openBorrowedBook && (
+        <div
+          className="fixed inset-0 flex items-center justify-center bg-red-200 bg-opacity-75 z-50"
+          onClick={() => setOpenBorrowedBook(false)}
+        >
+          <motion.div
+            initial={{ scale: 0, opacity: 0, rotateX: 180, x: "-100vw" }}
+            animate={{ scale: 1, opacity: 1, rotateX: 0, x: 0 }}
+            transition={{ type: "spring", duration: 0.2, bounce: 20 }}
+            className="w-full max-w-lg mx-auto bg-white rounded-md shadow-lg p-4 border-radius-2xl border-gray-200 border-4 flex gap-4"
+          >
             <img
-              className="image"
+              className="w-full h-[300px] object-cover rounded-md mx-auto"
               src={book?.coverImageUrl}
               alt={book?.title}
             />
-          </figure>
-
-          <article className="book-details-wrapper">
-            <h3 className="book-title"> {book?.title} </h3>
-
-            <small className="book-author">
-              by Justin G. Longenecker (Author), J. William Petty (Author),
-              Leslie E. Palich (Author), Frank Hoy (Author)
-            </small>
-
-            <hr />
-
-            <p className="book-rating">
-              Average Rating: {averageRating?.toFixed(1)}
-              <Rating
-                initialRating={averageRating} // Pass the averageRating to Rating component
-                onRatingChange={handleRatingChange}
-              />
-            </p>
-
-            <p className="book-summary">{book.summary}</p>
-
-            <button
-              onClick={() => setOpenBorrowedBook(true)}
-              className="borrow-book-btn"
-            >
-              Borrow Book
-            </button>
-          </article>
-
-          {openBorrowedBook && (
-            <BorrowedBookForm setOpenBorrowedBook={setOpenBorrowedBook} />
-          )}
+            <div className="flex flex-col justify-between ">
+              <div>
+                <p className="mt-2 text-black text-2xl font-semibold">
+                  Do you want to Borrow the Book?
+                </p>
+              </div>
+              <div className="flex mt-6 justify-between gap-2">
+                <button
+                  className=" bg-orange-300 hover:bg-orange-200 text-black font-semibold py-2 rounded w-full"
+                  onClick={() => setOpenBorrowedBook(false)}
+                >
+                  No
+                </button>
+                <button
+                  onClick={handleSubmit}
+                  className=" bg-cyan-400 hover:bg-cyan-200 text-black font-semibold py-2 rounded w-full"
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+          </motion.div>
         </div>
-      </section>
-    </main>
+      )}
+      <FooterComponent />
+    </>
   );
 };
 

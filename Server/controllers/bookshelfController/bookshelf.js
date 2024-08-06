@@ -143,7 +143,23 @@ export const updateBookshelf = async (req, res, next) => {
 //==========================================================================
 export const getBookshelves = async (req, res, next) => {
   try {
-    const { search } = req.query;
+    const { search, page } = req.query;
+
+    if (page && page) {
+      const bookshelves = await Bookshelf.find()
+        .limit(12)
+        .skip((page - 1) * 12);
+
+      if (!bookshelves) {
+        return next(createError(400, "Bookshelves not found!"));
+      }
+      console.log(bookshelves.length);
+      return res.status(200).json({
+        success: true,
+        result: bookshelves,
+      });
+    }
+    // const { search, page } = req.query;
     let query = {};
     if (search) {
       // If search parameter is provided, construct the query with $or conditions

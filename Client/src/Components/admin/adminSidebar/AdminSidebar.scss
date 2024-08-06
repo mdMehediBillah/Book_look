@@ -1,5 +1,5 @@
-@import '../../../styles/Variables.scss';
-@import '../../../styles/Mixins.scss';
+@import "../../../styles/Variables.scss";
+@import "../../../styles/Mixins.scss";
 
 .user-profile-sidebar-wrapper {
   min-height: 100vh;
@@ -13,13 +13,13 @@
     @include flexRow;
     align-items: center;
     font-size: $nfs;
-    padding: 0.5rem 0;
-    margin-bottom: 1rem;
+    padding: 0.7rem 0;
+    // margin-bottom: 1rem;
     border-bottom: 1px solid #d7e2ee;
     cursor: pointer;
 
     &:hover {
-      color: $red;
+      color: $blue;
       background: $userSidebar-hover;
       border-radius: $radius;
     }

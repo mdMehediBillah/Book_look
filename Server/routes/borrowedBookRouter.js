@@ -9,7 +9,7 @@ import {
 
 const borrowedBookRouter = express.Router();
 
-borrowedBookRouter.post("/new/:id", createBorrowedBook);
+borrowedBookRouter.post("/new", createBorrowedBook);
 borrowedBookRouter.get("/", getBorrowedBooks);
 borrowedBookRouter.get("/:id", getBorrowedBook);
 borrowedBookRouter.delete("/:id", deleteBorrowedBook);

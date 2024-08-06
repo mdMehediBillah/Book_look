@@ -16,6 +16,7 @@ import borrowedBookRouter from "./routes/borrowedBookRouter.js";
 import donatedBookRouter from "./routes/donatedBookRouter.js";
 import globalErrorHandler from "./middlewares/globalError/index.js";
 import subscribeRouter from "./routes/subscribeRouter.js";
+import likeShelfRouter from "./routes/likeShefeRouter.js";
 
 //chatbot
 import chatRouter from "./routes/chatbotRoutes/chatRouter.js";
@@ -57,6 +58,7 @@ app.use("/api/v1/ratings", ratingRouter);
 app.use("/api/v1/borrowedBooks", borrowedBookRouter);
 app.use("/api/v1/donatedBooks", donatedBookRouter);
 app.use("/api/v1/subscribe", subscribeRouter);
+app.use("/api/v1/likeShelf", likeShelfRouter);
 
 //chatbotRoutes
 app.use("/api/v1/chat/completions", chatRouter);

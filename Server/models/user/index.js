@@ -21,6 +21,9 @@ const userSchema = new Schema(
     city: { type: String },
     state: { type: String },
     country: { type: String },
+    likedBookshelves: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Bookshelf" },
+    ],
 
     borrowedBooks: [
       {
