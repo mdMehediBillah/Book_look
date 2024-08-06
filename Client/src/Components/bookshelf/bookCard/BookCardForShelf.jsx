@@ -14,7 +14,7 @@ npm install lodash.debounce
 const BookCardForShelf = ({ book }) => {
   const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
 
-  const [books, setBooks] = useState([]);
+  // const [books, setBooks] = useState([]);
 
   const { bookshelfId } = useParams();
   const [averageRating, setAverageRating] = useState(0);
@@ -51,20 +51,20 @@ const BookCardForShelf = ({ book }) => {
   };
 
   // console.log(bookshelf);
-  const fetchBooks = async () => {
-    try {
-      const { data } = await axios.get(
-        `${API}/api/v1/bookshelves/${bookshelfId}/books`
-      );
-      setBooks(data.books);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchBooks = async () => {
+  //   try {
+  //     const { data } = await axios.get(
+  //       `${API}/api/v1/bookshelves/${bookshelfId}/books`
+  //     );
+  //     setBooks(data.books);
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
-    fetchBooks();
+    // fetchBooks();
     fetchRating();
   }, [book._id]);
 

@@ -1,14 +1,43 @@
-.update-profile-container {
-  .update-profile-title {
+@import "../../../styles/Variables.scss";
+@import "../../../styles/Mixins.scss";
+
+.admin-dashboard-contents-container {
+  min-height: 100vh;
+}
+.summary-dashboard-container {
+  position: relative;
+  @include flexColumn;
+  gap: 2rem;
+
+  .summary-dashboard-title {
+    @include subTitle;
   }
 
-  .users-participation-wrapper {
+  .print-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: #a2d2ff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
   }
 
-  .line-pie-charts-container {
-    display: grid;
-    grid-template-columns: 60% 35%;
-    column-gap: 1rem;
+  .bookshelves-bar-chart-wrapper {
+  }
+
+  .line-pie-charts-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    @include shadow1;
 
     .line-chart {
     }

@@ -17,6 +17,8 @@ const NavigationComponent = () => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
+  console.log("user =", user);
+
   const { firstName } = user;
 
   useEffect(() => {
@@ -96,6 +98,17 @@ const NavigationComponent = () => {
                   </span>
                 </li>
               </Link>
+              {user && user.role === "admin" && (
+                <Link to="/admin/dashboard">
+                  <li>
+                    <span className="justify-between">
+                      Dashboard
+                      {/* <span className="badge">New</span> */}
+                    </span>
+                  </li>
+                </Link>
+              )}
+
               <li onClick={handleLogout}>
                 <span className="justify-between">
                   Logout

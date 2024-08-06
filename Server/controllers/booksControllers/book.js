@@ -102,6 +102,8 @@ export const getBooks = async (req, res, next) => {
   try {
     const books = await Book.find();
 
+    console.log("books =", books);
+
     if (!books) {
       return next(createError(400, "Books not found!"));
     }

@@ -258,8 +258,9 @@ export const getAllBooksInBookshelf = async (req, res, next) => {
   try {
     const bookshelf = await Bookshelf.findById(bookshelfId)
       .populate({ path: "books", model: "Book" })
-      .populate({ path: "donatedBooks", model: "Book" })
       .populate({ path: "borrowedBooks", model: "Book" });
+
+ 
 
     if (!bookshelf) {
       return next(createError(400, "Bookshelf not found!"));
@@ -275,5 +276,22 @@ export const getAllBooksInBookshelf = async (req, res, next) => {
     });
   } catch (error) {
     return next(createError(400, "Server error! Please try again!"));
+  }
+};
+
+//==========================================================================
+// Total Number of bookshelves
+//==========================================================================
+
+export const countBookshelves = async (req, res, next) => {
+  try {
+    const bookshelvesCount = await Bookshelf.countDocuments();
+
+    res.status(200).json({
+      success: true,
+      result: bookshelvesCount,
+    });
+  } catch (error) {
+    next(createError(400, "Server error! Please try again!"));
   }
 };
