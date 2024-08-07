@@ -18,7 +18,6 @@ const BookshelfPage = () => {
   const [bookshelf, setBookshelf] = useState(null);
   const [books, setBooks] = useState([]);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
-  const [donatedBooks, setDonatedBooks] = useState([]);
   const { user } = useAuthContext();
   const userId = user?._id;
 
@@ -45,24 +44,11 @@ const BookshelfPage = () => {
           `${API}/api/v1/bookshelves/${bookshelfId}/books`
         );
         setBooks(data.books);
-        console.log("shelf books=", data);
       } catch (error) {
         console.log(error);
       }
     };
     fetchBooks();
-
-    const fetchDonatedBooks = async () => {
-      try {
-        const { data } = await axios.get(
-          `${API}/api/v1/bookshelves/${bookshelfId}/books`
-        );
-        setDonatedBooks(data.donatedBooks);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDonatedBooks();
 
     const fetchBorrowedBooks = async () => {
       try {
@@ -76,6 +62,10 @@ const BookshelfPage = () => {
     };
     fetchBorrowedBooks();
   }, [bookshelfId]);
+
+  // Filter the array to get only the available books
+  const availableBooks = books.filter((book) => book.status === "available");
+  const availableBooksCount = availableBooks.length;
 
   // Compute opening status
   // console.log(bookshelf);
@@ -91,10 +81,6 @@ const BookshelfPage = () => {
     // Optionally, update local state or perform other actions when a bookshelf is liked
     console.log(`Bookshelf ${bookshelfId} liked`);
   };
-  const getAvailableBooksCount = (books = [], borrowedBooks = []) => {
-    return Math.max(0, books?.length - borrowedBooks?.length);
-  };
-  console.log(getAvailableBooksCount);
 
   return (
     <main
@@ -158,40 +144,17 @@ const BookshelfPage = () => {
                 </div>
                 <aside className="">
                   <div className="">
-                    {/* <Link
-                      to={`/${bookshelfId}/books`}
-                      state={{ books, bookshelf }}
-                    >
-                      <div className="bg-cyan-100 w-full">
-                        <div className="flex gap-1 py-1 px-2 rounded w-full">
-                          <span>{books ? books?.length : 0}</span>
-                          <span>Books</span>
-                        </div>
-                      </div>
-                    </Link> */}
                     <Link
                       to={`/${bookshelfId}/books`}
                       state={{ books, bookshelf, borrowedBooks }}
                     >
                       <div className="bg-cyan-100 w-full">
                         <div className="flex gap-1 py-1 rounded w-full justify-center">
-                          {/* <span>{books?.length - borrowedBooks?.length}</span> */}
-                          <span>
-                            {getAvailableBooksCount(
-                              bookshelf?.books,
-                              bookshelf?.borrowedBooks
-                            )}
-                          </span>
+                          <span>{availableBooksCount}</span>
                           <span>available books</span>
                         </div>
                       </div>
                     </Link>
-                    {/* <div className="bg-cyan-100 w-full">
-                      <div className="flex gap-1 py-1 px-2 rounded w-full">
-                        <span>{books?.length - borrowedBooks?.length}</span>
-                        <span>Available</span>
-                      </div>
-                    </div> */}
                   </div>
                 </aside>
               </div>
