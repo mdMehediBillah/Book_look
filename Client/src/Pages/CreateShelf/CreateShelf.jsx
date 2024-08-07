@@ -107,9 +107,9 @@ const CreateShelfForm = () => {
       // console.log(" x", x);
 
       // const formReq = { ...updatedFormData, country: x[0].name };
-
+      const URL = import.meta.env.VITE_REACT_APP_URL;
       const response = await axios.post(
-        "http://localhost:8000/api/v1/bookshelves/new",
+        `${URL}/api/v1/bookshelves/new`,
         updatedFormData
       );
       // const response = await axios.post(

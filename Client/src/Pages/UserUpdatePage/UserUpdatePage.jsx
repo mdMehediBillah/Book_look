@@ -162,22 +162,19 @@ const UserUpdatePage = () => {
       setLoading(true);
       setGeneratingImage(true);
       setShareButton(false);
-      const response = await fetch(
-        "http://localhost:8000/api/v1/images/generations",
-        {
-          method: "POST",
-          headers: {
-            provider: "open-ai",
-            mode: "production",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            model: "dall-e-3",
-            prompt: form.prompt,
-            size: "1024x1024",
-          }),
-        }
-      );
+      const response = await fetch(`${url}/api/v1/images/generations`, {
+        method: "POST",
+        headers: {
+          provider: "open-ai",
+          mode: "production",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "dall-e-3",
+          prompt: form.prompt,
+          size: "1024x1024",
+        }),
+      });
       const data = await response.json();
       const createdImage = data[0].url;
       setImgUrl(createdImage);

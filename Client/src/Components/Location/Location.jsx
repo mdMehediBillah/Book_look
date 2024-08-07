@@ -12,6 +12,7 @@ import SearchComponent from "../SearchComponent/SearchComponent";
 import { updateBookshelvesWithCoordinates } from "./geocoding/geocoding";
 
 const Location = () => {
+  const URL = import.meta.env.VITE_REACT_APP_URL;
   const [bookshelves, setBookshelves] = useState([]);
   const [center, setCenter] = useState([51.541574, 9.951122]); // Default center
   const [userLocation, setUserLocation] = useState(null);
@@ -26,9 +27,7 @@ const Location = () => {
   useEffect(() => {
     const fetchBookshelves = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8000/api/v1/bookshelves/`
-        );
+        const response = await axios.get(`${URL}/api/v1/bookshelves/`);
 
         setBookshelves(response.data.result);
       } catch (error) {

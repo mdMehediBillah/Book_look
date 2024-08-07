@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaPaperPlane } from "react-icons/fa";
 
 export const Form = ({ setMessages, messages }) => {
+  const URL = import.meta.env.VITE_REACT_APP_URL;
   const [{ stream, message }, setState] = useState({
     stream: true,
     message: "",
@@ -24,23 +25,19 @@ export const Form = ({ setMessages, messages }) => {
     };
 
     setMessages((prev) => [...prev, newMessage]);
-
-    const response = await fetch(
-      "http://localhost:8000/api/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          provider: "open-ai",
-          mode: "production",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "gpt-4o",
-          messages: [...messages, newMessage],
-          stream,
-        }),
-      }
-    );
+    const response = await fetch(`${URL}/api/v1/chat/completions`, {
+      method: "POST",
+      headers: {
+        provider: "open-ai",
+        mode: "production",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "gpt-4o",
+        messages: [...messages, newMessage],
+        stream,
+      }),
+    });
 
     setState({ stream, message: "" });
 

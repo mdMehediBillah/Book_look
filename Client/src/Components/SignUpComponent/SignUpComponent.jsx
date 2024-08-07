@@ -9,6 +9,7 @@ import { LuEye, LuEyeOff } from "react-icons/lu";
 // SignUpComponent
 const SignUpComponent = ({ toggleForm }) => {
   const navigate = useNavigate();
+  const URL = import.meta.env.VITE_REACT_APP_URL;
 
   // =================================================================
   // define states
@@ -79,7 +80,7 @@ const SignUpComponent = ({ toggleForm }) => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/v1/auth/register`,
+        `${URL}/api/v1/auth/register`,
         formData
       );
       console.log(response);
