@@ -1,10 +1,11 @@
 import { useContext, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import {
   GoBackComponent,
   NavigationComponent,
   UserProfileComponent,
-  FooterComponent
+  FooterComponent,
 } from "../../Components";
 import ChatbotLayout from "../../Components/Chatbot/ChatbotLayout/ChatbotLayout";
 import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext";

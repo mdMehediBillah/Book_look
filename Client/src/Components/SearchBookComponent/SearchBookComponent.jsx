@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import coverImg from "../../assets/images/bookCover.png"; // Placeholder image
 import "./SearchBookComponent.css";
 import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext.jsx";
+import { ColorRing } from "react-loader-spinner";
 
 const SearchBookComponent = ({ shelf }) => {
   const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
@@ -58,8 +59,24 @@ const SearchBookComponent = ({ shelf }) => {
       </form>
       <div className="">
         {loading ? (
-          <div className="container screen-max-lg p-4 text-center font-semibold">
-            Loading...
+          <div className="flex flex-col justify-center  mx-auto w-6/12 mb-20">
+            {" "}
+            <div className="mx-auto">
+              <div className="mx-auto">
+                <ColorRing
+                  loading={loading}
+                  colors={[
+                    "#00BCD4",
+                    "#ff007a",
+                    "#00BCD4",
+                    "#ff007a",
+                    "#00BCD4",
+                  ]}
+                  size={28}
+                />
+              </div>
+              <span className="text-center">Loading search result...</span>
+            </div>
           </div>
         ) : (
           <div className="container screen-max-lg p-4">
@@ -80,12 +97,41 @@ const SearchBookComponent = ({ shelf }) => {
                     {" "}
                     <Link to={`/createBookSearch/${book.id}`}>
                       <div className="">
+                        {loading ? (
+                          <div className="flex flex-col justify-center  mx-auto w-6/12">
+                            {" "}
+                            <div className="mx-auto">
+                              <div className="mx-auto">
+                                <ColorRing
+                                  loading={loading}
+                                  colors={[
+                                    "#00BCD4",
+                                    "#ff007a",
+                                    "#00BCD4",
+                                    "#ff007a",
+                                    "#00BCD4",
+                                  ]}
+                                  size={28}
+                                />
+                              </div>
+                              <span className="text-center">Loading...</span>
+                            </div>
+                          </div>
+                        ) : (
+                          <img
+                            src={book.cover_img}
+                            alt="cover"
+                            className="w-full cover "
+                          />
+                        )}
+                      </div>
+                      {/* <div className="">
                         <img
                           src={book.cover_img}
                           alt="cover"
                           className="w-full cover "
                         />
-                      </div>
+                      </div> */}
                     </Link>
                     <div className="px-2">
                       <div className="text-lg font-semibold pt-2">
