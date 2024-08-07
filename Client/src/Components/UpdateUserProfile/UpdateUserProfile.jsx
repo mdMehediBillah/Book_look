@@ -7,7 +7,7 @@ import UserProfileActivitiesCompo from "../UserProfileActivitiesCompo/UserProfil
 const UpdateUserProfile = () => {
   const navigate = useNavigate();
   const { user, setUser } = useAuthContext();
-  console.log(user);
+  // console.log(user);
 
   // fetching data from local storage
   // const userLocal = localStorage.getItem("user");

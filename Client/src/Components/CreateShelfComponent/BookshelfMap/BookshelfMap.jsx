@@ -45,11 +45,11 @@ const LocationPicker = ({ onLocationSelect }) => {
             street: road,
             zipCode: postcode,
           };
-          console.log("Retrieved Address:", formattedAddress);
+          // console.log("Retrieved Address:", formattedAddress);
           setAddress(formattedAddress);
           onLocationSelect(formattedAddress);
         } else {
-          console.log("No address found for the given location.");
+          // console.log("No address found for the given location.");
           setAddress(null);
           onLocationSelect(null);
         }

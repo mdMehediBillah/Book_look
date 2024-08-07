@@ -15,8 +15,12 @@ import TimeSelectionOptions from "../../Components/CreateShelfComponent/TimeSele
 import BookshelfMap from "../../Components/CreateShelfComponent/BookshelfMap/BookshelfMap.jsx";
 import MapSearch from "../../Components/CreateShelfComponent/MapSearch/MapSearch.jsx";
 import AddressInput from "../../Components/CreateShelfComponent/AddressInput/AddressInput.jsx";
-import { GoBackComponent, FooterComponent,  NavigationComponent } from "../../Components/index.js";
-import { Link } from "react-router-dom";
+import {
+  GoBackComponent,
+  FooterComponent,
+  NavigationComponent,
+} from "../../Components/index.js";
+import { Link, useNavigate } from "react-router-dom";
 
 // Function to upload image to Cloudinary
 const uploadImageToCloudinary = async (file) => {
@@ -32,6 +36,7 @@ const uploadImageToCloudinary = async (file) => {
 
 const CreateShelfForm = () => {
   const { theme } = useContext(ThemeContext); // for dark and light mode
+  const navigate = useNavigate();
 
   // Determine the styles based on the theme
   // const inputStyle =
@@ -93,7 +98,7 @@ const CreateShelfForm = () => {
       };
       //==========================================================================
       //==========================================================================
-      console.log(" updatedFormData", updatedFormData);
+      // console.log(" updatedFormData", updatedFormData);
       // console.log(Country.getAllCountries());
 
       // const x = Country.getAllCountries().filter(
@@ -116,6 +121,7 @@ const CreateShelfForm = () => {
       //   updatedFormData
       // );
       toast.success(response.data.message);
+      navigate("/allShalves");
     } catch (error) {
       console.error("Error creating bookshelf:", error);
       toast.error(error.response?.data?.message || "Error creating bookshelf");

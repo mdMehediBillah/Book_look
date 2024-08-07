@@ -15,9 +15,9 @@ const URL = "https://openlibrary.org/works/";
 
 const BookDetails = ({ shelf }) => {
   const { shelfData } = useShelfContext();
-  console.log(shelfData._id);
+  // console.log(shelfData._id);
   const { id } = useParams();
-  console.log(shelf);
+  // console.log(shelf);
   const [loading, setLoading] = useState(false);
   const [book, setBook] = useState(null);
   const navigate = useNavigate();
@@ -39,14 +39,14 @@ const BookDetails = ({ shelf }) => {
         const authorKey = data.authors[0].author.key;
         // http://openlibrary.org/search.json?author=/authors/$OL3732231A}
         const authorNameurl = `http://openlibrary.org/search.json?author=${authorKey}`;
-        console.log(authorNameurl);
+        // console.log(authorNameurl);
 
         const authorResponse = await fetch(authorNameurl);
         const authorData = await authorResponse.json();
         // console.log(authorData.docs[0].author_name);
         const author = authorData.docs[0].author_name;
         setAuthorData(author);
-        console.log(authorData.docs[0].author_name);
+        // console.log(authorData.docs[0].author_name);
         // =================================================================
 
         setFormData(data);
@@ -95,10 +95,10 @@ const BookDetails = ({ shelf }) => {
     const imageFormData = formData.covers[0];
 
     // fetch image from openlibrary
-    console.log(imageFormData);
+    // console.log(imageFormData);
     const url = `https://covers.openlibrary.org/b/id/${imageFormData}-L.jpg`;
     // setImageData(url);
-    console.log(url);
+    // console.log(url);
     // console.log(imageData);
 
     // create new book object with updated data
@@ -119,10 +119,10 @@ const BookDetails = ({ shelf }) => {
     setFormData(newBook);
     // save changes to database
     // console.log(formData);
-    console.log(newBook.title);
-    console.log(newBook.author);
-    console.log(newBook.coverImageUrl);
-    console.log(newBook.bookshelf);
+    // console.log(newBook.title);
+    // console.log(newBook.author);
+    // console.log(newBook.coverImageUrl);
+    // console.log(newBook.bookshelf);
     // const img = newBook.image;
     // const url = `https://covers.openlibrary.org/b/id/${img}-L.jpg`;
     // setImageData(url);
@@ -139,7 +139,7 @@ const BookDetails = ({ shelf }) => {
         // publishedDate: newBook.publishedDate,
         // language: newBook.language,
       });
-      console.log(response.data);
+      // console.log(response.data);
       toast.success("Add Book successfully!");
       navigate("/");
     } catch (error) {

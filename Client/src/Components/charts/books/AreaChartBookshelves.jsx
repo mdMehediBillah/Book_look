@@ -52,7 +52,7 @@ const AreaChartBookshelves = ({ bookshelves, books }) => {
   }));
 
   // Debugging: Log the processed data
-  console.log("Chart Data:", chartData);
+  // console.log("Chart Data:", chartData);
 
   return (
     <section className="pt-5 pb-10" style={{ width: "40vw", height: "400px" }}>

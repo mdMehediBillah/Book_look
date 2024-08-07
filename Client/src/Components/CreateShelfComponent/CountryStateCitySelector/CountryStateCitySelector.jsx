@@ -22,7 +22,6 @@ const CountryStateCitySelector = ({ onLocationChange }) => {
       setCities([]);
       setSelectedState("");
       setSelectedCity("");
-      
     }
   }, [selectedCountry]);
 
@@ -47,7 +46,7 @@ const CountryStateCitySelector = ({ onLocationChange }) => {
   };
 
   const handleCityChange = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setSelectedCity(e.target.value);
     onLocationChange({ city: e.target.value });
     // onLocationChange("city", e.target.value);

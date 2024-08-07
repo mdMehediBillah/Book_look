@@ -46,7 +46,7 @@ export const createBookshelf = async (req, res, next) => {
       openingTime,
       closingTime,
     };
-    console.log(newBookshelf);
+    // console.log(newBookshelf);
 
     await Bookshelf.create(newBookshelf);
     // Create a new bookshelf instance
@@ -153,7 +153,7 @@ export const getBookshelves = async (req, res, next) => {
       if (!bookshelves) {
         return next(createError(400, "Bookshelves not found!"));
       }
-      console.log(bookshelves.length);
+      // console.log(bookshelves.length);
       return res.status(200).json({
         success: true,
         result: bookshelves,
@@ -259,8 +259,6 @@ export const getAllBooksInBookshelf = async (req, res, next) => {
     const bookshelf = await Bookshelf.findById(bookshelfId)
       .populate({ path: "books", model: "Book" })
       .populate({ path: "borrowedBooks", model: "Book" });
-
- 
 
     if (!bookshelf) {
       return next(createError(400, "Bookshelf not found!"));

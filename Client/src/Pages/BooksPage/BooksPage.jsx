@@ -13,8 +13,8 @@ const BooksPage = () => {
     books: [],
     bookshelf: {},
   };
-  console.log(books.length);
-  console.log(borrowedBooks?.length);
+  // console.log(books.length);
+  // console.log(borrowedBooks?.length);
   return (
     <main
       className={`w-full object-cover bg-cover bg-center bg-no-repeat bookshelf-page h-[100vh] ${

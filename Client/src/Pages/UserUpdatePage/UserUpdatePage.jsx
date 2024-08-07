@@ -138,7 +138,7 @@ const UserUpdatePage = () => {
         //   },
         // }
       );
-      console.log("User updated successfully:", response.data);
+      // console.log("User updated successfully:", response.data);
 
       setUser(response.data.result);
       // localStorage.setItem("user", JSON.stringify(response.data.result));
@@ -280,21 +280,21 @@ const UserUpdatePage = () => {
           <div className="flex flex-col items-center">
             <div className="w-full lg:w-8/12 py-2 flex flex-col items-center">
               <h4 className="text-gray-600 font-semibold text-lg">
-                Use AI-Generated Image
+                Generated your Profile Image
               </h4>
               <div className="w-full lg:w-8/12 flex flex-col items-center">
                 <textarea
                   // ref={inputRef}
                   name="prompt"
                   className="textarea textarea-bordered h-24 w-full my-2"
-                  placeholder="Image prompt"
+                  placeholder="Describe yourself for your profile image"
                   onChange={handleChange}
                 />
                 <button
                   onClick={handleImgGenerator}
                   className="btn bg-rose-500 text-white w-8/12 hover:bg-rose-400 hover:text-gray-700"
                 >
-                  Generate Image
+                  Generate
                 </button>
               </div>
             </div>

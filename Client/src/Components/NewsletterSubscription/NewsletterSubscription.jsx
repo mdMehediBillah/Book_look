@@ -48,7 +48,7 @@ const NewsletterSubscription = () => {
     }
     setLoading(true);
     setError("");
-    console.log("clicked submit for subscription");
+    // console.log("clicked submit for subscription");
 
     try {
       const response = await axios.post(`${URL}/api/v1/subscribe/new`, form);

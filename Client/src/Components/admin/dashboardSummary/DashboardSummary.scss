@@ -1,6 +1,5 @@
 @import "../../../styles/Variables.scss";
 @import "../../../styles/Mixins.scss";
-
 .admin-dashboard-contents-container {
   min-height: 100vh;
 }
@@ -8,11 +7,9 @@
   position: relative;
   @include flexColumn;
   gap: 2rem;
-
   .summary-dashboard-title {
     @include subTitle;
   }
-
   .print-button {
     position: absolute;
     top: 1rem;
@@ -29,19 +26,15 @@
     border-radius: 5px;
     transition: background-color 0.3s ease;
   }
-
   .bookshelves-bar-chart-wrapper {
   }
-
   .line-pie-charts-wrapper {
     display: flex;
     flex-direction: row;
     gap: 1rem;
     @include shadow1;
-
     .line-chart {
     }
-
     .pie-chart {
       display: flex;
       flex-direction: column;

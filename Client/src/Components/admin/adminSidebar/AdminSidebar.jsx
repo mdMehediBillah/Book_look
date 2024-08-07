@@ -92,7 +92,7 @@ const AdminSidebar = ({ isActive, setIsActive }) => {
         </h4>
       </aside> */}
 
-      <aside
+      {/* <aside
         onClick={() => setIsActive(6)}
         className="flex items-center gap-1 hover:bg-rose-500 cursor-pointer w-full px-4 py-2 rounded-lg"
       >
@@ -104,7 +104,7 @@ const AdminSidebar = ({ isActive, setIsActive }) => {
         <h4 className={isActive === 6 ? "active-text" : "passive-text"}>
           Borrowed
         </h4>
-      </aside>
+      </aside> */}
 
       {/* <aside
         onClick={() => setIsActive(7)}

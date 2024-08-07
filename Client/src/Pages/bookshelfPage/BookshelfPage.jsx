@@ -83,97 +83,102 @@ const BookshelfPage = () => {
 
   const handleLike = (bookshelfId) => {
     // Optionally, update local state or perform other actions when a bookshelf is liked
-    console.log(`Bookshelf ${bookshelfId} liked`);
+    // console.log(`Bookshelf ${bookshelfId} liked`);
   };
 
   return (
-    <main
-      className={`w-full object-cover bg-cover bg-center bg-no-repeat bookshelf-page h-[100vh] ${
-        theme === "light" ? "bg-gray-50" : "bg-gray-800"
-      }`}
-    >
-      <NavigationComponent />
-      <div className="max-w-screen-lg mx-auto">
-        <GoBackComponent />
-      </div>
-      <section className="flex flex-col py-4 container mx-auto screen-max-lg max-w-screen-lg mt-6 mb-6">
-        <article
-          className={`flex flex-col gap-4  mx-auto p-3 rounded-md ${
-            theme === "light" ? "bg-gray-200" : "bg-gray-400"
-          }`}
-        >
-          <div>
-            <div className="flex gap-2">
-              <figure>
-                <img
-                  className="w-56 h-68 object-cover rounded-lg"
-                  src={bookshelf?.image}
-                  alt={bookshelf?.name}
-                />
-              </figure>
-              <div className="flex flex-col justify-between">
-                <div>
-                  <h2 className="text-xl font-semibold"> {bookshelf?.name}</h2>
-                  <div className="flex items-center gap-1 text-sm">
-                    <span>{bookshelf?.street},</span>
-                    <span>{bookshelf?.city}</span>
+    <>
+      <main
+        className={`w-full object-cover bg-cover bg-center bg-no-repeat bookshelf-page h-[100vh] ${
+          theme === "light" ? "bg-gray-50" : "bg-gray-800"
+        }`}
+      >
+        <NavigationComponent />
+        <div className="max-w-screen-lg mx-auto">
+          <GoBackComponent />
+        </div>
+        <section className="flex flex-col py-4 container mx-auto screen-max-lg max-w-screen-lg mt-6 mb-6">
+          <article
+            className={`flex flex-col gap-4  mx-auto p-3 rounded-md ${
+              theme === "light" ? "bg-gray-200" : "bg-gray-400"
+            }`}
+          >
+            <div>
+              <div className="flex gap-2">
+                <figure>
+                  <img
+                    className="w-56 h-68 object-cover rounded-lg"
+                    src={bookshelf?.image}
+                    alt={bookshelf?.name}
+                  />
+                </figure>
+                <div className="flex flex-col justify-between">
+                  <div>
+                    <h2 className="text-xl font-semibold">
+                      {" "}
+                      {bookshelf?.name}
+                    </h2>
+                    <div className="flex items-center gap-1 text-sm">
+                      <span>{bookshelf?.street},</span>
+                      <span>{bookshelf?.city}</span>
+                    </div>
+                    <div className="flex items-center gap-1 text-sm">
+                      <span>{bookshelf?.zipCode},</span>
+                      <span>{bookshelf?.country}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1 text-sm">
-                    <span>{bookshelf?.zipCode},</span>
-                    <span>{bookshelf?.country}</span>
-                  </div>
-                </div>
-                <aside className="">
-                  <div className="">
-                    <Link
-                      to={`/${bookshelfId}/books`}
-                      state={{ books, bookshelf, borrowedBooks }}
-                    >
-                      <div className="bg-cyan-100 w-full">
-                        <div className="flex gap-1 py-1 rounded w-full justify-center">
-                          <span>{availableBooksCount}</span>
-                          <span>available books</span>
+                  <aside className="">
+                    <div className="">
+                      <Link
+                        to={`/${bookshelfId}/books`}
+                        state={{ books, bookshelf, borrowedBooks }}
+                      >
+                        <div className="bg-cyan-100 w-full">
+                          <div className="flex gap-1 py-1 rounded w-full justify-center">
+                            <span>{availableBooksCount}</span>
+                            <span>available books</span>
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  </div>
-                </aside>
+                      </Link>
+                    </div>
+                  </aside>
+                </div>
               </div>
-            </div>
-            <div className="text-center py-1 bg-gray-100 w-full rounded-md mt-3">
-              <p className={`text-${isOpen ? "green" : "red"}-500`}>
-                {message} <span className="text-gray-500">{detail}</span>
-              </p>{" "}
-            </div>
-            <div className="flex justify-between gap-2 mt-1  items-center">
-              <div className="bg-cyan-600 w-10/12 rounded-md text-white">
-                <Link
-                  to={`/create_book/${bookshelf?._id}`}
-                  className="flex items-center justify-center gap-1"
-                >
-                  <div>
-                    <LuBook />
-                  </div>
-                  <div>
-                    <p className="text-center py-1">Add Book</p>
-                  </div>
-                </Link>
+              <div className="text-center py-1 bg-gray-100 w-full rounded-md mt-3">
+                <p className={`text-${isOpen ? "green" : "red"}-500`}>
+                  {message} <span className="text-gray-500">{detail}</span>
+                </p>{" "}
               </div>
-              <div className="w-4/12">
-                <div className="w-full bg-rose-200 rounded-lg text-gray-800">
-                  <LikeButton
-                    userId={userId}
-                    bookshelfId={bookshelf?._id}
-                    onLike={handleLike}
-                  />{" "}
+              <div className="flex justify-between gap-2 mt-1  items-center">
+                <div className="bg-cyan-600 w-10/12 rounded-md text-white">
+                  <Link
+                    to={`/create_book/${bookshelf?._id}`}
+                    className="flex items-center justify-center gap-1"
+                  >
+                    <div>
+                      <LuBook />
+                    </div>
+                    <div>
+                      <p className="text-center py-1">Add Book</p>
+                    </div>
+                  </Link>
+                </div>
+                <div className="w-4/12">
+                  <div className="w-full bg-rose-200 rounded-lg text-gray-800">
+                    <LikeButton
+                      userId={userId}
+                      bookshelfId={bookshelf?._id}
+                      onLike={handleLike}
+                    />{" "}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </article>
-      </section>
+          </article>
+        </section>
+      </main>
       <FooterComponent />
-    </main>
+    </>
   );
 };
 

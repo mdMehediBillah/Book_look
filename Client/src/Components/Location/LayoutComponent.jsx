@@ -11,6 +11,9 @@ import LikeComponent from "../LikeComponent/LikeComponent";
 import { LuBook } from "react-icons/lu";
 import LikeButton from "../LikeButtonComponent/LikeButtonComponent";
 import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext"; // Import ThemeContext
+import { useAuthContext } from "../../Context/User/AuthContext.jsx";
+import { useBookshelvesContext } from "../../Context/Shelf/BookshelvesContext.jsx";
+import ButtonCreateShelf from "../ButtonCreateShelf/ButtonCreateShelf.jsx";
 
 const LayoutComponent = ({
   bookshelves,
@@ -24,15 +27,17 @@ const LayoutComponent = ({
 }) => {
   const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
 
+  // =================================================================
+  const { loading, error } = useBookshelvesContext();
+  // const { bookshelves, loading, error } = useBookshelvesContext();
+  // console.log(bookshelves);
+  // const userId = user?._id;
+
   //==========================================================================
   // Filter bookshelves based on search term
   //==========================================================================
   const normalizedSearchTerm = (searchTerm || "").toLowerCase();
-  // Safeguard against undefined properties
   const filteredBookshelves = bookshelves.filter((shelf) => {
-    // console.log("Bookshelf:", shelf); // Log each bookshelf item ----> debugging
-    // console.log("Search Term:", normalizedSearchTerm); // Log the current search term ----> debugging
-    //search based on name, country, state, and city
     const name = shelf.name?.toLowerCase() || "";
     const country = shelf.country?.toLowerCase() || "";
     const state = shelf.state?.toLowerCase() || "";
@@ -61,10 +66,22 @@ const LayoutComponent = ({
   };
 
   //==========================================================================
-  const displayedBookshelves = filteredBookshelves; // to always display all bookshelves
+  const displayedBookshelves =
+    searchTerm === "" ? filteredBookshelves.slice(0, 8) : filteredBookshelves; // to always display all bookshelves
+  // console.log(displayedBookshelves);
   return (
     <div className="flex flex-col mt-10">
       {/* Map Container */}
+      <div className="flex justify-between py-4 px-2 items-center">
+        <h2
+          className={`text-xl font-bold ${
+            theme === "light" ? "text-gray-800" : "text-gray-300"
+          }`}
+        >
+          Grow your Bookshelf
+        </h2>
+        <ButtonCreateShelf />
+      </div>
       <div className="relative h-1/2 md:h-full">
         {/* Search Component inside the map */}
         <div className="absolute w-[50%] left-[25%] z-[1000] p-2 rounded">
@@ -97,8 +114,8 @@ const LayoutComponent = ({
               key={idx}
               className={`text-sm flex flex-col items-start p-2 border rounded mb-4 shadow-md hover:scale-105 transition-transform duration-500 cursor-direction justify-between hover:shadow-xl ${
                 theme === "light"
-                  ? "border-gray-300 bg-white text-black"
-                  : "border-gray-700 bg-gray-400 text-white"
+                  ? "border-gray-300 bg-gray-100 text-black"
+                  : "border-gray-700 bg-gray-600 text-white"
               }`}
             >
               {/* Image Container */}
@@ -113,16 +130,16 @@ const LayoutComponent = ({
 
                 {/* Text Content */}
                 <h2 className="text-[16px] font-semibold pt-1">{shelf.name}</h2>
-                <p className="text-gray-700">
+                <p className="">
                   {shelf.street}, {shelf.city}
                 </p>
                 <p className={`text-${isOpen ? "green" : "red"}-500`}>
-                  {message} <span className="text-gray-500">{detail}</span>
+                  {message} <span className="">{detail}</span>
                 </p>
               </Link>
 
               <div className="flex justify-between gap-2 mt-1  items-center w-full pt-4">
-                <div className="bg-cyan-600 w-7/12 rounded-md text-white">
+                <div className="bg-cyan-600 w-full rounded-md text-white">
                   <Link
                     to={`/create_book/${shelf._id}`}
                     className="flex items-center justify-center gap-1"
@@ -135,14 +152,22 @@ const LayoutComponent = ({
                     </div>
                   </Link>
                 </div>
-                <div className="w-5/12">
-                  <LikeButton />
-                </div>
               </div>
             </div>
           );
         })}
       </div>
+      {searchTerm ? (
+        ""
+      ) : (
+        <div className="flex justify-center my-12">
+          <Link to="/allShalves">
+            <span className="bg-rose-600 py-2 px-6 rounded-lg text-gray-100 hover:bg-cyan-600 ">
+              More Bookshelves
+            </span>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

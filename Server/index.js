@@ -38,10 +38,10 @@ app.use(
     credentials: true,
   })
 
-//   // cors({
-//   //   origin: "http://localhost:5174",
-//   //   credentials: true,
-//   // })
+  //   // cors({
+  //   //   origin: "http://localhost:5174",
+  //   //   credentials: true,
+  //   // })
 );
 // app.use(cors({ origin: "*" , credentials: true,}), express.json(), validateProvider, validateMode);
 
@@ -70,9 +70,7 @@ app.use(express.static("assets"));
 // Global error handler
 app.use(globalErrorHandler);
 
-
 app.use(errorHandler);
-
 
 // Server Listener
 const port = process.env.PORT || 8000;
@@ -81,7 +79,6 @@ const port = process.env.PORT || 8000;
 app.get("/*", (req, res) => {
   res.send("invalid endpoint!");
 });
-
 
 app.listen(port, () => {
   console.log("Server is running on port http://localhost:8000/");

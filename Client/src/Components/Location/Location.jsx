@@ -26,16 +26,10 @@ const Location = () => {
   useEffect(() => {
     const fetchBookshelves = async () => {
       try {
-        // const response = await axios.get(`${API}/bookshelves`);
         const response = await axios.get(
           `http://localhost:8000/api/v1/bookshelves/`
         );
-        // setBookshelves(response.data.result);
 
-        // const updatedShelves = await updateBookshelvesWithCoordinates(
-        //   response.data.result
-        // );
-        // setBookshelves(updatedShelves);
         setBookshelves(response.data.result);
       } catch (error) {
         toast.error("Error fetching Bookshelfs");

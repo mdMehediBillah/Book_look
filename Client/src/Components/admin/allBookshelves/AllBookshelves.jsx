@@ -6,14 +6,12 @@ import { toast } from "react-toastify";
 import { API } from "../../../Utils/security/secreteKey.js";
 import { FaTrashAlt } from "react-icons/fa";
 import { MdEditSquare } from "react-icons/md";
-
 const AllBookshelves = () => {
   const [bookshelves, setBookshelves] = useState([]);
   const [bookshelfId, setBookshelfId] = useState("");
   const [openBookshelf, setOpenBookshelf] = useState(false);
   const [confirmDeletion, setConfirmDeletion] = useState(false);
   const downloadRef = useRef(); // Create a reference to the component to download
-
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -25,7 +23,6 @@ const AllBookshelves = () => {
     };
     fetchUsers();
   }, []);
-
   const columns = [
     {
       field: "image",
@@ -69,7 +66,6 @@ const AllBookshelves = () => {
       ),
     },
   ];
-
   const rows = bookshelves.map((bookshelf) => ({
     id: bookshelf._id,
     barcode: bookshelf.barcode,
@@ -83,7 +79,6 @@ const AllBookshelves = () => {
     openingTime: bookshelf.openingTime,
     closingTime: bookshelf.closingTime,
   }));
-
   const handleDelete = async (id) => {
     try {
       const { data } = await axios.delete(`${API}/bookshelves/${id}`);
@@ -92,7 +87,6 @@ const AllBookshelves = () => {
       toast.error(error.response.data.message);
     }
   };
-
   return (
     <section
       ref={downloadRef}
@@ -100,7 +94,6 @@ const AllBookshelves = () => {
       style={{ height: "auto", width: "100%", backgroundColor: "#fff" }}
     >
       <h3 className="bookshelves-table-title"> List of Bookshelves </h3>
-
       <aside className="add-new-bookshelf">
         <h3 className="add-new-bookshelf-title">
           Options to Add New Bookshelf
@@ -114,7 +107,6 @@ const AllBookshelves = () => {
           </button>
         </div>
       </aside>
-
       <DataGrid
         rows={rows}
         columns={columns}
@@ -135,7 +127,6 @@ const AllBookshelves = () => {
         disableRowSelectionOnClick
         autoHeight // Adjust the height automatically
       />
-
       {confirmDeletion && (
         <article className="service-delete-confirmation-wrapper">
           <span
@@ -144,7 +135,6 @@ const AllBookshelves = () => {
           >
             X
           </span>
-
           <h3 className="you-want-delete-user">
             Are you sure you want delete this bookshelf?
           </h3>
@@ -170,5 +160,4 @@ const AllBookshelves = () => {
     </section>
   );
 };
-
 export default AllBookshelves;

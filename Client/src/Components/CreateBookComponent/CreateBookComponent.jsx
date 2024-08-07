@@ -14,7 +14,7 @@ const CreateBookComponent = () => {
   const [error, setError] = useState("");
   const [imagePreview, setImagePreview] = useState(imgPlaceholder);
 
-  console.log(id);
+  // console.log(id);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -77,7 +77,7 @@ const CreateBookComponent = () => {
         `${url}/api/v1/books/new`,
         updatedFormData
       );
-      console.log(response.data);
+      // console.log(response.data);
 
       toast.success("Add Book successfully!");
       navigate("/");

@@ -22,7 +22,7 @@ const BorrowedBookForm = ({ setOpenBorrowedBook }) => {
   };
   // Local variables
   const [formData, setFormData] = useState(initialValues);
-  console.log(formData);
+  // console.log(formData);
   // const [books, setBooks] = useState([]);
   // const [authors, setAuthors] = useState([]);
   // const [bookshelves, setBookshelves] = useState([]);

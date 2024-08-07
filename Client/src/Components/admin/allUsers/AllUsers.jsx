@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./AllUsers.scss";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import axios from "axios";
@@ -6,12 +6,12 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { API } from "../../../Utils/security/secreteKey";
-
+import { ThemeContext } from "../../../Components/lightDarkMood/ThemeContext.jsx";
 const AllUsers = () => {
+  const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
   const [users, setUsers] = useState([]);
   const [userId, setUserId] = useState("");
   const [confirmDeletion, setConfirmDeletion] = useState(false);
-
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -23,7 +23,6 @@ const AllUsers = () => {
     };
     fetchUsers();
   }, []);
-
   const columns = [
     {
       field: "image",
@@ -41,9 +40,7 @@ const AllUsers = () => {
     { field: "lastName", headerName: "Last Name", width: 150 },
     { field: "email", headerName: "Email", width: 200 },
     { field: "street", headerName: "Street", width: 150 },
-    { field: "zipCode", headerName: "Postal Code", width: 100 },
     { field: "city", headerName: "City", width: 150 },
-    { field: "state", headerName: "County", width: 150 },
     { field: "country", headerName: "Country", width: 150 },
     {
       field: "action",
@@ -65,7 +62,6 @@ const AllUsers = () => {
       ),
     },
   ];
-
   // Populate rows with user data
   const rows = users.map((user) => ({
     id: user._id,
@@ -74,12 +70,9 @@ const AllUsers = () => {
     lastName: user?.lastName,
     email: user?.email,
     street: user?.street || "",
-    zipCode: user?.zipCode || "",
     city: user?.city || "",
-    state: user?.state || "",
     country: user?.country || "",
   }));
-
   // Handle user deletion
   const handleDelete = async () => {
     try {
@@ -92,11 +85,14 @@ const AllUsers = () => {
       setConfirmDeletion(false);
     }
   };
-
   return (
-    <section className="">
-      <h3 className=""> List of Users </h3>
+    <section className=" w-10/12 ">
+      <h3 className={` ${theme === "light" ? "" : "text-gray-50"}`}>
+        {" "}
+        List of Users{" "}
+      </h3>
       <DataGrid
+        className="bg-gray-100"
         // Rows
         rows={rows}
         // Columns
@@ -123,11 +119,10 @@ const AllUsers = () => {
         autoHeight // Adjust the height automatically
         //
       />
-
       {confirmDeletion && (
         <article className="service-delete-confirmation-wrapper">
           <span
-            className="delete-icon"
+            className="delete-icon "
             onClick={() => setConfirmDeletion(false)}
           >
             X
@@ -151,5 +146,4 @@ const AllUsers = () => {
     </section>
   );
 };
-
 export default AllUsers;

@@ -50,19 +50,6 @@ const BookCardForShelf = ({ book }) => {
     debouncedUpdateRating(newRating);
   };
 
-  // console.log(bookshelf);
-  // const fetchBooks = async () => {
-  //   try {
-  //     const { data } = await axios.get(
-  //       `${API}/api/v1/bookshelves/${bookshelfId}/books`
-  //     );
-  //     setBooks(data.books);
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   useEffect(() => {
     // fetchBooks();
     fetchRating();
@@ -74,33 +61,31 @@ const BookCardForShelf = ({ book }) => {
         theme === "light" ? "bg-gray-50" : "bg-gray-300"
       }`}
     >
-      <Link to={`/${bookshelfId}/books/${book._id}`} className="">
-        <figure className="">
-          {/* <Link to={`/bookshelves/${bookshelfId}/books/${book._id}`}> */}
-          <img
-            className="w-full h-52 object-cover rounded-md mx-auto"
-            src={book?.coverImageUrl}
-            alt={book?.title}
+      <figure className="">
+        {/* <Link to={`/bookshelves/${bookshelfId}/books/${book._id}`}> */}
+        <img
+          className="w-full h-52 object-cover rounded-md mx-auto"
+          src={book?.coverImageUrl}
+          alt={book?.title}
+        />
+        {/* </Link> */}
+      </figure>
+      <article className="">
+        {/* <Link to={`/bookshelves/${bookshelfId}/books/${book._id}`}> */}
+        <h4 className="text-lg font-semibold pt-2 line-clamp-1">
+          {" "}
+          {book?.title}{" "}
+        </h4>
+        {/* </Link> */}
+        <small className="font-semibold text-[14px]">{book?.author}</small>
+        <div className="flex gap-4 items-center">
+          <p className="text-sm">Rating: {averageRating?.toFixed(1)}</p>
+          <Rating
+            initialRating={averageRating}
+            onRatingChange={handleRatingChange}
           />
-          {/* </Link> */}
-        </figure>
-        <article className="">
-          {/* <Link to={`/bookshelves/${bookshelfId}/books/${book._id}`}> */}
-          <h4 className="text-lg font-semibold pt-2 line-clamp-1">
-            {" "}
-            {book?.title}{" "}
-          </h4>
-          {/* </Link> */}
-          <small className="font-semibold text-[14px]">{book?.author}</small>
-          <div className="flex gap-4 items-center">
-            <p className="text-sm">Rating: {averageRating?.toFixed(1)}</p>
-            <Rating
-              initialRating={averageRating}
-              onRatingChange={handleRatingChange}
-            />
-          </div>
-        </article>
-      </Link>
+        </div>
+      </article>
       <Link to={`/${bookshelfId}/books/${book._id}`} className="">
         <p className="bg-gray-200 text-center rounded-lg py-1">
           {book?.summary?.slice(0, 300).concat("...")}{" "}

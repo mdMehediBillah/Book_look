@@ -34,7 +34,7 @@ export const createBook = async (req, res, next) => {
       bookshelf: shelfId, // Ensure correct property name matches your schema
     });
 
-    console.log("New Book:", newBook); // Log the new book object for debugging
+    // console.log("New Book:", newBook); // Log the new book object for debugging
 
     // Save the new book
     const savedBook = await newBook.save();
@@ -102,7 +102,7 @@ export const getBooks = async (req, res, next) => {
   try {
     const books = await Book.find();
 
-    console.log("books =", books);
+    // console.log("books =", books);
 
     if (!books) {
       return next(createError(400, "Books not found!"));
@@ -250,4 +250,3 @@ export const getBookRating = async (req, res, next) => {
     next(error);
   }
 };
-

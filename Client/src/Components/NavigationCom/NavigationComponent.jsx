@@ -17,7 +17,7 @@ const NavigationComponent = () => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
-  console.log("user =", user);
+  // console.log("user =", user);
 
   const { firstName } = user;
 

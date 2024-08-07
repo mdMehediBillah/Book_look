@@ -9,7 +9,7 @@ import { ColorRing } from "react-loader-spinner";
 const SearchBookComponent = ({ shelf }) => {
   const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
 
-  console.log(shelf);
+  // console.log(shelf);
   const { books, loading, resultTitle, setSearchTerm, fetchBooks } =
     useGlobalContext();
   const searchText = useRef("");

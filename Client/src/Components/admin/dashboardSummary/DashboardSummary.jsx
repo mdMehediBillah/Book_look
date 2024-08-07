@@ -15,13 +15,10 @@ import BookshelvesChart from "../../charts/bookshelves/BookshelvesChart";
 import AreaChartBookshelves from "../../charts/books/AreaChartBookshelves";
 import PieChartBookshelves from "../../charts/performance/PieChartBookshelves";
 import { ThemeContext } from "../../../Components/lightDarkMood/ThemeContext.jsx";
-
 const DashboardSummary = ({ isActive }) => {
   const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
-
   const [bookshelves, setBookshelves] = useState([]);
   const [bookshelvesCount, setBookshelvesCount] = useState([]);
-
   const [books, setBooks] = useState([]);
   const [booksCount, setBooksCount] = useState([]);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
@@ -31,9 +28,7 @@ const DashboardSummary = ({ isActive }) => {
   const [users, setUsers] = useState([]);
   const [usersCount, setUsersCount] = useState([]);
   const [commentsCount, setCommentsCount] = useState([]);
-
-  console.log("commentsCount", commentsCount);
-
+  // console.log("commentsCount", commentsCount);
   // ====================================================
   // Bookshelves
   // ====================================================
@@ -48,7 +43,6 @@ const DashboardSummary = ({ isActive }) => {
     };
     fetchBookshelves();
   }, []);
-
   useEffect(() => {
     const fetchBookshelvesCount = async () => {
       try {
@@ -62,7 +56,6 @@ const DashboardSummary = ({ isActive }) => {
     };
     fetchBookshelvesCount();
   }, []);
-
   // ====================================================
   // Books
   // ====================================================
@@ -77,7 +70,6 @@ const DashboardSummary = ({ isActive }) => {
     };
     fetchBooks();
   }, []);
-
   useEffect(() => {
     const fetchBooksCount = async () => {
       try {
@@ -89,11 +81,9 @@ const DashboardSummary = ({ isActive }) => {
     };
     fetchBooksCount();
   }, []);
-
   // ====================================================
   // Donated Books
   // ====================================================
-
   useEffect(() => {
     const fetchDonatedBooks = async () => {
       try {
@@ -118,7 +108,6 @@ const DashboardSummary = ({ isActive }) => {
     };
     fetchDonatedBooksCount();
   }, []);
-
   // ====================================================
   // Borrowed Books
   // ====================================================
@@ -133,7 +122,6 @@ const DashboardSummary = ({ isActive }) => {
     };
     fetchBorrowedBooks();
   }, []);
-
   useEffect(() => {
     const fetchBorrowedBooksCount = async () => {
       try {
@@ -147,11 +135,9 @@ const DashboardSummary = ({ isActive }) => {
     };
     fetchBorrowedBooksCount();
   }, []);
-
   // ====================================================
   // Users Books
   // ====================================================
-
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -163,7 +149,6 @@ const DashboardSummary = ({ isActive }) => {
     };
     fetchUsers();
   }, []);
-
   useEffect(() => {
     const fetchUsersCount = async () => {
       try {
@@ -175,11 +160,9 @@ const DashboardSummary = ({ isActive }) => {
     };
     fetchUsersCount();
   }, []);
-
   // ====================================================
   // Comments
   // ====================================================
-
   useEffect(() => {
     const fetchCommentsCount = async () => {
       try {
@@ -191,12 +174,10 @@ const DashboardSummary = ({ isActive }) => {
     };
     fetchCommentsCount();
   }, []);
-
   // Function to handle the print
   const handlePrint = () => {
     window.print();
   };
-
   return (
     <article className="w-full">
       {isActive === 1 && (
@@ -219,7 +200,6 @@ const DashboardSummary = ({ isActive }) => {
           >
             Print
           </button>
-
           <div
             className={`rounded-lg p-2 ${
               theme === "light"
@@ -251,7 +231,6 @@ const DashboardSummary = ({ isActive }) => {
           </div>
         </section>
       )}
-
       {isActive === 2 && <AllUsers />}
       {isActive === 3 && <AllBookshelves />}
       {isActive === 4 && <AllBooks />}
@@ -264,5 +243,4 @@ const DashboardSummary = ({ isActive }) => {
     </article>
   );
 };
-
 export default DashboardSummary;

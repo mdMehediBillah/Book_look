@@ -2,7 +2,7 @@ import { useBookshelvesContext } from "../../Context/Shelf/BookshelvesContext.js
 
 const Pagination = ({ hasMore }) => {
   const { page, loadMoreBookshelves } = useBookshelvesContext();
-  console.log(page);
+  // console.log(page);
   return (
     <>
       <div className="flex justify-center py-4">

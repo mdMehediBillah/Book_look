@@ -36,7 +36,7 @@ const AllShalvesPage = () => {
 
   const handleLike = (bookshelfId) => {
     // Optionally, update local state or perform other actions when a bookshelf is liked
-    console.log(`Bookshelf ${bookshelfId} liked`);
+    // console.log(`Bookshelf ${bookshelfId} liked`);
   };
 
   return (

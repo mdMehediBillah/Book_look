@@ -34,7 +34,7 @@ export const createBorrowedBook = async (req, res) => {
 
     // Save the updated bookshelf document
     await bookshelf.save();
-    console.log(bookshelf);
+    // console.log(bookshelf);
     return res
       .status(200)
       .json({ message: "Book successfully borrowed", bookshelf });

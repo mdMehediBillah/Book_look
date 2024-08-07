@@ -25,7 +25,7 @@ const BookPage = () => {
   const { shelfData } = useShelfContext();
   // console.log(shelfData);
   const { bookshelfId, bookId } = useParams();
-  console.log(bookshelfId, bookId);
+  // console.log(bookshelfId, bookId);
 
   const { user } = useAuthContext();
   const [book, setBook] = useState({});
@@ -89,13 +89,13 @@ const BookPage = () => {
     user: userId,
     borrowedFrom: bookshelfId,
   });
-  console.log(formData);
+  // console.log(formData);
   // console.log(book);
 
   // handle BorrowedBookForm
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
     try {
       const { data } = await axios.post(
         `${API}/api/v1/borrowedBooks/new`,
@@ -185,10 +185,11 @@ const BookPage = () => {
                   className="modal modal-bottom sm:modal-middle"
                 >
                   <div className="modal-box">
-                    <h4 className="font-bold text-lg">Borrow Bookshelf?</h4>
+                    <h4 className="font-bold text-lg text-rose-500">
+                      Borrow Book!
+                    </h4>
                     <p className="py-4">
-                      Do you really want to Borrow this book from your Bookshelf
-                      ?
+                      Do you really want to Borrow this book from Bookshelf ?
                     </p>
                     <div className="modal-action">
                       <form method="dialog">

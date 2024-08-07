@@ -28,13 +28,13 @@ const MapComponent = ({
   searchTerm,
 }) => {
   const [mockData, setMockData] = useState(mockBookshelves);
-  console.log(searchTerm);
+  // console.log(searchTerm);
   const mapRef = useRef(null); //It is used to directly manipulate the map.
 
   useEffect(() => {
-    console.log("MapComponent useEffect called");
+    // console.log("MapComponent useEffect called");
     if (mapRef.current) {
-      console.log("Map instance:", mapRef.current);
+      // console.log("Map instance:", mapRef.current);
 
       // Clear previous layers
       mapRef.current.eachLayer((layer) => {
@@ -132,7 +132,7 @@ const MapComponent = ({
       }
     });
     setMockData(filterdMockBookshelves);
-    console.log(filterdMockBookshelves);
+    // console.log(filterdMockBookshelves);
   }, [searchTerm]);
 
   const showMap = (mockBookshelves) => {
@@ -148,39 +148,42 @@ const MapComponent = ({
         return (
           <Marker key={idx} position={location} icon={customIcon}>
             <Popup>
-              <div className="popup-container">
-                {/* Image */}
-                {shelf.image && shelf.image.length > 0 && (
-                  <img
-                    src={shelf.image[0]}
-                    alt={shelf.name}
-                    className="popup-image"
-                    style={{
-                      width: "100%",
-                      height: "auto",
-                      borderRadius: "5px",
-                    }}
-                  />
-                )}
-                {/* Title and Address */}
-                <div className="popup-text">
-                  <h3 className="popup-title">{shelf.name}</h3>
-                  <p className="popup-address">
-                    {shelf.street}, {shelf.city}
-                  </p>
-                  <p className="text-gray-500">
-                    {shelf.openingTime === "00:00" &&
-                    shelf.closingTime === "23:59"
-                      ? "Open 24 hours"
-                      : `Opening Hours: ${shelf.openingTime} - ${shelf.closingTime}`}
-                  </p>
+              <div className="">
+                <div className="flex gap-1">
+                  <div>
+                    {/* Image */}
+                    {shelf.image && shelf.image.length > 0 && (
+                      <img
+                        src={shelf.image[0]}
+                        alt={shelf.name}
+                        className="w-screen h-20 object-cover rounded-md"
+                      />
+                    )}
+                  </div>
+                  {/* Title and Address */}
+                  <div className="popup-text">
+                    <h4 className="line-clamp-2 font-semibold">{shelf.name}</h4>
+                    <p className="line-clamp-1">
+                      {shelf.street}, {shelf.city}
+                    </p>
+                  </div>
                 </div>
-                <button
-                  className="popup-button"
-                  onClick={() => setDestination(location)}
-                >
-                  Go Here
-                </button>
+                <div className="flex justify-between w-full gap-1 items-center">
+                  <div className="w-full ">
+                    <p className="btn btn-nutral btn-sm">
+                      {shelf.openingTime === "00:00" &&
+                      shelf.closingTime === "23:59"
+                        ? "Open 24 hours"
+                        : `Opening Hours: ${shelf.openingTime} - ${shelf.closingTime}`}
+                    </p>
+                  </div>
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={() => setDestination(location)}
+                  >
+                    Go Here
+                  </button>
+                </div>
               </div>
             </Popup>
           </Marker>

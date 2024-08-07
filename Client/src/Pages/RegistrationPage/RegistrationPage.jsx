@@ -40,9 +40,9 @@ const RegistrationPage = () => {
       <div className="flex justify-center items-start">
         <div className="">
           {isLogin ? (
-            <SignUpComponent toggleForm={toggleForm} />
-          ) : (
             <LoginComponent toggleForm={toggleForm} />
+          ) : (
+            <SignUpComponent toggleForm={toggleForm} />
           )}
         </div>
       </div>

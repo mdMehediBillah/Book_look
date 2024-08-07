@@ -104,9 +104,12 @@ const LikedBookshelvesPage = () => {
                 className="modal modal-bottom sm:modal-middle"
               >
                 <div className="modal-box">
-                  <h4 className="font-bold text-lg">Remove Bookshelf?</h4>
+                  <h4 className="font-bold text-lg text-rose-500">
+                    Remove Bookshelf!
+                  </h4>
                   <p className="py-4">
                     Do you really want to remove this bookshelf from your liked
+                    ?
                   </p>
                   <div className="modal-action">
                     <form method="dialog">
