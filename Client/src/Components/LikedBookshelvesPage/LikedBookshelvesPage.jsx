@@ -6,10 +6,12 @@ import { toast } from "react-toastify";
 import imgUrl from "../../assets/images/shelfDefault.png";
 const URL = import.meta.env.VITE_REACT_APP_URL;
 import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext";
+import { motion } from "framer-motion";
 
 const LikedBookshelvesPage = () => {
   const { theme } = useContext(ThemeContext);
   const { user } = useAuthContext();
+  const [openUnlikeBook, setOpenUnlikeBook] = useState(false);
 
   const [likedBookshelves, setLikedBookshelves] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -88,12 +90,46 @@ const LikedBookshelvesPage = () => {
                   {shelf.street}, {shelf.city}
                 </p>
               </Link>
+              {/* Open the modal using document.getElementById('ID').showModal() method */}
               <button
+                className="btn btn-warning btn-sm mt-2"
+                onClick={() =>
+                  document.getElementById("my_modal_6").showModal()
+                }
+              >
+                Remove
+              </button>
+              <dialog
+                id="my_modal_6"
+                className="modal modal-bottom sm:modal-middle"
+              >
+                <div className="modal-box">
+                  <h4 className="font-bold text-lg">Remove Bookshelf?</h4>
+                  <p className="py-4">
+                    Do you really want to remove this bookshelf from your liked
+                  </p>
+                  <div className="modal-action">
+                    <form method="dialog">
+                      {/* if there is a button in form, it will close the modal */}
+                      <button className="btn btn-accent mr-2 btn-sm">
+                        Close
+                      </button>
+                      <button
+                        className="btn btn-warning btn-sm"
+                        onClick={() => removeLikedBookshelf(shelf._id)}
+                      >
+                        Remove
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </dialog>
+              {/* <button
                 onClick={() => removeLikedBookshelf(shelf._id)}
                 className="mt-2 px-2 py-1 bg-red-500 text-white rounded-md"
               >
                 Remove
-              </button>
+              </button> */}
             </div>
           ))}
         </div>
@@ -117,6 +153,20 @@ const LikedBookshelvesPage = () => {
               Add a new bookshelf
             </button>
           </Link>
+        </div>
+      )}
+
+      {openUnlikeBook && (
+        <div
+          className="fixed inset-0 flex items-center justify-center bg-red-200 bg-opacity-75 z-50"
+          onClick={() => openUnlikeBook(false)}
+        >
+          <motion.div
+            initial={{ scale: 0, opacity: 0, rotateX: 180, x: "-100vw" }}
+            animate={{ scale: 1, opacity: 1, rotateX: 0, x: 0 }}
+            transition={{ type: "spring", duration: 0.2, bounce: 20 }}
+            className="w-full max-w-lg mx-auto bg-white rounded-md shadow-lg p-4 border-radius-2xl border-gray-200 border-4 flex gap-4"
+          ></motion.div>
         </div>
       )}
     </div>

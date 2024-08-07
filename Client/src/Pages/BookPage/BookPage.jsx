@@ -19,6 +19,7 @@ import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext.jsx";
 
 const BookPage = () => {
   const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
+  const [openUnlikeBook, setOpenUnlikeBook] = useState(false);
 
   const navigate = useNavigate();
   const { shelfData } = useShelfContext();
@@ -165,57 +166,52 @@ const BookPage = () => {
                   />
                 </div>
                 <p className="book-summary">{book.summary}</p>
-                <button
+                {/* <button
                   onClick={() => setOpenBorrowedBook(true)}
                   className="bg-cyan-500 text-white px-4 py-1 rounded-md mt-4 hover:bg-rose-500 hover:scale-105 transition-transform duration-500"
                 >
                   Borrow Book
+                </button> */}
+                <button
+                  className="btn btn-warning btn-sm mt-2"
+                  onClick={() =>
+                    document.getElementById("my_modal_5").showModal()
+                  }
+                >
+                  Borrow Book
                 </button>
+                <dialog
+                  id="my_modal_5"
+                  className="modal modal-bottom sm:modal-middle"
+                >
+                  <div className="modal-box">
+                    <h4 className="font-bold text-lg">Borrow Bookshelf?</h4>
+                    <p className="py-4">
+                      Do you really want to Borrow this book from your Bookshelf
+                      ?
+                    </p>
+                    <div className="modal-action">
+                      <form method="dialog">
+                        {/* if there is a button in form, it will close the modal */}
+                        <button className="btn btn-accent mr-2 btn-sm">
+                          Close
+                        </button>
+                        <button
+                          className="btn btn-warning btn-sm"
+                          onClick={handleSubmit}
+                        >
+                          Borrow Book
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </dialog>
               </div>
             </article>
           </div>
         </section>
       </main>
-      {openBorrowedBook && (
-        <div
-          className="fixed inset-0 flex items-center justify-center bg-red-200 bg-opacity-75 z-50"
-          onClick={() => setOpenBorrowedBook(false)}
-        >
-          <motion.div
-            initial={{ scale: 0, opacity: 0, rotateX: 180, x: "-100vw" }}
-            animate={{ scale: 1, opacity: 1, rotateX: 0, x: 0 }}
-            transition={{ type: "spring", duration: 0.2, bounce: 20 }}
-            className="w-full max-w-lg mx-auto bg-white rounded-md shadow-lg p-4 border-radius-2xl border-gray-200 border-4 flex gap-4"
-          >
-            <img
-              className="w-full h-[300px] object-cover rounded-md mx-auto"
-              src={book?.coverImageUrl}
-              alt={book?.title}
-            />
-            <div className="flex flex-col justify-between ">
-              <div>
-                <p className="mt-2 text-black text-2xl font-semibold">
-                  Do you want to Borrow the Book?
-                </p>
-              </div>
-              <div className="flex mt-6 justify-between gap-2">
-                <button
-                  className=" bg-orange-300 hover:bg-orange-200 text-black font-semibold py-2 rounded w-full"
-                  onClick={() => setOpenBorrowedBook(false)}
-                >
-                  No
-                </button>
-                <button
-                  onClick={handleSubmit}
-                  className=" bg-cyan-400 hover:bg-cyan-200 text-black font-semibold py-2 rounded w-full"
-                >
-                  Yes
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      )}
+
       <FooterComponent />
     </>
   );

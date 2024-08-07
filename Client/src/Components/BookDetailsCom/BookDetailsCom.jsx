@@ -9,6 +9,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import GoBackComponent from "../GoBackComponent/GoBackComponent";
 import axios from "axios";
+import { ColorRing } from "react-loader-spinner";
 
 const URL = "https://openlibrary.org/works/";
 
@@ -150,66 +151,94 @@ const BookDetails = ({ shelf }) => {
   return (
     <>
       {" "}
-      <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900 max-w-screen-lg">
-        <div className="w-3/12">
-          <GoBackComponent />
-        </div>
-        <div className="flex items-center gap-4 w-6/12 justify-center">
-          <div>
-            <Link
-              to="/"
-              className="flex justify-center items-center gap-2 text-xl"
-            >
-              <h3>
-                <span className="text-rose-500 font-semibold ">Book</span>
-                <span className="text-cyan-600 font-semibold ">Look</span>
-              </h3>
-            </Link>
+      <main className="h-[100%] mb-12">
+        <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-cyan-900 max-w-screen-lg">
+          <div className="w-3/12">
+            <GoBackComponent />
           </div>
-        </div>
-        <div className="w-3/12 flex justify-end">
-          <div className="py-1 px-3 font-semibold text-white">
-            <h4>Book Details</h4>
-          </div>
-        </div>
-      </section>
-      <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-gray-200 max-w-screen-lg">
-        <div className="container">
-          <div className="grid md:grid-cols-2 justify-center py-8 px-6 gap-4 mt-4">
-            <div className="">
-              <img src={book?.cover_img} alt="cover img" className="w-full" />
-            </div>
-            <div className=" flex flex-col gap-2">
-              <div className="">
-                <span className="text-2xl font-bold">{book?.title}</span>
-              </div>
-              <div className="flex flex-col gap-1">
-                <div className="">
-                  <span className="">{book?.description}</span>
-                </div>
-                <div className="book-details-item">
-                  <span className="fw-6">Subject Places: </span>
-                  <span className="text-italic">{book?.subject_places}</span>
-                </div>
-                <div className="book-details-item">
-                  <span className="fw-6">Subject Times: </span>
-                  <span className="text-italic">{book?.subject_times}</span>
-                </div>
-                <div className="book-details-item">
-                  <span className="fw-6">Subjects: </span>
-                  <span>{book?.subjects}</span>
-                </div>
-              </div>
-              <button
-                onClick={handleBookSubmit}
-                className="bg-cyan-800 text-white py-2 rounded-xl mt-8 w-10/12 mx-auto font-semibold hover:bg-rose-600"
+          <div className="flex items-center gap-4 w-6/12 justify-center">
+            <div>
+              <Link
+                to="/"
+                className="flex justify-center items-center gap-2 text-xl"
               >
-                Add to shelf
-              </button>
+                <h3>
+                  <span className="text-rose-500 font-semibold ">Book</span>
+                  <span className="text-cyan-600 font-semibold ">Look</span>
+                </h3>
+              </Link>
             </div>
           </div>
-        </div>
-      </section>
+          <div className="w-3/12 flex justify-end">
+            <div className="py-1 px-3 font-semibold text-white">
+              <h4>Book Details</h4>
+            </div>
+          </div>
+        </section>
+        <section className="flex items-center py-2 px-4 container mx-auto justify-between screen-max-lg bg-gray-200 max-w-screen-lg">
+          <div className="container">
+            <div className="grid md:grid-cols-2 justify-center py-8 px-6 gap-4 mt-4">
+              <div className="">
+                {loading ? (
+                  <div className="flex flex-col justify-center  mx-auto w-6/12">
+                    {" "}
+                    <div className="mx-auto">
+                      <div className="mx-auto">
+                        <ColorRing
+                          loading={loading}
+                          colors={[
+                            "#00BCD4",
+                            "#ff007a",
+                            "#00BCD4",
+                            "#ff007a",
+                            "#00BCD4",
+                          ]}
+                          size={28}
+                        />
+                      </div>
+                      <span className="text-center">Loading...</span>
+                    </div>
+                  </div>
+                ) : (
+                  <img
+                    src={book?.cover_img}
+                    alt="cover img"
+                    className="w-full object-cover rounded-md"
+                  />
+                )}
+              </div>
+              <div className=" flex flex-col gap-2">
+                <div className="">
+                  <span className="text-2xl font-bold">{book?.title}</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <div className="">
+                    <span className="">{book?.description}</span>
+                  </div>
+                  <div className="book-details-item">
+                    <span className="fw-6">Subject Places: </span>
+                    <span className="text-italic">{book?.subject_places}</span>
+                  </div>
+                  <div className="book-details-item">
+                    <span className="fw-6">Subject Times: </span>
+                    <span className="text-italic">{book?.subject_times}</span>
+                  </div>
+                  <div className="book-details-item">
+                    <span className="fw-6">Subjects: </span>
+                    <span>{book?.subjects}</span>
+                  </div>
+                </div>
+                <button
+                  onClick={handleBookSubmit}
+                  className="bg-cyan-800 text-white py-2 rounded-xl mt-8 w-10/12 mx-auto font-semibold hover:bg-rose-600"
+                >
+                  Add to shelf
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
       <FooterComponent />
     </>
   );
