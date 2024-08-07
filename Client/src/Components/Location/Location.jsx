@@ -32,10 +32,11 @@ const Location = () => {
         );
         // setBookshelves(response.data.result);
 
-        const updatedShelves = await updateBookshelvesWithCoordinates(
-          response.data.result
-        );
-        setBookshelves(updatedShelves);
+        // const updatedShelves = await updateBookshelvesWithCoordinates(
+        //   response.data.result
+        // );
+        // setBookshelves(updatedShelves);
+        setBookshelves(response.data.result);
       } catch (error) {
         toast.error("Error fetching Bookshelfs");
       }

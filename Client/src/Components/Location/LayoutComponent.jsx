@@ -12,7 +12,6 @@ import { LuBook } from "react-icons/lu";
 import LikeButton from "../LikeButtonComponent/LikeButtonComponent";
 import { ThemeContext } from "../../Components/lightDarkMood/ThemeContext"; // Import ThemeContext
 
-
 const LayoutComponent = ({
   bookshelves,
   center,
@@ -23,7 +22,6 @@ const LayoutComponent = ({
   searchTerm,
   setSearchTerm,
 }) => {
-
   const { theme } = useContext(ThemeContext); // Access theme context for dark and light mode
 
   //==========================================================================
@@ -83,6 +81,7 @@ const LayoutComponent = ({
           userLocation={userLocation}
           destination={destination}
           setDestination={setDestination}
+          searchTerm={searchTerm}
         />
       </div>
 
