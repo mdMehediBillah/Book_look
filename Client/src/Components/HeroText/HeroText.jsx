@@ -8,7 +8,7 @@ const HeroText = () => {
     <div className="flex flex-col items-center justify-center">
       <h1
         className={`text-4xl font-bold ${
-          theme === "light" ? "text-rose-800" : "text-gray-300"
+          theme === "light" ? "text-rose-500" : "text-cyan-300"
         }`}
       >
         Start your journey
